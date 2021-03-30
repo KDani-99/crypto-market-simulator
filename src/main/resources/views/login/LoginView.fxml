@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="500.0" maxWidth="400.0" minHeight="500.0" minWidth="400.0" prefHeight="500.0" prefWidth="400.0" styleClass="pane" stylesheets="@LoginView.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <AnchorPane maxHeight="500.0" maxWidth="400.0" minHeight="500.0" minWidth="400.0" prefHeight="500.0" prefWidth="507.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="label_version" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="440.0" prefHeight="60.0" prefWidth="400.0" text="&lt;label_version&gt;" textAlignment="CENTER" textFill="#c8c8c8" />
+            <PasswordField fx:id="input_password" layoutX="64.0" layoutY="210.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="Enter your password">
+               <styleClass>
+                  <String fx:value="input" />
+                  <String fx:value="common" />
+               </styleClass></PasswordField>
+            <TextField fx:id="input_username" layoutX="64.0" layoutY="140.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="Enter your username">
+               <styleClass>
+                  <String fx:value="input" />
+                  <String fx:value="common" />
+               </styleClass></TextField>
+            <Button fx:id="button_login" alignment="CENTER" contentDisplay="CENTER" layoutX="64.0" layoutY="290.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" styleClass="common" text="Log in">
+               <graphic>
+                  <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" text="Log in" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Label layoutX="64.0" layoutY="180.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" styleClass="label2" text="Password">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="64.0" layoutY="110.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" styleClass="label2" text="Username">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="button_register" alignment="CENTER" contentDisplay="CENTER" layoutX="64.0" layoutY="340.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Register">
+               <styleClass>
+                  <String fx:value="button-outline" />
+                  <String fx:value="common" />
+               </styleClass>
+               <graphic>
+                  <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" text="Register" textAlignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color red="1.0" green="0.7921568751335144" blue="0.1568627506494522" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" green="0.6549019813537598" blue="0.14901961386203766" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                           <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Label id="welcome" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" layoutY="40.0" maxHeight="50.0" maxWidth="275.0" minHeight="50.0" minWidth="275.0" prefHeight="50.0" prefWidth="275.0" text="Welcome back!" textAlignment="CENTER">
+               <font>
+                  <Font size="34.0" />
+               </font>
+            </Label>
+            <Pane fx:id="pane_error" layoutX="65.0" layoutY="385.0" maxWidth="275.0" minWidth="275.0" prefHeight="75.0" prefWidth="275.0" styleClass="errorBox">
+               <children>
+                  <Label fx:id="label_error" alignment="CENTER" contentDisplay="CENTER" prefHeight="70.0" prefWidth="275.0" styleClass="label" text="&lt;label_error&gt;" />
+               </children></Pane>
+            <SVGPath content="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" fill="#787878bf" layoutX="70.0" layoutY="217.0" />
+            <SVGPath content="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z" fill="#787878bf" layoutX="70.0" layoutY="148.0" />
+            <CheckBox layoutX="65.0" layoutY="255.0" maxHeight="30.0" maxWidth="275.0" minHeight="30.0" minWidth="275.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="275.0" text="Stay logged in" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

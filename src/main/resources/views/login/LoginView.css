@@ -1,0 +1,122 @@
+/*@font-face
+{
+    src: url("/fonts/FredokaOne-Regular.ttf");
+}
+@font-face {
+    -fx-font-family: "Rubik Bold";
+    src: url("/fonts/Rubik-Bold.ttf");
+}
+@font-face {
+    -fx-font-family: "Rubik";
+    src: url("/fonts/Rubik-Regular.ttf");
+}
+@font-face {
+    -fx-font-family: "Rubik Medium";
+    src: url("/fonts/Rubik-Medium.ttf");
+}
+@font-face {
+    -fx-font-family: "Lato Regular";
+    src: url("/fonts/Lato-Regular.ttf");
+}
+@font-face {
+    -fx-font-family: "Lato Bold";
+    src: url("/fonts/Lato-Bold.ttf");
+}*/
+/*@font-face {
+    -fx-font-family: "Lato";
+    src: url("/fonts/Lato-Regular.ttf");
+}
+@font-face {
+    -fx-font-family: "Lato Bold";
+    src: url("/fonts/Lato-Bold.ttf");
+}*/
+.view {
+    -fx-background-color: white;
+    -fx-font-family: 'Lato Regular';
+}
+.common {
+    -fx-min-width: 275px;
+    -fx-min-height: 40px;
+    -fx-max-width: 275px;
+    -fx-max-height: 40px;
+    -fx-width: 275px;
+    -fx-height: 40px;
+    -fx-text-alignment: left;
+}
+.pane {
+    -fx-min-width: 400px;
+    -fx-min-height: 500px;
+    -fx-max-width: 400px;
+    -fx-max-height: 500px;
+    -fx-width: 400px;
+    -fx-height: 500px;
+    -fx-background-color: transparent;
+}
+.errorBox {
+    -fx-border-width: 0px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-font-size: 14px;
+    -fx-background-color: rgba(231,76,60 ,0.15);
+    -fx-fill: white;
+    -fx-padding: 5;
+    -fx-border-insets: 0;
+    -fx-border-color: rgb(240,240,240);
+}
+.errorBox .label {
+    -fx-text-fill: rgba(231,76,60 ,1);
+}
+.elevatedPane {
+    /*-fx-effect: dropshadow(gaussian, rgba(60,60,60,0.25), 2, 0, 0, 0);
+    -fx-background-radius: 12px;
+    -fx-border-width: 5px;*/
+    -fx-background-color: white;
+}
+.label {
+    -fx-font-size: 14px;
+}
+.label2 {
+    -fx-text-fill: rgb(80,80,80);
+    -fx-font-family: 'Lato Bold';
+}
+.input {
+
+   /* -fx-background-color: rgb(240,240,240);*/
+    -fx-background-color: white;
+    -fx-padding: 5 5 5 40;
+    -fx-border-insets: 0;
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
+    -fx-border-color: rgb(240,240,240);
+    -fx-border-radius: 4px;
+    -fx-font-size: 14px;
+}
+.input:focused {
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
+    -fx-border-color: #FFCA28;
+}
+.button {
+    -fx-hgap: 20px;
+    -fx-padding: 40px;
+    -fx-background-radius: 50px;
+    -fx-border-radius: 50px;
+    -fx-border-width: 5px;
+    -fx-effect: dropshadow(gaussian, #FFCA28, 15, -15, 0, 0);
+    -fx-background-color: linear-gradient(to right,#FFCA28,#FFA726);
+}
+.button:hover {
+    -fx-effect: none;
+}
+.button-outline {
+    -fx-effect: none;
+    -fx-background-color: white;
+}
+#welcome {
+    -fx-font-size: 24px;
+    -fx-font-family: 'Lato Bold';
+}
+#label_version {
+    -fx-font-size: 12px;
+    -fx-font-family: 'Roboto Thin';
+}
