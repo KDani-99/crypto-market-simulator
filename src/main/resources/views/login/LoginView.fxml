@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import java.net.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -8,22 +9,12 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="500.0" maxWidth="400.0" minHeight="500.0" minWidth="400.0" prefHeight="500.0" prefWidth="400.0" styleClass="pane" stylesheets="@LoginView.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="500.0" maxWidth="400.0" minHeight="500.0" minWidth="400.0" prefHeight="500.0" prefWidth="400.0" styleClass="pane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <AnchorPane maxHeight="500.0" maxWidth="400.0" minHeight="500.0" minWidth="400.0" prefHeight="500.0" prefWidth="507.0" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="label_version" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="440.0" prefHeight="60.0" prefWidth="400.0" text="&lt;label_version&gt;" textAlignment="CENTER" textFill="#c8c8c8" />
-            <PasswordField fx:id="input_password" layoutX="64.0" layoutY="210.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="Enter your password">
-               <styleClass>
-                  <String fx:value="input" />
-                  <String fx:value="common" />
-               </styleClass></PasswordField>
-            <TextField fx:id="input_username" layoutX="64.0" layoutY="140.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="Enter your username">
-               <styleClass>
-                  <String fx:value="input" />
-                  <String fx:value="common" />
-               </styleClass></TextField>
-            <Button fx:id="button_login" alignment="CENTER" contentDisplay="CENTER" layoutX="64.0" layoutY="290.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" styleClass="common" text="Log in">
+            <Button fx:id="button_login" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" layoutY="315.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" styleClass="common" text="Log in">
                <graphic>
                   <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" text="Log in" textAlignment="CENTER" textFill="WHITE">
                      <font>
@@ -37,17 +28,7 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <Label layoutX="64.0" layoutY="180.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" styleClass="label2" text="Password">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="64.0" layoutY="110.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" styleClass="label2" text="Username">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Button fx:id="button_register" alignment="CENTER" contentDisplay="CENTER" layoutX="64.0" layoutY="340.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Register">
+            <Button fx:id="button_register" alignment="CENTER" contentDisplay="CENTER" layoutX="66.0" layoutY="365.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Register">
                <styleClass>
                   <String fx:value="button-outline" />
                   <String fx:value="common" />
@@ -81,19 +62,72 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <Label id="welcome" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" layoutY="40.0" maxHeight="50.0" maxWidth="275.0" minHeight="50.0" minWidth="275.0" prefHeight="50.0" prefWidth="275.0" text="Welcome back!" textAlignment="CENTER">
+            <Label id="welcome" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" layoutY="30.0" maxHeight="50.0" maxWidth="275.0" minHeight="50.0" minWidth="275.0" prefHeight="50.0" prefWidth="275.0" styleClass="title" text="Welcome back!" textAlignment="CENTER">
                <font>
                   <Font size="34.0" />
                </font>
             </Label>
-            <Pane fx:id="pane_error" layoutX="65.0" layoutY="385.0" maxWidth="275.0" minWidth="275.0" prefHeight="75.0" prefWidth="275.0" styleClass="errorBox">
+            <SVGPath content="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" fill="#787878bf" layoutX="70.0" layoutY="217.0" scaleX="0.75" scaleY="0.75" />
+            <CheckBox fx:id="checkbox_stay_logged" contentDisplay="CENTER" layoutX="66.0" layoutY="272.0" maxHeight="30.0" maxWidth="275.0" minHeight="30.0" minWidth="275.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="275.0" text="Stay logged in" textFill="#787878" AnchorPane.bottomAnchor="198.0" AnchorPane.leftAnchor="66.0" AnchorPane.rightAnchor="59.0" AnchorPane.topAnchor="272.0" />
+            <AnchorPane fx:id="pane_error" layoutX="65.0" layoutY="75.0" prefHeight="35.0" prefWidth="275.0">
                <children>
-                  <Label fx:id="label_error" alignment="CENTER" contentDisplay="CENTER" prefHeight="70.0" prefWidth="275.0" styleClass="label" text="&lt;label_error&gt;" />
-               </children></Pane>
-            <SVGPath content="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" fill="#787878bf" layoutX="70.0" layoutY="217.0" />
-            <SVGPath content="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z" fill="#787878bf" layoutX="70.0" layoutY="148.0" />
-            <CheckBox layoutX="65.0" layoutY="255.0" maxHeight="30.0" maxWidth="275.0" minHeight="30.0" minWidth="275.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="275.0" text="Stay logged in" />
+                  <Label fx:id="label_error" alignment="CENTER" prefHeight="35.0" prefWidth="275.0" styleClass="label" text="&lt;label_error&gt;" textFill="#cd3d64" AnchorPane.rightAnchor="0.0" />
+                  <SVGPath content="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" fill="#cd3d64" scaleX="0.75" scaleY="0.75" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="255.0" AnchorPane.topAnchor="8.0" />
+               </children>
+            </AnchorPane>
+            <SplitPane dividerPositions="0.5" layoutX="65.0" layoutY="190.0" maxHeight="75.0" maxWidth="275.0" minHeight="72.0" minWidth="275.0" orientation="VERTICAL" prefHeight="72.0" prefWidth="275.0" styleClass="split-box">
+               <items>
+                  <AnchorPane maxHeight="30.0" maxWidth="275.0" minHeight="30.0" minWidth="0.0" prefHeight="30.0" prefWidth="0.0">
+                     <children>
+                        <Label contentDisplay="CENTER" maxHeight="30.0" maxWidth="275.0" minHeight="30.0" minWidth="275.0" prefHeight="30.0" prefWidth="250.0" styleClass="label2" text="Password" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane maxHeight="40.0" minHeight="40.0" minWidth="0.0" prefHeight="40.0" prefWidth="275.0">
+                     <children>
+                        <PasswordField fx:id="input_password" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" promptText="Enter your password">
+                           <styleClass>
+                              <String fx:value="input" />
+                              <String fx:value="common" />
+                           </styleClass>
+                        </PasswordField>
+                        <SVGPath content="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" fill="#787878bf" layoutX="5.0" layoutY="8.0" scaleX="0.75" scaleY="0.75" />
+                     </children>
+                  </AnchorPane>
+               </items>
+            </SplitPane>
+            <SplitPane dividerPositions="0.5" layoutX="65.0" layoutY="110.0" maxHeight="75.0" maxWidth="275.0" minHeight="72.0" minWidth="275.0" orientation="VERTICAL" prefHeight="72.0" prefWidth="275.0" styleClass="split-box">
+               <items>
+                  <AnchorPane maxHeight="30.0" maxWidth="275.0" minHeight="30.0" minWidth="0.0" prefHeight="30.0" prefWidth="0.0">
+                     <children>
+                        <Label contentDisplay="CENTER" maxHeight="30.0" maxWidth="275.0" minHeight="30.0" minWidth="275.0" prefHeight="30.0" prefWidth="250.0" styleClass="label2" text="Username" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane maxHeight="40.0" minHeight="40.0" minWidth="0.0" prefHeight="40.0" prefWidth="275.0">
+                     <children>
+                        <TextField fx:id="input_username" maxHeight="40.0" maxWidth="275.0" minHeight="40.0" minWidth="167.0" prefHeight="40.0" prefWidth="275.0" promptText="Enter your username">
+                           <styleClass>
+                              <String fx:value="input" />
+                              <String fx:value="common" />
+                           </styleClass>
+                        </TextField>
+                        <SVGPath content="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z" fill="#787878bf" layoutX="5.0" layoutY="8.0" scaleX="0.75" scaleY="0.75" />
+                     </children>
+                  </AnchorPane>
+               </items>
+            </SplitPane>
          </children>
       </AnchorPane>
    </center>
+   <stylesheets>
+      <URL value="@../common/Common.css" />
+      <URL value="@LoginView.css" />
+   </stylesheets>
 </BorderPane>
