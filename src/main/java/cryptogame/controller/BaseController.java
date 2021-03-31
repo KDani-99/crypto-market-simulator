@@ -1,30 +1,55 @@
 package cryptogame.controller;
 
+import cryptogame.model.database.jpa.entities.Session;
+import cryptogame.model.session.SessionManager;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
-
-import java.util.HashMap;
+import java.util.Map;
 
 public abstract class BaseController {
 
-    private final HashMap<String, Scene> scenes;
-    private final Stage primaryStage;
+    @FXML protected Label versionLabel;
 
-    protected final Scene scene;
+    private Stage primaryStage;
+    private SessionManager sessionManager;
+    protected Map<Class<? extends BaseController>, BaseController> controllers;
+    protected Scene scene;
 
-    protected BaseController(Stage primaryStage,HashMap<String, Scene> scenes,String sceneName) {
-        this.primaryStage = primaryStage;
-        this.scenes = scenes;
-        this.scene = this.getScene(sceneName);
+    protected BaseController() {}
+
+    public void setControllers(Map<Class<? extends BaseController>, BaseController> controllers) {
+        this.controllers = controllers;
     }
 
-    protected Scene getScene(String key) {
-        return this.scenes.get(key);
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+    public void setSessionManager(SessionManager sessionManager) {
+        this.sessionManager = sessionManager;
+    }
+    protected SessionManager getSessionManager() {
+        return this.sessionManager;
+    }
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+    protected BaseController getController(Class<? extends BaseController> controllerClass) {
+        return controllers.get(controllerClass);
+    }
+    public Scene getScene() {
+        return this.scene;
     }
 
     protected Stage getPrimaryStage() {
         return this.primaryStage;
     }
 
-    protected abstract void getSceneNodes();
+    public void setVersionLabelText(String text) {
+        this.versionLabel.setText(text);
+    }
+
+    public abstract void initScene();
+    protected abstract void showError(Exception exception);
 }

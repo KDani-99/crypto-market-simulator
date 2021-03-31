@@ -1,6 +1,7 @@
 package cryptogame.controller;
 
 import cryptogame.model.session.SessionManager;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -12,48 +13,33 @@ import javafx.stage.Stage;
 import javafx.event.EventHandler;
 
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class LoginController extends BaseController {
 
-    public static final String SCENE_NAME = "login";
+    @FXML private TextField usernameInput;
+    @FXML private PasswordField passwordInput;
 
-    private final SessionManager sessionManager;
+    @FXML private Button loginButton;
+    @FXML private Button registerButton;
 
-    private TextField usernameInput;
-    private PasswordField passwordInput;
+    @FXML private Pane errorPane;
+    @FXML private Label errorLabel;
 
-    private Button loginButton;
-    private Button registerButton;
-
-    private Pane errorPane;
-    private Label errorLabel;
-
-    public LoginController(Stage primaryStage,HashMap<String, Scene> scenes, SessionManager sessionManager) {
-
-        super(primaryStage,scenes,SCENE_NAME);
-
-        this.sessionManager = sessionManager;
-        this.getSceneNodes();
-    }
+    public LoginController() {}
 
     @Override
-    protected void getSceneNodes() {
-        this.usernameInput = (TextField)this.scene.lookup("#input_username");
+    public void initScene() {
         this.setupUsernameInput();
-
-        this.passwordInput = (PasswordField) this.scene.lookup("#input_password");
-
-        this.loginButton = (Button)this.scene.lookup("#button_login");
         this.setupLoginButton();
-
-        this.registerButton = (Button)this.scene.lookup("#button_register");
         this.setupRegisterButton();
-
-        this.errorPane = (Pane)this.scene.lookup("#pane_error");
         errorPane.setVisible(false);
-
-        this.errorLabel = (Label)this.scene.lookup("#label_error");
+    }
+    @Override
+    protected void showError(Exception ex) {
+        errorLabel.setText(ex.getMessage());
+        errorPane.setVisible(true);
     }
 
     private void setupUsernameInput() {
@@ -71,11 +57,12 @@ public class LoginController extends BaseController {
                     var username = usernameInput.getText();
                     var password = passwordInput.getText();
 
-                    sessionManager.login(username,password);
+                    getSessionManager().login(username,password);
 
                 } catch (Exception ex) {
                     errorLabel.setText(ex.getMessage());
                     errorPane.setVisible(true);
+                    System.out.println(ex.toString());
                 }
             }
         });
@@ -85,9 +72,11 @@ public class LoginController extends BaseController {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    getPrimaryStage().setScene(getScene(RegistrationController.SCENE_NAME));
+                    getPrimaryStage().setScene(getController(RegistrationController.class).getScene());
                     getPrimaryStage().setResizable(false);
                 } catch (Exception ex) {
+                    errorLabel.setText(ex.getMessage());
+                    errorPane.setVisible(true);
                     System.out.println(ex.toString());
                 }
             }

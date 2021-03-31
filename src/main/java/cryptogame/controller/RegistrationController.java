@@ -1,6 +1,7 @@
 package cryptogame.controller;
 
 import cryptogame.model.session.SessionManager;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
@@ -14,47 +15,30 @@ import javafx.stage.Stage;
 import javafx.event.EventHandler;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class RegistrationController extends BaseController {
 
-    public static final String SCENE_NAME = "registration";
-    private final SessionManager sessionManager;
+    @FXML private TextField usernameInput;
+    @FXML private TextField emailInput;
+    @FXML private PasswordField passwordInput;
 
-    private TextField usernameInput;
-    private TextField emailInput;
-    private PasswordField passwordInput;
+    @FXML private Button loginButton;
+    @FXML private Button registerButton;
 
-    private Button loginButton;
-    private Button registerButton;
-
-    private Pane errorPane;
-    private Label errorLabel;
-
-    public RegistrationController(Stage primaryStage, HashMap<String, Scene> scenes, SessionManager sessionManager) {
-
-        super(primaryStage,scenes,SCENE_NAME);
-
-        this.sessionManager = sessionManager;
-        this.getSceneNodes();
-    }
+    @FXML private Pane errorPane;
+    @FXML private Label errorLabel;
 
     @Override
-    protected void getSceneNodes() {
-        this.usernameInput = (TextField)this.scene.lookup("#input_username");
-
-        this.emailInput = (TextField)this.scene.lookup("#input_email");
-
-        this.passwordInput = (PasswordField) this.scene.lookup("#input_password");
-
-        this.loginButton = (Button)this.scene.lookup("#button_login");
+    public void initScene() {
         this.setupLoginButton();
-
-        this.registerButton = (Button)this.scene.lookup("#button_register");
-
-        this.errorPane = (Pane)this.scene.lookup("#pane_error");
+        this.setupRegisterButton();
         this.errorPane.setVisible(false);
-
-        this.errorLabel = (Label)this.scene.lookup("#label_error");
+    }
+    @Override
+    protected void showError(Exception ex) {
+        errorLabel.setText(ex.getMessage());
+        errorPane.setVisible(true);
     }
 
     private void setupLoginButton() {
@@ -62,8 +46,25 @@ public class RegistrationController extends BaseController {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    getPrimaryStage().setScene(getScene(LoginController.SCENE_NAME));
+                    getPrimaryStage().setScene(getController(LoginController.class).getScene());
                     getPrimaryStage().setResizable(false);
+                } catch (Exception ex) {
+                    System.out.println(ex.toString());
+                }
+            }
+        });
+    }
+    private void setupRegisterButton() {
+        this.registerButton.setOnMouseClicked(new EventHandler<>(){
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+
+                    var username = usernameInput.getText();
+                    var email = emailInput.getText();
+                    var password = passwordInput.getText();
+
+                    getSessionManager().register(username,email,password);
                 } catch (Exception ex) {
                     System.out.println(ex.toString());
                 }
