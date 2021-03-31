@@ -9,12 +9,12 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="500.0" maxWidth="400.0" minHeight="500.0" minWidth="400.0" prefHeight="500.0" prefWidth="400.0" styleClass="pane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="500.0" maxWidth="400.0" minHeight="500.0" minWidth="400.0" prefHeight="500.0" prefWidth="400.0" styleClass="pane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cryptogame.controller.RegistrationController">
     <center>
         <AnchorPane maxHeight="500.0" maxWidth="400.0" minHeight="500.0" minWidth="400.0" prefHeight="500.0" prefWidth="507.0" BorderPane.alignment="CENTER">
             <children>
-                <Label fx:id="label_version" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="440.0" prefHeight="60.0" prefWidth="400.0" text="&lt;label_version&gt;" textAlignment="CENTER" textFill="#c8c8c8" />
-                <Button fx:id="button_register" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" layoutY="360.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" styleClass="common" text="Register">
+                <Label fx:id="versionLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="440.0" prefHeight="60.0" prefWidth="400.0" text="&lt;label_version&gt;" textAlignment="CENTER" textFill="#c8c8c8" />
+                <Button fx:id="registerButton" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" layoutY="360.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" styleClass="common" text="Register">
                     <graphic>
                         <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" text="Register" textAlignment="CENTER" textFill="WHITE">
                             <font>
@@ -28,7 +28,7 @@
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor></Button>
-                <Button fx:id="button_login" alignment="CENTER" contentDisplay="CENTER" layoutX="66.0" layoutY="410.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Log in">
+                <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" layoutX="66.0" layoutY="410.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Log in">
                     <styleClass>
                         <String fx:value="button-outline" />
                         <String fx:value="common" />
@@ -67,9 +67,9 @@
                         <Font size="34.0" />
                     </font>
                 </Label>
-                <AnchorPane fx:id="pane_error" layoutX="65.0" layoutY="65.0" prefHeight="35.0" prefWidth="275.0">
+                <AnchorPane fx:id="errorPane" layoutX="65.0" layoutY="65.0" prefHeight="35.0" prefWidth="275.0">
                     <children>
-                        <Label fx:id="label_error" alignment="CENTER" prefHeight="35.0" prefWidth="275.0" styleClass="label" text="&lt;label_error&gt;" textFill="#cd3d64" AnchorPane.rightAnchor="0.0" />
+                        <Label fx:id="labelError" alignment="CENTER" prefHeight="35.0" prefWidth="275.0" styleClass="label" text="&lt;label_error&gt;" textFill="#cd3d64" AnchorPane.rightAnchor="0.0" />
                         <SVGPath content="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" fill="#cd3d64" scaleX="0.75" scaleY="0.75" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="255.0" AnchorPane.topAnchor="8.0" />
                     </children>
                 </AnchorPane>
@@ -86,7 +86,7 @@
                   </AnchorPane>
                   <AnchorPane maxHeight="40.0" minHeight="40.0" minWidth="0.0" prefHeight="40.0" prefWidth="275.0">
                      <children>
-                        <TextField fx:id="input_email" maxHeight="40.0" maxWidth="275.0" minHeight="40.0" minWidth="167.0" prefHeight="40.0" prefWidth="275.0" promptText="Enter your email">
+                        <TextField fx:id="emailInput" maxHeight="40.0" maxWidth="275.0" minHeight="40.0" minWidth="167.0" prefHeight="40.0" prefWidth="275.0" promptText="Enter your email">
                            <styleClass>
                               <String fx:value="input" />
                               <String fx:value="common" />
@@ -110,7 +110,7 @@
                   </AnchorPane>
                   <AnchorPane maxHeight="40.0" minHeight="40.0" minWidth="0.0" prefHeight="40.0" prefWidth="275.0">
                      <children>
-                        <PasswordField fx:id="input_password" maxHeight="40.0" maxWidth="275.0" minHeight="30.0" minWidth="275.0" prefColumnCount="0" prefHeight="30.0" prefWidth="147.0" promptText="Enter your password" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <PasswordField fx:id="passwordInput" maxHeight="40.0" maxWidth="275.0" minHeight="30.0" minWidth="275.0" prefColumnCount="0" prefHeight="30.0" prefWidth="147.0" promptText="Enter your password" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <styleClass>
                               <String fx:value="input" />
                               <String fx:value="common" />
@@ -134,7 +134,7 @@
                   </AnchorPane>
                   <AnchorPane maxHeight="40.0" minHeight="40.0" minWidth="0.0" prefHeight="40.0" prefWidth="275.0">
                      <children>
-                        <TextField fx:id="input_username" maxHeight="40.0" maxWidth="275.0" minHeight="40.0" minWidth="167.0" prefHeight="40.0" prefWidth="275.0" promptText="Enter your username">
+                        <TextField fx:id="usernameInput" maxHeight="40.0" maxWidth="275.0" minHeight="40.0" minWidth="167.0" prefHeight="40.0" prefWidth="275.0" promptText="Enter your username">
                            <styleClass>
                               <String fx:value="input" />
                               <String fx:value="common" />
