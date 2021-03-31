@@ -25,7 +25,7 @@ public class SessionManager {
         this.activeSession = null;
     }
 
-    public void register(String username, String email,String password, String password2) throws Exception {
+    public void register(String username, String email,String password) throws Exception {
 
         if(!Validation.validateUsername(username)) {
             throw new InvalidUsernameException();
@@ -36,10 +36,6 @@ public class SessionManager {
         }
 
         if(!Validation.validatePassword(password)) {
-            throw new InvalidPasswordException();
-        }
-
-        if(!password.equals(password2)) {
             throw new InvalidPasswordException();
         }
 
@@ -66,8 +62,6 @@ public class SessionManager {
         if(!Auth.comparePasswords(tmp.get().getPassword(),password)) {
             throw new Exception("Invalid username or password");
         }
-
-        System.out.println("Settings: "+tmp.get().getSettings());
 
         var session = new Session();
         session.setUserId(tmp.get().getId());
