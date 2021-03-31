@@ -17,6 +17,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.HashMap;
 import java.util.Properties;
 
 public class Main extends Application {
@@ -27,7 +28,8 @@ public class Main extends Application {
     SessionManager sessionManager = null;
     EntityManager entityManager = null;
 
-    LoginController loginController;
+  //  LoginController loginController;
+    Controller controller;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -57,24 +59,32 @@ public class Main extends Application {
         }
 
        // Parent root = FXMLLoader.load(Main.class.getResource("/views/MainView.fxml"));
-        Parent root = FXMLLoader.load(Main.class.getResource("/views/login/LoginView.fxml"));
+       // Parent root = FXMLLoader.load(Main.class.getResource("/views/login/LoginView.fxml"));
 
         Properties properties = new Properties();
         properties.load(Main.class.getResourceAsStream("/application.properties"));
 
-        primaryStage.setTitle("Crypto Trading Game");
-        primaryStage.setScene(new Scene(root, 400, 500));
-        primaryStage.setResizable(false);
+        //primaryStage.setTitle("Crypto Trading Game");
 
-        ((Label)primaryStage.getScene().lookup("#label_version")).setText("v"+properties.get("version").toString());
+        //primaryStage.setScene(new Scene(root, 400, 500));
+        //primaryStage.setResizable(false);
+
+     //   ((Label)primaryStage.getScene().lookup("#label_version")).setText("v"+properties.get("version").toString());
        /* primaryStage.setMinWidth(300);
         primaryStage.setMaxWidth(300);
         primaryStage.setMaxHeight(450);
         primaryStage.setMinHeight(450);*/
 
-        primaryStage.show();
+       // primaryStage.show();
 
-        loginController = new LoginController(primaryStage,sessionManager);
+        //HashMap<String ,Scene> scenes = new HashMap<>();
+        //scenes.put(root.getId)
+
+
+        controller = new Controller(primaryStage,sessionManager);
+        controller.setupScenes();
+        controller.registerControllers();
+       // loginController = new LoginController(primaryStage,sessionManager);
 
     }
 
