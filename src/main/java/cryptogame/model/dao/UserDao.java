@@ -46,9 +46,11 @@ public final class UserDao extends BaseDao<User, String> {
 
         var userSettings = new UserSettings();
         userSettings.setUserId(entity.getId());
+        userSettings.setUser(entity);
 
-        entity.setSettings(userSettings);
+        //entity.setSettings(userSettings);
 
         this.executeTransaction(entityManager -> entityManager.persist(entity));
+        this.executeTransaction(entityManager -> entityManager.persist(userSettings));
     }
 }
