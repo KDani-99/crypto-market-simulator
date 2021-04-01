@@ -28,7 +28,7 @@ public class SessionManager {
     public void register(String username, String email,String password) throws Exception {
 
         if(!Validation.validateUsername(username)) {
-            throw new InvalidUsernameException();
+            throw new InvalidUsernameException(4,50);
         }
 
         if(!Validation.validateEmail(email)) {
@@ -69,9 +69,6 @@ public class SessionManager {
         this.sessionDao.persistEntity(
                 session
         );
-
-        //this.activeSession = new Session(tmp.get());
-        // successful
     }
 
     public void logout() throws Exception {
@@ -80,5 +77,9 @@ public class SessionManager {
         }
 
         activeSession = null;
+    }
+
+    public Session getActiveSession() {
+        return this.activeSession;
     }
 }
