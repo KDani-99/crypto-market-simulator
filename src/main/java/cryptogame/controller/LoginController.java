@@ -1,5 +1,6 @@
 package cryptogame.controller;
 
+import cryptogame.model.exceptions.InvalidUsernameException;
 import cryptogame.model.session.SessionManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -37,9 +38,13 @@ public class LoginController extends BaseController {
         errorPane.setVisible(false);
     }
     @Override
-    protected void showError(Exception ex) {
-        errorLabel.setText(ex.getMessage());
+    protected void showError(String message,String alertMessage) {
+        errorLabel.setText(message);
         errorPane.setVisible(true);
+    }
+    @Override
+    protected void hideError() {
+        errorPane.setVisible(false);
     }
 
     private void setupUsernameInput() {
@@ -60,8 +65,8 @@ public class LoginController extends BaseController {
                     getSessionManager().login(username,password);
 
                 } catch (Exception ex) {
-                    errorLabel.setText(ex.getMessage());
-                    errorPane.setVisible(true);
+
+                    showError(ex.getMessage(),ex.getMessage());
                     System.out.println(ex.toString());
                 }
             }
@@ -72,11 +77,11 @@ public class LoginController extends BaseController {
             @Override
             public void handle(MouseEvent event) {
                 try {
+                    hideError();
                     getPrimaryStage().setScene(getController(RegistrationController.class).getScene());
                     getPrimaryStage().setResizable(false);
                 } catch (Exception ex) {
-                    errorLabel.setText(ex.getMessage());
-                    errorPane.setVisible(true);
+                    showError(ex.getMessage(),ex.getMessage());
                     System.out.println(ex.toString());
                 }
             }

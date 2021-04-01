@@ -47,9 +47,13 @@ public abstract class BaseController {
     }
 
     public void setVersionLabelText(String text) {
+        if(this.versionLabel == null) {
+            return;
+        }
         this.versionLabel.setText(text);
     }
 
     public abstract void initScene();
-    protected abstract void showError(Exception exception);
+    protected abstract void showError(String message,String alertMessage);
+    protected abstract void hideError();
 }
