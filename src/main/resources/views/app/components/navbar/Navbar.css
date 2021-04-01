@@ -1,0 +1,91 @@
+.navbar {
+    -fx-min-width: 100px;
+    -fx-pref-width: 250px;
+    -fx-max-width: 250px;
+    -fx-min-height: 400px;
+    -fx-pref-height: 500px;
+    -fx-background-color: rgb(34,34,40);
+    -fx-text-fill: white;
+}
+.navbar .info {
+    -fx-pref-height: 75px;
+    -fx-max-height: 75px;
+    -fx-padding: 15px 0px;
+    -fx-border-style: hidden hidden solid hidden;
+    -fx-border-width: 1;
+    -fx-border-color: rgba(255,255,255,0.5);
+    -fx-border-insets: 0px 15px 15px 15px;
+}
+.navbar .info .label {
+    -fx-text-fill: white;
+    -fx-font-family: 'Lato Bold';
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+.navbar .buttonContainer {
+    -fx-padding: 15px;
+}
+.navbar .buttonContainer .buttonBox {
+    -fx-pref-height: 40px;
+    -fx-end-margin: 10px;
+    -fx-start-margin: 10px;
+}
+.navbar .buttonContainer .button {
+    -fx-pref-height: 45px;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+    -fx-text-fill: rgb(175,175,175);
+    -fx-font-family: 'Lato Bold';
+    /*-fx-background-color: rgb(24,118,247);*/
+    -fx-background-color: transparent;
+    -fx-padding: 0px 15px 0px 45px;
+}
+.navbar .loggedInfo .label {
+    -fx-text-fill: rgb(175,175,175);
+    -fx-font-size: 10px;
+}
+.navbar .buttonContainer .selected SVGPath {
+    -fx-fill: white;
+}
+.navbar .buttonContainer .selected .label {
+    -fx-text-fill: rgb(60,60,60);
+}
+.navbar .outerLoggedInfo {
+    -fx-padding: 15px;
+}
+.navbar .loggedInfo {
+    -fx-min-height: 55px;
+    -fx-pref-height: 55px;
+    -fx-max-height: 55px;
+    -fx-padding: 10px 10px 10px 25px;
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+    -fx-background-color: rgba(255,255,255,0.05);
+}
+.navbar .loggedInfo .image{
+
+}
+.navbar .loggedInfo .balance {
+    -fx-font-family: 'Lato Bold';
+    -fx-font-weight: bold;
+}
+.navbar .loggedInfo .positiveBalance {
+    -fx-text-fill: #2ecc71;
+}
+.navbar .loggedInfo .negativeBalance {
+    -fx-text-fill: red;
+}
+.navbar .loggedInfo .user {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.navbar .buttonContainer .selected Button {
+    /*-fx-background-color: rgb(24,118,247);*/
+    -fx-background-color: linear-gradient(to right, rgba(255, 202, 40,1), rgba(255,167,38,1));
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.navbar .buttonBox:hover Button {
+    -fx-opacity: 0.75;
+    -fx-text-fill: linear-gradient(to right,#FFCA28,#FFA726);
+}
