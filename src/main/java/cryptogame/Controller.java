@@ -1,6 +1,7 @@
 package cryptogame;
 
 import cryptogame.controller.*;
+import cryptogame.controller.main.NavbarController;
 import cryptogame.model.session.SessionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +24,8 @@ public class Controller {
     private final Map<Class<? extends BaseController>, BaseController> controllers = new HashMap<>(){{
         put(RegistrationController.class,null);
         put(LoginController.class,null);
+       // put(NavbarController.class,null);
+        put(MainController.class,null);
     }};
 
     private LoginController loginController;
@@ -36,20 +39,27 @@ public class Controller {
         this.stage.setTitle("Crypto Trading Game");
     }
 
-    private void registerMain(Scene main) {
-        this.stage.setScene(main);
-        this.stage.setResizable(false);
-        this.stage.show();
-    }
-
     public void setupScenes() throws IOException {
 
         // DI context object to access model? as a parameter for loadController? idk
         loadController("/views/login/LoginView.fxml",400,500);
         loadController("/views/registration/RegistrationView.fxml",400,500);
 
-        this.registerMain(this.controllers.get(RegistrationController.class).getScene());
+        // @Test
+        //loadController("/views/app/components/navbar/Navbar.fxml",250,500);
+        loadController("/views/app/AppView.fxml",1024,700);
+        this.registerMain(this.controllers.get(MainController.class).getScene());
+        // @TestEnd
+
+       // this.registerMain(this.controllers.get(RegistrationController.class).getScene());
     }
+
+    private void registerMain(Scene main) {
+        this.stage.setScene(main);
+        //this.stage.setResizable(false);
+        this.stage.show();
+    }
+
 
     private void loadController(String path, int width, int height) throws IOException {
         var loader = new FXMLLoader(Main.class.getResource(path));
