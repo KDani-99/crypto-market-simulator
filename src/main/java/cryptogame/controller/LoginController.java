@@ -78,8 +78,8 @@ public class LoginController extends BaseController {
             public void handle(MouseEvent event) {
                 try {
                     hideError();
-                    getPrimaryStage().setScene(getController(RegistrationController.class).getScene());
-                    getPrimaryStage().setResizable(false);
+                    sceneManager.showScene(RegistrationController.class);
+
                 } catch (Exception ex) {
                     showError(ex.getMessage(),ex.getMessage());
                     System.out.println(ex.toString());
