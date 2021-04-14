@@ -3,19 +3,14 @@ package cryptogame.controller;
 import cryptogame.model.exceptions.InvalidEmailException;
 import cryptogame.model.exceptions.InvalidPasswordException;
 import cryptogame.model.exceptions.InvalidUsernameException;
-import cryptogame.model.session.SessionManager;
+import cryptogame.model.services.managers.ISceneManager;
+import cryptogame.model.services.managers.SceneManager;
+import cryptogame.model.services.session.ISession;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import javafx.event.EventHandler;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class RegistrationController extends BaseController {
 
@@ -28,6 +23,10 @@ public class RegistrationController extends BaseController {
 
     @FXML private Pane errorPane;
     @FXML private Label errorLabel;
+
+    public RegistrationController(ISession sessionManager, ISceneManager sceneManager) {
+        super(sessionManager,sceneManager,false,400,500);
+    }
 
     @Override
     public void initScene() {
