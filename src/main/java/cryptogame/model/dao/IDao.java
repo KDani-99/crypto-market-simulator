@@ -3,7 +3,7 @@ package cryptogame.model.dao;
 import java.util.List;
 import java.util.Optional;
 
-public interface IBaseDao<T,IdType> {
+public interface IDao<T,IdType> {
 
     Optional<T> getEntity(IdType id);
     Optional<T> getEntityBy(String field, Object value);
