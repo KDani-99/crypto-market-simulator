@@ -1,7 +1,11 @@
 package cryptogame.controller;
 
 import cryptogame.Main;
+import cryptogame.controller.main.HomeController;
 import cryptogame.controller.main.NavbarController;
+import cryptogame.model.services.managers.ISceneManager;
+import cryptogame.model.services.managers.SceneManager;
+import cryptogame.model.services.session.ISession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -14,6 +18,7 @@ import javafx.scene.layout.VBox;
 public class MainController extends BaseController {
 
     private NavbarController navbarController;
+    private HomeController homeController;
 
     @FXML private BorderPane mainComponent;
 
@@ -21,7 +26,12 @@ public class MainController extends BaseController {
 
     @Override
     public void initScene() {
+
+        this.sceneManager.getPrimaryStage()
+                .setMinHeight(450);
+
         this.setNavbar();
+        this.setHome();
     }
 
     private void setNavbar() {
