@@ -1,5 +1,6 @@
-package cryptogame.model.session;
+package cryptogame.model.services.session;
 
+import cryptogame.model.dao.IDao;
 import cryptogame.model.dao.SessionDao;
 import cryptogame.model.dao.UserDao;
 import cryptogame.model.database.jpa.entities.User;
@@ -14,12 +15,12 @@ import cryptogame.model.session.utils.Validation;
 
 public class SessionManager implements ISession {
 
-    private final UserDao userDao;
-    private final SessionDao sessionDao;
+    private final IDao<User,String> userDao;
+    private final IDao<Session,String> sessionDao;
 
     private Session activeSession;
 
-    public SessionManager(UserDao userDao,SessionDao sessionDao) {
+    public SessionManager(IDao<User,String> userDao,IDao<Session,String> sessionDao) {
         this.userDao = userDao;
         this.sessionDao = sessionDao;
         this.activeSession = null;
