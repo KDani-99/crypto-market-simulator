@@ -28,7 +28,7 @@ public class LoginController extends BaseController {
     @FXML private Pane errorPane;
     @FXML private Label errorLabel;
 
-    public LoginController() {}
+    public LoginController(ISession sessionManager, ISceneManager sceneManager) {super(sessionManager,sceneManager,false,400,500);}
 
     @Override
     public void initScene() {
