@@ -1,12 +1,10 @@
 package cryptogame.model.dao;
 
 import javax.persistence.EntityManager;
-import javax.transaction.Transaction;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public abstract class BaseDao<T,IdType> implements IBaseDao<T,IdType> {
+public abstract class BaseDao<T,IdType> implements IDao<T,IdType> {
 
     protected final EntityManager entityManager;
 
