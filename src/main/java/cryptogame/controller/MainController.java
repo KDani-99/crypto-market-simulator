@@ -17,6 +17,8 @@ public class MainController extends BaseController {
 
     @FXML private BorderPane mainComponent;
 
+    public MainController(ISession sessionManager, ISceneManager sceneManager) {super(sessionManager,sceneManager,true,1024,768);}
+
     @Override
     public void initScene() {
         this.setNavbar();
