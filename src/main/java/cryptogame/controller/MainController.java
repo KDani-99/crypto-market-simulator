@@ -39,6 +39,19 @@ public class MainController extends BaseController {
         }
     }
 
+    private void setHome() {
+        try {
+
+            var loader = new FXMLLoader(Main.class.getResource("/views/app/components/home/HomeView.fxml"));
+
+            mainComponent.setCenter(loader.load());
+            homeController = loader.getController();
+
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+    }
+
     @Override
     public void showError(String message, String alertMessage) {
 
