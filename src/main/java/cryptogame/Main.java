@@ -1,55 +1,46 @@
 package cryptogame;
 
-import cryptogame.controller.LoginController;
+import cryptogame.model.common.Initializable;
+import cryptogame.model.dao.IDao;
 import cryptogame.model.dao.SessionDao;
 import cryptogame.model.dao.UserDao;
-import cryptogame.model.session.SessionManager;
+import cryptogame.model.database.jpa.entities.Session;
+import cryptogame.model.database.json.entities.User;
+import cryptogame.model.services.IServices;
+import cryptogame.model.services.Services;
+import cryptogame.model.services.managers.ISceneManager;
+import cryptogame.model.services.managers.SceneManager;
+import cryptogame.model.services.session.ISession;
+import cryptogame.model.services.session.SessionManager;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.HashMap;
 import java.util.Properties;
 
 public class Main extends Application {
 
     private static final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("crypto_trading_game");
 
-    UserDao usersDao = null;
-    SessionDao sessionDao = null;
-    SessionManager sessionManager = null;
-    EntityManager entityManager = null;
-
-    Controller controller;
+    IServices services = null;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        entityManager = entityManagerFactory.createEntityManager();
-        usersDao = new UserDao(entityManager);
-        sessionDao = new SessionDao(entityManager);
+        services = new Services();
 
-        sessionManager = new SessionManager(usersDao,sessionDao);
+        services.addServiceInstance(Stage.class,primaryStage);
+        services.addServiceInstance(EntityManager.class,entityManagerFactory.createEntityManager());
 
-
-        Properties properties = new Properties();
-        properties.load(Main.class.getResourceAsStream("/application.properties"));
-
-
-        controller = new Controller(properties,primaryStage,sessionManager);
-        controller.setupScenes();
+        services.addService(IDao.class,UserDao.class);
+        services.addService(IDao.class,SessionDao.class);
+        services.addService(ISession.class,SessionManager.class);
+        services.addService(ISceneManager.class,SceneManager.class);
 
     }
-
     public static void main(String[] args) {
         launch(args);
     }
