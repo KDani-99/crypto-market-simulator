@@ -12,7 +12,7 @@ import cryptogame.model.session.utils.Auth;
 import cryptogame.model.session.utils.Validation;
 
 
-public class SessionManager {
+public class SessionManager implements ISession {
 
     private final UserDao userDao;
     private final SessionDao sessionDao;
