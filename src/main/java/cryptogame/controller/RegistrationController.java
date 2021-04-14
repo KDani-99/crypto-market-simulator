@@ -36,7 +36,7 @@ public class RegistrationController extends BaseController {
         this.errorPane.setVisible(false);
     }
     @Override
-    protected void showError(String message,String alertMessage) {
+    public void showError(String message,String alertMessage) {
 
         errorLabel.setText(message);
         errorPane.setVisible(true);
@@ -49,7 +49,7 @@ public class RegistrationController extends BaseController {
 
     }
     @Override
-    protected void hideError() {
+    public void hideError() {
         errorPane.setVisible(false);
     }
 
@@ -59,8 +59,11 @@ public class RegistrationController extends BaseController {
             public void handle(MouseEvent event) {
                 try {
                     hideError();
-                    getPrimaryStage().setScene(getController(LoginController.class).getScene());
-                    getPrimaryStage().setResizable(false);
+                    //getPrimaryStage().setScene(getController(LoginController.class).getScene());
+                   // getPrimaryStage().setResizable(false);
+
+                    sceneManager.showScene(LoginController.class);
+
                 } catch (Exception ex) {
                     showError(ex.getMessage(),ex.getMessage());
                     System.out.println(ex.toString());
