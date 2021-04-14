@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class NavbarController extends BaseController {
+public class NavbarController {
 
     @FXML public VBox vBox;
 
@@ -20,20 +20,4 @@ public class NavbarController extends BaseController {
     @FXML private Label loggedInUsernameLabel;
     @FXML private Label balanceLabel;
 
-    @Override
-    public void initScene() {
-
-        for(Node child : vBox.getChildren()) {
-            VBox.setVgrow(child, Priority.ALWAYS);
-        }
-    }
-
-    @Override
-    protected void showError(String message,String alertMessage) {
-
-    }
-    @Override
-    protected void hideError() {
-
-    }
 }
