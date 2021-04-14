@@ -38,12 +38,12 @@ public class MainController extends BaseController {
     }
 
     @Override
-    protected void showError(String message, String alertMessage) {
+    public void showError(String message, String alertMessage) {
 
     }
 
     @Override
-    protected void hideError() {
+    public void hideError() {
 
     }
 }
