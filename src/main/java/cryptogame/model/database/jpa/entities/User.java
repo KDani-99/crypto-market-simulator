@@ -1,9 +1,11 @@
 package cryptogame.model.database.jpa.entities;
 
-import org.w3c.dom.stylesheets.LinkStyle;
+import cryptogame.model.common.validation.EmailValidation;
+import cryptogame.model.common.validation.PasswordValidation;
+import cryptogame.model.common.validation.UsernameValidation;
+import cryptogame.model.common.validation.Validate;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity(name = "users")
@@ -13,8 +15,11 @@ public class User {
     @Id
     @Column(name = "id")
     private String id;
+    @Validate(validatorClass = UsernameValidation.class)
     private String username;
+    @Validate(validatorClass = EmailValidation.class)
     private String email;
+    @Validate(validatorClass = PasswordValidation.class)
     private String password;
 
     @OneToMany(mappedBy = "user")
