@@ -1,16 +1,13 @@
 package cryptogame.model.services.session;
 
+import cryptogame.model.common.validation.Validation;
 import cryptogame.model.dao.IDao;
-import cryptogame.model.dao.SessionDao;
-import cryptogame.model.dao.UserDao;
 import cryptogame.model.database.jpa.entities.User;
 import cryptogame.model.database.jpa.entities.Session;
-import cryptogame.model.database.jpa.entities.UserSettings;
-import cryptogame.model.exceptions.InvalidEmailException;
-import cryptogame.model.exceptions.InvalidPasswordException;
-import cryptogame.model.exceptions.InvalidUsernameException;
 import cryptogame.model.session.utils.Auth;
-import cryptogame.model.session.utils.Validation;
+
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class SessionManager implements ISession {
@@ -26,9 +23,10 @@ public class SessionManager implements ISession {
         this.activeSession = null;
     }
 
+
     public void register(String username, String email,String password) throws Exception {
 
-        if(!Validation.validateUsername(username)) {
+       /* if(!Validation.validateUsername(username)) {
             throw new InvalidUsernameException(4,50);
         }
 
@@ -38,8 +36,20 @@ public class SessionManager implements ISession {
 
         if(!Validation.validatePassword(password)) {
             throw new InvalidPasswordException();
+        }*/
+        var user = new User();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(password);
+
+        var validationResult = Validation.validateObject(user);
+
+        if(validationResult.size() > 0) {
+            // TODO: Throw exception
+            return;
         }
 
+        // TODO: Move this to controller
         if(this.userDao.getEntityBy("username",username).isPresent()) {
             throw new Exception("Username is already taken");
         }
@@ -48,7 +58,8 @@ public class SessionManager implements ISession {
             throw new Exception("Email is already taken");
         }
 
-        var user = new User(username,email,Auth.generatePasswordHash(password));
+        user.setPassword(Auth.generatePasswordHash(password));
+
         this.userDao.persistEntity(user);
     }
 
