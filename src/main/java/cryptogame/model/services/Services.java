@@ -65,4 +65,8 @@ public class Services implements IServices {
 
         return null;
     }
+    @Override
+    public Object getInterfaceImplementation(Class<?> classInterface) {
+        return serviceCollection.get(classInterface);
+    }
 }
