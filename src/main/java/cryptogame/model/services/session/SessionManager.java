@@ -1,14 +1,12 @@
 package cryptogame.model.services.session;
 
-import cryptogame.model.common.validation.Validation;
-import cryptogame.model.dao.IDao;
-import cryptogame.model.database.jpa.entities.User;
-import cryptogame.model.database.jpa.entities.Session;
-import cryptogame.model.session.utils.Auth;
-
-import java.util.HashSet;
-import java.util.Set;
-
+import cryptogame.common.validation.Validation;
+import cryptogame.common.validation.ValidationError;
+import cryptogame.dao.IDao;
+import cryptogame.entities.User;
+import cryptogame.entities.Session;
+import cryptogame.service.auth.AuthService;
+import cryptogame.service.exception.ValidationException;
 
 public class SessionManager implements ISession {
 
@@ -26,17 +24,6 @@ public class SessionManager implements ISession {
 
     public void register(String username, String email,String password) throws Exception {
 
-       /* if(!Validation.validateUsername(username)) {
-            throw new InvalidUsernameException(4,50);
-        }
-
-        if(!Validation.validateEmail(email)) {
-            throw new InvalidEmailException();
-        }
-
-        if(!Validation.validatePassword(password)) {
-            throw new InvalidPasswordException();
-        }*/
         var user = new User();
         user.setUsername(username);
         user.setEmail(email);
@@ -45,20 +32,21 @@ public class SessionManager implements ISession {
         var validationResult = Validation.validateObject(user);
 
         if(validationResult.size() > 0) {
-            // TODO: Throw exception
-            return;
+            throw new ValidationException(validationResult);
         }
 
         // TODO: Move this to controller
         if(this.userDao.getEntityBy("username",username).isPresent()) {
-            throw new Exception("Username is already taken");
+            validationResult.add(new ValidationError("username","Username is already in use"));
+            throw new ValidationException(validationResult);
         }
 
         if(this.userDao.getEntityBy("email",email).isPresent()) {
-            throw new Exception("Email is already taken");
+            validationResult.add(new ValidationError("email","Email address is already in use"));
+            throw new ValidationException(validationResult);
         }
 
-        user.setPassword(Auth.generatePasswordHash(password));
+        user.setPassword(AuthService.generatePasswordHash(password));
 
         this.userDao.persistEntity(user);
     }
@@ -71,7 +59,7 @@ public class SessionManager implements ISession {
             throw new Exception("Invalid username or password");
         }
 
-        if(!Auth.comparePasswords(tmp.get().getPassword(),password)) {
+        if(!AuthService.comparePasswords(tmp.get().getPassword(),password)) {
             throw new Exception("Invalid username or password");
         }
 
