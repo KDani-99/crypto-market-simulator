@@ -1,9 +1,9 @@
 package cryptogame.model.database.jpa.entities;
 
-import cryptogame.model.common.validation.EmailValidation;
-import cryptogame.model.common.validation.PasswordValidation;
-import cryptogame.model.common.validation.UsernameValidation;
-import cryptogame.model.common.validation.Validate;
+import cryptogame.common.validation.EmailValidation;
+import cryptogame.common.validation.PasswordValidation;
+import cryptogame.common.validation.UsernameValidation;
+import cryptogame.common.validation.Validate;
 
 import javax.persistence.*;
 import java.util.Set;

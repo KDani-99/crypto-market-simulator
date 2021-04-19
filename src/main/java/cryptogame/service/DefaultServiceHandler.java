@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Services implements IServices {
+public class DefaultServiceHandler implements ServiceHandler {
 
     private final HashMap<Class<?>,Object> serviceCollection;
 
-    public Services()
+    public DefaultServiceHandler()
     {
         serviceCollection = new HashMap<>();
-        this.addServiceInstance(IServices.class, this);
+        this.addServiceInstance(ServiceHandler.class, this);
     }
     @Override
     public void addServiceInstance(Class<?> classInterface, Object instance)

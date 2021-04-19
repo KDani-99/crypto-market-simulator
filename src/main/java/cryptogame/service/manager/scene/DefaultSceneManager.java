@@ -1,11 +1,11 @@
-package cryptogame.model.services.managers;
+package cryptogame.service.manager;
 
 import cryptogame.Main;
 import cryptogame.controller.IController;
 import cryptogame.controller.LoginController;
 import cryptogame.controller.MainController;
 import cryptogame.controller.RegistrationController;
-import cryptogame.model.services.IServices;
+import cryptogame.service.ServiceHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
@@ -13,14 +13,14 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.HashMap;
 
-public class SceneManager implements ISceneManager {
+public class DefaultSceneManager implements SceneManager {
 
     private final HashMap<Class<?>, URL> controllerCollection;
 
-    private final IServices services;
+    private final ServiceHandler services;
     private final Stage primaryStage;
 
-    public SceneManager(Stage primaryStage,IServices services) throws Exception{
+    public DefaultSceneManager(Stage primaryStage, ServiceHandler services) throws Exception{
         this.primaryStage = primaryStage;
         this.services = services;
 

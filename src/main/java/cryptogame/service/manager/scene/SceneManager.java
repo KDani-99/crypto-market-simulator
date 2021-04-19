@@ -1,10 +1,10 @@
-package cryptogame.model.services.managers;
+package cryptogame.service.manager;
 
 import cryptogame.controller.IController;
-import cryptogame.model.common.Initializable;
+import cryptogame.common.Initializable;
 import javafx.stage.Stage;
 
-public interface ISceneManager extends Initializable {
+public interface SceneManager extends Initializable {
     <T extends IController> void showScene(Class<T> controllerClass) throws Exception;
     Stage getPrimaryStage();
 }

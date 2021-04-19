@@ -1,4 +1,4 @@
-package cryptogame.model.session.utils;
+package cryptogame.service.auth;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
@@ -11,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
 
-public abstract class Auth {
+public abstract class AuthService {
 
     private static final int saltSize = 16;
 

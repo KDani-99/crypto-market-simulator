@@ -18,9 +18,6 @@ public abstract class BaseDao<T,IdType> implements IDao<T,IdType> {
     @Override
     public abstract Optional<T> getEntityBy(String field, Object value);
 
-    //@Override
-   // public abstract List<T> getEntities();
-
     @Override
     public void updateEntity(T entity) throws Exception {
         this.executeTransaction(entityManager -> entityManager.merge(entity));
