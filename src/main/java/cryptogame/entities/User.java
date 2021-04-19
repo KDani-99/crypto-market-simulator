@@ -1,4 +1,4 @@
-package cryptogame.model.database.jpa.entities;
+package cryptogame.entities;
 
 import cryptogame.common.validation.EmailValidation;
 import cryptogame.common.validation.PasswordValidation;

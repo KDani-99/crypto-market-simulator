@@ -1,6 +1,6 @@
-package cryptogame.model.services;
+package cryptogame.service;
 
-import cryptogame.model.common.Initializable;
+import cryptogame.common.Initializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

@@ -1,4 +1,4 @@
-package cryptogame.service.manager;
+package cryptogame.service.manager.scene;
 
 import cryptogame.Main;
 import cryptogame.controller.IController;

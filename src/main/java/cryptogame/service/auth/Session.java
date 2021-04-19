@@ -1,6 +1,6 @@
-package cryptogame.model.session.utils;
+package cryptogame.service.auth;
 
-import cryptogame.model.database.json.entities.User;
+import cryptogame.entities.User;
 
 import java.time.Instant;
 

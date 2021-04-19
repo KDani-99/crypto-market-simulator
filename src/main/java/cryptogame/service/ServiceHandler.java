@@ -1,4 +1,4 @@
-package cryptogame.model.services;
+package cryptogame.service;
 
 public interface ServiceHandler {
 

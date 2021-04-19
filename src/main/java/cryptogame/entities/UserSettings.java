@@ -1,4 +1,6 @@
-package cryptogame.model.database.jpa.entities;
+package cryptogame.entities;
+
+import cryptogame.entities.User;
 
 import javax.persistence.*;
 
