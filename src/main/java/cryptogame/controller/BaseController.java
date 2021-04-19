@@ -1,21 +1,11 @@
 package cryptogame.controller;
 
-import cryptogame.Main;
-import cryptogame.model.services.IServices;
-import cryptogame.model.services.managers.ISceneManager;
-import cryptogame.model.services.managers.SceneManager;
+import cryptogame.service.manager.scene.SceneManager;
 import cryptogame.model.services.session.ISession;
-import cryptogame.model.services.session.SessionManager;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.util.Map;
 
 public abstract class BaseController implements IController {
 
@@ -24,13 +14,13 @@ public abstract class BaseController implements IController {
     private final ISession sessionManager;
 
     //protected Map<Class<? extends BaseController>, BaseController> controllers;
-    protected final ISceneManager sceneManager;
+    protected final SceneManager sceneManager;
     protected Scene scene;
     protected final boolean isResizable;
     protected final int initialWidth;
     protected final int initialHeight;
 
-    protected BaseController(ISession sessionManager,ISceneManager scenemanager, boolean isResizable, int initialWidth,int initialHeight) {
+    protected BaseController(ISession sessionManager, SceneManager scenemanager, boolean isResizable, int initialWidth, int initialHeight) {
         this.sessionManager = sessionManager;
         this.sceneManager = scenemanager;
         this.isResizable = isResizable;
