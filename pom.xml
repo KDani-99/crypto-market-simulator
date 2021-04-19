@@ -9,6 +9,13 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+    <developers>
+        <developer>
+            <name>Daniel K</name>
+            <email>kdani98@mailbox.unideb.hu</email>
+        </developer>
+    </developers>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>15</maven.compiler.release>
