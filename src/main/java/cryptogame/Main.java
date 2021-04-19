@@ -1,36 +1,33 @@
 package cryptogame;
 
-import cryptogame.model.common.Initializable;
-import cryptogame.model.dao.IDao;
-import cryptogame.model.dao.SessionDao;
-import cryptogame.model.dao.UserDao;
-import cryptogame.model.database.jpa.entities.Session;
-import cryptogame.model.database.json.entities.User;
-import cryptogame.model.services.IServices;
-import cryptogame.model.services.Services;
-import cryptogame.model.services.managers.ISceneManager;
-import cryptogame.model.services.managers.SceneManager;
+import cryptogame.dao.IDao;
+import cryptogame.dao.SessionDao;
+import cryptogame.dao.UserDao;
+import cryptogame.service.manager.market.DefaultMarketManager;
+import cryptogame.service.manager.market.MarketManager;
+import cryptogame.service.manager.scene.SceneManager;
+import cryptogame.service.manager.scene.DefaultSceneManager;
 import cryptogame.model.services.session.ISession;
 import cryptogame.model.services.session.SessionManager;
+import cryptogame.service.DefaultServiceHandler;
+import cryptogame.service.ServiceHandler;
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.util.Properties;
 
 public class Main extends Application {
 
     private static final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("crypto_trading_game");
 
-    IServices services = null;
+    ServiceHandler services = null;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        services = new Services();
+        services = new DefaultServiceHandler();
 
         services.addServiceInstance(Stage.class,primaryStage);
         services.addServiceInstance(EntityManager.class,entityManagerFactory.createEntityManager());
@@ -38,7 +35,9 @@ public class Main extends Application {
         services.addService(IDao.class,UserDao.class);
         services.addService(IDao.class,SessionDao.class);
         services.addService(ISession.class,SessionManager.class);
-        services.addService(ISceneManager.class,SceneManager.class);
+        services.addService(SceneManager.class, DefaultSceneManager.class);
+
+        services.addService(MarketManager.class, DefaultMarketManager.class);
 
     }
     public static void main(String[] args) {
