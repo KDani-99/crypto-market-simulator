@@ -1,4 +1,4 @@
-package cryptogame.model.common.validation;
+package cryptogame.common.validation;
 
 public class EmailValidation implements IValidation<String> {
 
