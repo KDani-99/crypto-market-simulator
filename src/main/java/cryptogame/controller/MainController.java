@@ -3,17 +3,12 @@ package cryptogame.controller;
 import cryptogame.Main;
 import cryptogame.controller.main.HomeController;
 import cryptogame.controller.main.NavbarController;
-import cryptogame.model.services.managers.ISceneManager;
-import cryptogame.model.services.managers.SceneManager;
+import cryptogame.service.manager.scene.SceneManager;
 import cryptogame.model.services.session.ISession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 
 public class MainController extends BaseController {
 
@@ -22,7 +17,7 @@ public class MainController extends BaseController {
 
     @FXML private BorderPane mainComponent;
 
-    public MainController(ISession sessionManager, ISceneManager sceneManager) {super(sessionManager,sceneManager,true,1024,768);}
+    public MainController(ISession sessionManager, SceneManager sceneManager) {super(sessionManager,sceneManager,true,1024,768);}
 
     @Override
     public void initScene() {

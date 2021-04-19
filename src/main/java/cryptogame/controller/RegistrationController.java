@@ -1,11 +1,8 @@
 package cryptogame.controller;
 
-import cryptogame.model.exceptions.InvalidEmailException;
-import cryptogame.model.exceptions.InvalidPasswordException;
-import cryptogame.model.exceptions.InvalidUsernameException;
-import cryptogame.model.services.managers.ISceneManager;
-import cryptogame.model.services.managers.SceneManager;
+import cryptogame.service.manager.scene.SceneManager;
 import cryptogame.model.services.session.ISession;
+import cryptogame.service.exception.ValidationException;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -24,7 +21,7 @@ public class RegistrationController extends BaseController {
     @FXML private Pane errorPane;
     @FXML private Label errorLabel;
 
-    public RegistrationController(ISession sessionManager, ISceneManager sceneManager) {
+    public RegistrationController(ISession sessionManager, SceneManager sceneManager) {
         super(sessionManager,sceneManager,false,400,500);
     }
 
@@ -80,18 +77,20 @@ public class RegistrationController extends BaseController {
                     var email = emailInput.getText();
                     var password = passwordInput.getText();
 
-                    getSessionManager().register(username,email,password);
+                    getSessionManager().register(username, email, password);
+                } catch(ValidationException ex) {
+                    // TODO: 
                 } catch (Exception ex) {
 
                     String error = "";
 
-                    if(ex instanceof InvalidUsernameException) {
+                 /*   if(ex instanceof InvalidUsernameException) {
                         error = "Invalid username";
                     } else if(ex instanceof InvalidEmailException) {
                         error = "Invalid email";
                     } else if(ex instanceof InvalidPasswordException) {
                         error = "Invalid password";
-                    }
+                    }*/
 
                     showError(error,ex.getMessage());
                     System.out.println(ex.toString());

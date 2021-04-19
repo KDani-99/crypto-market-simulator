@@ -1,9 +1,8 @@
 package cryptogame.controller;
 
-import cryptogame.Main;
-import cryptogame.model.services.managers.ISceneManager;
-import cryptogame.model.services.managers.SceneManager;
+import cryptogame.service.manager.scene.SceneManager;
 import cryptogame.model.services.session.ISession;
+import cryptogame.service.exception.ValidationException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,7 +24,7 @@ public class LoginController extends BaseController {
     @FXML private Pane errorPane;
     @FXML private Label errorLabel;
 
-    public LoginController(ISession sessionManager, ISceneManager sceneManager) {super(sessionManager,sceneManager,false,400,500);}
+    public LoginController(ISession sessionManager, SceneManager sceneManager) {super(sessionManager,sceneManager,false,400,500);}
 
     @Override
     public void initScene() {
@@ -59,8 +58,10 @@ public class LoginController extends BaseController {
                     var username = usernameInput.getText();
                     var password = passwordInput.getText();
 
-                    getSessionManager().login(username,password);
+                    getSessionManager().login(username, password);
 
+                }  catch(ValidationException ex) {
+                    // TODO: mark invalid fields
                 } catch (Exception ex) {
 
                     showError(ex.getMessage(),ex.getMessage());
@@ -76,7 +77,8 @@ public class LoginController extends BaseController {
                 try {
                     hideError();
                     sceneManager.showScene(RegistrationController.class);
-
+                } catch(ValidationException ex) {
+                    // TODO: mark invalid fields
                 } catch (Exception ex) {
                     showError(ex.getMessage(),ex.getMessage());
                     System.out.println(ex.toString());
