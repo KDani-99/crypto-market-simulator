@@ -1,14 +1,14 @@
-package cryptogame.model.dao;
+package cryptogame.dao;
 
 import javax.persistence.EntityManager;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public abstract class BaseDao<T,IdType> implements IDao<T,IdType> {
+public abstract class Dao<T,IdType> implements IDao<T,IdType> {
 
     protected final EntityManager entityManager;
 
-    protected BaseDao(EntityManager entityManager) {
+    protected Dao(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
