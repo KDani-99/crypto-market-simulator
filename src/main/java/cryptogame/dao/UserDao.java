@@ -1,14 +1,13 @@
-package cryptogame.model.dao;
+package cryptogame.dao;
 
-import cryptogame.model.database.DatabaseService;
-import cryptogame.model.database.jpa.entities.User;
-import cryptogame.model.database.jpa.entities.UserSettings;
+import cryptogame.entities.User;
+import cryptogame.entities.UserSettings;
 
 import javax.persistence.EntityManager;
 import java.util.Optional;
 import java.util.UUID;
 
-public final class UserDao extends BaseDao<User, String> {
+public final class UserDao extends Dao<User, String> {
 
     public UserDao(EntityManager entityManager) {
         super(entityManager);

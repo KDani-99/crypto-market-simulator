@@ -1,12 +1,12 @@
-package cryptogame.model.dao;
+package cryptogame.dao;
 
 
-import cryptogame.model.database.jpa.entities.Session;
+import cryptogame.entities.Session;
 
 import javax.persistence.EntityManager;
 import java.util.Optional;
 
-public class SessionDao extends BaseDao<Session,String> {
+public class SessionDao extends Dao<Session,String> {
 
     public SessionDao(EntityManager entityManager) {
         super(entityManager);

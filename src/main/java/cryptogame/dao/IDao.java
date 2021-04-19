@@ -1,4 +1,4 @@
-package cryptogame.model.dao;
+package cryptogame.dao;
 
 import java.util.List;
 import java.util.Optional;
