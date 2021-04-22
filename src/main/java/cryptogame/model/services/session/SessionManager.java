@@ -3,8 +3,8 @@ package cryptogame.model.services.session;
 import cryptogame.common.validation.Validation;
 import cryptogame.common.validation.ValidationError;
 import cryptogame.dao.IDao;
-import cryptogame.entities.User;
-import cryptogame.entities.Session;
+import cryptogame.jpa.entities.User;
+import cryptogame.jpa.entities.Session;
 import cryptogame.service.auth.AuthService;
 import cryptogame.service.exception.ValidationException;
 

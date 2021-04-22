@@ -1,7 +1,7 @@
 package cryptogame.dao;
 
-import cryptogame.entities.User;
-import cryptogame.entities.UserSettings;
+import cryptogame.jpa.entities.User;
+import cryptogame.jpa.entities.UserSettings;
 
 import javax.persistence.EntityManager;
 import java.util.Optional;

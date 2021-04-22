@@ -1,7 +1,7 @@
 package cryptogame.dao;
 
 
-import cryptogame.entities.Session;
+import cryptogame.jpa.entities.Session;
 
 import javax.persistence.EntityManager;
 import java.util.Optional;

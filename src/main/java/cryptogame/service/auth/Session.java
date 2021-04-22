@@ -1,6 +1,6 @@
 package cryptogame.service.auth;
 
-import cryptogame.entities.User;
+import cryptogame.jpa.entities.User;
 
 import java.time.Instant;
 

@@ -1,6 +1,4 @@
-package cryptogame.entities;
-
-import cryptogame.entities.User;
+package cryptogame.jpa.entities;
 
 import javax.persistence.*;
 import java.time.Instant;
