@@ -32,7 +32,7 @@ public abstract class Dao<T,IdType> implements IDao<T,IdType> {
     public void deleteEntity(T entity) throws Exception {
         this.executeTransaction(entityManager -> entityManager.remove(entity));
     }
-
+    // @Transactional
     protected void executeTransaction(Consumer<EntityManager> consumer) {
         var transaction = this.entityManager.getTransaction();
         transaction.begin();
