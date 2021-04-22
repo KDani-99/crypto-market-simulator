@@ -1,6 +1,6 @@
 package cryptogame.service.manager.market;
 
-import cryptogame.entities.CryptoCurrency;
+import cryptogame.containers.CryptoCurrency;
 
 import java.io.IOException;
 import java.net.URI;
@@ -53,6 +53,7 @@ public class DefaultMarketManager implements MarketManager {
     public void refreshAssets() throws ExecutionException, InterruptedException, IOException {
 
         previousCurrencies.replaceAll((key, value) -> currencies.get(key));
+        currencies.clear();
 
         String ep = "assets";
         var request = buildHttpRequest(ep);
@@ -67,9 +68,9 @@ public class DefaultMarketManager implements MarketManager {
         var assets = mapper.readTree(result.body()).get("data");
         for(var currency : assets) {
             var tmp = mapper.treeToValue(currency,CryptoCurrency.class);
-            currencies.replace(tmp.getId(),tmp);
+            currencies.put(tmp.getId(),tmp);
         }
-
+        System.out.println("Length: " + currencies.size());
     }
 
 }
