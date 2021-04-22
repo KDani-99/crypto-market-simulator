@@ -28,6 +28,9 @@ public class User {
     @OneToOne(mappedBy = "user")
     private UserSettings settings;
 
+    @OneToMany(mappedBy = "user")
+    private Set<CryptoCurrency> wallet;
+
     public User() {}
 
     public User(String username, String email, String password) {
