@@ -39,6 +39,8 @@ public class Main extends Application {
 
         services.addService(MarketManager.class, DefaultMarketManager.class);
 
+        //entityManagerFactory.close();
+
     }
     public static void main(String[] args) {
         launch(args);
