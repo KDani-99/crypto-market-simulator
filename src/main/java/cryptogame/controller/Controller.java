@@ -1,12 +1,11 @@
 package cryptogame.controller;
 
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 import java.net.URL;
 
-public interface Controller extends ComponentController {
+public interface Controller {
     void initScene();
     void showError(String message,String alertMessage);
     void hideError();
