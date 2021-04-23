@@ -1,0 +1,26 @@
+.currencyPane {
+    -fx-background-color: rgba(255,255,255,0.05);
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+.currencyPane .label {
+    -fx-alignment: center;
+    -fx-text-fill: white;
+    -fx-max-height: 65px;
+    -fx-pref-height: 65px;
+    -fx-min-height: 65px;
+}
+.currencyPane .buyBtn {
+    -fx-pref-width: 35px;
+    -fx-pref-height: 35px;
+    -fx-border-radius: 50px;
+    -fx-background-radius: 50px;
+    -fx-background-color: transparent;
+    -fx-cursor: pointer;
+}
+.currencyPane .posChangePercent {
+    -fx-text-fill: #2ecc71;
+}
+.currencyPane .negChangePercent {
+    -fx-text-fill: red;
+}
