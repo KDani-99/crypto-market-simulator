@@ -1,7 +1,7 @@
 package cryptogame.service.manager.scene;
 
 import cryptogame.Main;
-import cryptogame.controller.IController;
+import cryptogame.controller.Controller;
 import cryptogame.controller.LoginController;
 import cryptogame.controller.MainController;
 import cryptogame.controller.RegistrationController;
@@ -44,11 +44,11 @@ public class DefaultSceneManager implements SceneManager {
         this.controllerCollection.put(RegistrationController.class,getResourceURL("/views/registration/RegistrationView.fxml"));
     }
 
-    private <T extends IController> IController loadController(Class<T> controller) throws Exception {
+    private <T extends Controller> Controller loadController(Class<T> controller) throws Exception {
         var resourceUrl = controllerCollection.get(controller);
 
         var loader = new FXMLLoader(resourceUrl);
-        var controllerInstance = (IController) services.injectDependencies(controller);
+        var controllerInstance = (Controller) services.injectDependencies(controller);
         loader.setController(controllerInstance);
 
         var view = (Parent)loader.load();
@@ -59,7 +59,7 @@ public class DefaultSceneManager implements SceneManager {
         return controllerInstance;
     }
 
-    public <T extends IController> void showScene(Class<T> controllerClass) throws Exception {
+    public <T extends Controller> void showScene(Class<T> controllerClass) throws Exception {
         var controllerInstance = loadController(controllerClass);
 
         primaryStage.setScene(controllerInstance.getScene());
