@@ -1,13 +1,17 @@
 package cryptogame.controller;
 
+import cryptogame.Main;
 import cryptogame.service.manager.scene.SceneManager;
 import cryptogame.model.services.session.ISession;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 
-public abstract class BaseController implements IController {
+import java.net.URL;
+
+public abstract class BaseController implements Controller {
 
     @FXML protected Label versionLabel;
 
@@ -19,10 +23,12 @@ public abstract class BaseController implements IController {
     protected final boolean isResizable;
     protected final int initialWidth;
     protected final int initialHeight;
+    protected final String resourceURL;
 
-    protected BaseController(ISession sessionManager, SceneManager scenemanager, boolean isResizable, int initialWidth, int initialHeight) {
+    protected BaseController(ISession sessionManager, SceneManager scenemanager,String url, boolean isResizable, int initialWidth, int initialHeight) {
         this.sessionManager = sessionManager;
         this.sceneManager = scenemanager;
+        this.resourceURL = url;
         this.isResizable = isResizable;
         this.initialWidth = initialWidth;
         this.initialHeight = initialHeight;
@@ -65,4 +71,8 @@ public abstract class BaseController implements IController {
     public abstract void showError(String message,String alertMessage);
     @Override
     public abstract void hideError();
+    @Override
+    public URL getResourceURL() {
+        return Main.class.getResource(this.resourceURL);
+    }
 }

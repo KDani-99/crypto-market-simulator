@@ -1,5 +1,6 @@
 package cryptogame.controller;
 
+import cryptogame.Main;
 import cryptogame.service.manager.scene.SceneManager;
 import cryptogame.model.services.session.ISession;
 import cryptogame.service.exception.ValidationException;
@@ -22,7 +23,9 @@ public class RegistrationController extends BaseController {
     @FXML private Label errorLabel;
 
     public RegistrationController(ISession sessionManager, SceneManager sceneManager) {
-        super(sessionManager,sceneManager,false,400,500);
+        super(sessionManager,sceneManager,
+                "/views/registration/RegistrationView.fxml"
+                ,false,400,500);
     }
 
     @Override

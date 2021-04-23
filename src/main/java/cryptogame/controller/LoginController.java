@@ -1,5 +1,6 @@
 package cryptogame.controller;
 
+import cryptogame.Main;
 import cryptogame.service.manager.scene.SceneManager;
 import cryptogame.model.services.session.ISession;
 import cryptogame.service.exception.ValidationException;
@@ -11,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.event.EventHandler;
+
+import java.net.URL;
 
 
 public class LoginController extends BaseController {
@@ -24,7 +27,7 @@ public class LoginController extends BaseController {
     @FXML private Pane errorPane;
     @FXML private Label errorLabel;
 
-    public LoginController(ISession sessionManager, SceneManager sceneManager) {super(sessionManager,sceneManager,false,400,500);}
+    public LoginController(ISession sessionManager, SceneManager sceneManager) {super(sessionManager,sceneManager, "/views/login/LoginView.fxml",false,400,500);}
 
     @Override
     public void initScene() {
@@ -41,6 +44,11 @@ public class LoginController extends BaseController {
     @Override
     public void hideError() {
         errorPane.setVisible(false);
+    }
+
+    @Override
+    public URL getResourceURL() {
+        return null;
     }
 
     private void setupUsernameInput() {
