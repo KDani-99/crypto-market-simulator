@@ -32,7 +32,7 @@ public class CurrencyComponent implements Initializable {
 
         this.rankLabel.setText("#"+currency.getRank());
 
-        this.nameLabel.setText(currency.getName());
+        this.nameLabel.setText(currency.getName() + "(" + "$"+ currency.getId() +")");
 
         this.priceLabel.setText("$"+currency.getPriceUsd());
 
