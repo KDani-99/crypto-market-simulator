@@ -6,5 +6,4 @@ import javafx.scene.chart.AreaChart;
 public class HomeController {
 
     @FXML public AreaChart<Double,Double>  areaChart;
-
 }
