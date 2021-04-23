@@ -1,15 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-        </content>
-      </ScrollPane>
-   </children>
-</VBox>
+<ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="main" stylesheets="@MarketView.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cryptogame.controller.main.market.MarketController">
+   <content>
+      <VBox fx:id="vBox" alignment="TOP_CENTER" prefHeight="0.0" prefWidth="460.0" spacing="5.0">
+         <children>
+            <HBox fx:id="hBox" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label prefHeight="50.0" prefWidth="323.0" text="Next refresh in: 10 minute(s)" textFill="WHITE" />
+                  <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="559.0" text="Showing: 100 currencies" textFill="WHITE" />
+               </children></HBox>
+            <GridPane maxHeight="65.0" minHeight="65.0" prefHeight="65.0" styleClass="header" VBox.vgrow="ALWAYS">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="65.0" valignment="CENTER" vgrow="ALWAYS" />
+              </rowConstraints>
+               <children>
+                  <Label alignment="CENTER" prefHeight="70.0" prefWidth="78.0" text="Rank" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Name" GridPane.columnIndex="1" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Price" GridPane.columnIndex="2" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="166.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Market Cap" GridPane.columnIndex="3" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="244.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Supply" GridPane.columnIndex="4" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="323.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Change (%)" GridPane.columnIndex="5" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="402.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Purchase" GridPane.columnIndex="6" />
+               </children>
+            </GridPane>
+         </children></VBox>
+   </content>
+   <padding>
+      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+   </padding>
+</ScrollPane>
