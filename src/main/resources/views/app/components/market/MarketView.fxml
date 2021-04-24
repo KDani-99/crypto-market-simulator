@@ -27,7 +27,7 @@
                 <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="65.0" valignment="CENTER" vgrow="ALWAYS" />
               </rowConstraints>
                <children>
-                  <Label alignment="CENTER" prefHeight="70.0" prefWidth="78.0" text="Rank" />
+                  <Label fx:id="rankHeaderLabel" alignment="CENTER" prefHeight="70.0" prefWidth="78.0" text="Rank △" />
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Name" GridPane.columnIndex="1" />
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Price" GridPane.columnIndex="2" />
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="166.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Market Cap" GridPane.columnIndex="3" />
