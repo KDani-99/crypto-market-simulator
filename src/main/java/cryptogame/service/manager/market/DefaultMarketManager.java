@@ -2,14 +2,15 @@ package cryptogame.service.manager.market;
 
 import cryptogame.containers.CryptoCurrency;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
+import java.util.Set;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DefaultMarketManager implements MarketManager {
@@ -24,7 +25,7 @@ public class DefaultMarketManager implements MarketManager {
 
     private long previousRefreshTimestamp = 0L;
 
-    public DefaultMarketManager() throws ExecutionException, InterruptedException, IOException {
+    public DefaultMarketManager() throws Exception {
         this.httpClient = buildHttpClient();
 
         // test
@@ -50,7 +51,8 @@ public class DefaultMarketManager implements MarketManager {
                 .build();
     }
 
-    public void refreshAssets() throws ExecutionException, InterruptedException, IOException {
+    @Override
+    public void refreshAssets() throws Exception {
 
         previousCurrencies.replaceAll((key, value) -> currencies.get(key));
         currencies.clear();
@@ -71,6 +73,10 @@ public class DefaultMarketManager implements MarketManager {
             currencies.put(tmp.getId(),tmp);
         }
         System.out.println("Length: " + currencies.size());
+    }
+    @Override
+    public Collection<CryptoCurrency> getCurrencies() {
+        return this.currencies.values();
     }
 
 }
