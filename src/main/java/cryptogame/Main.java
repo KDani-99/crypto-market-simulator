@@ -31,13 +31,12 @@ public class Main extends Application {
 
         services.addServiceInstance(Stage.class,primaryStage);
         services.addServiceInstance(EntityManager.class,entityManagerFactory.createEntityManager());
+        services.addService(MarketManager.class, DefaultMarketManager.class);
 
         services.addService(IDao.class,UserDao.class);
         services.addService(IDao.class,SessionDao.class);
         services.addService(ISession.class,SessionManager.class);
         services.addService(SceneManager.class, DefaultSceneManager.class);
-
-        services.addService(MarketManager.class, DefaultMarketManager.class);
 
         //entityManagerFactory.close();
 
