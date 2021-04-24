@@ -7,7 +7,10 @@
 <?import javafx.scene.shape.*?>
 
 <GridPane maxHeight="65.0" minHeight="65.0" prefHeight="65.0" styleClass="currencyPane" stylesheets="@CurrencyComponent.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cryptogame.controller.main.market.components.CurrencyComponent">
-<columnConstraints>
+    <properties>
+        <foo><fx:reference source="controller" /></foo>
+    </properties>
+    <columnConstraints>
     <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -21,7 +24,7 @@
 </rowConstraints>
 <children>
     <Label fx:id="rankLabel" contentDisplay="CENTER" prefWidth="560.0" styleClass="rank" text="#1" />
-    <Label fx:id="nameLabel" contentDisplay="CENTER" layoutX="10.0" layoutY="-7.0" prefWidth="560.0" styleClass="rank" text="Bitcoin" GridPane.columnIndex="1" />
+    <Label fx:id="nameLabel" contentDisplay="CENTER" layoutX="10.0" layoutY="-7.0" prefWidth="560.0" styleClass="rank" text="Bitcoin" wrapText="true" GridPane.columnIndex="1" />
     <Label fx:id="priceLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="-7.0" prefWidth="560.0" styleClass="rank" text="\$192381" textAlignment="CENTER" GridPane.columnIndex="2" />
     <Label fx:id="marketCapLabel" contentDisplay="CENTER" layoutX="166.0" layoutY="-7.0" prefWidth="560.0" styleClass="rank" text="2313B" GridPane.columnIndex="3" />
     <Label fx:id="supplyLabel" contentDisplay="CENTER" layoutX="244.0" layoutY="-7.0" prefWidth="560.0" styleClass="rank" text="19B" GridPane.columnIndex="4" />
