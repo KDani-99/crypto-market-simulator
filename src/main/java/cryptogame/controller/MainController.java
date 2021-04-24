@@ -4,6 +4,7 @@ import cryptogame.Main;
 import cryptogame.controller.main.HomeController;
 import cryptogame.controller.main.market.MarketController;
 import cryptogame.controller.main.NavbarController;
+import cryptogame.service.manager.market.MarketManager;
 import cryptogame.service.manager.scene.SceneManager;
 import cryptogame.model.services.session.ISession;
 import javafx.fxml.FXML;
@@ -17,11 +18,16 @@ public class MainController extends BaseController {
     private HomeController homeController;
     private MarketController marketController;
 
+    private final MarketManager marketManager;
+
     @FXML private BorderPane mainComponent;
 
     @FXML private HBox hBox;
 
-    public MainController(ISession sessionManager, SceneManager sceneManager) {super(sessionManager,sceneManager,"/views/app/AppView.fxml",true,1024,768);}
+    public MainController(ISession sessionManager, SceneManager sceneManager, MarketManager marketManager) {
+        super(sessionManager,sceneManager,"/views/app/AppView.fxml",true,1024,768);
+        this.marketManager = marketManager;
+    }
 
     @Override
     public void initScene() {
@@ -31,7 +37,7 @@ public class MainController extends BaseController {
 
         this.setNavbar();
       //  this.setHome();
-        this.setMarket(); // @test
+        this.setMarket(); // @test -> default
     }
 
     private void setNavbar() {
@@ -76,6 +82,7 @@ public class MainController extends BaseController {
 
             hBox.getChildren().add(n);
             marketController = loader.getController();
+            marketController.setMarketManager(this.marketManager);
 
             marketController.initialize();
 
