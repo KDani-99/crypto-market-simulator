@@ -6,15 +6,17 @@ import cryptogame.common.validation.UsernameValidation;
 import cryptogame.common.validation.Validate;
 
 import javax.persistence.*;
+import javax.swing.*;
 import java.util.Set;
 
-@Entity(name = "users")
-@Table(name = "users")
+@Entity//(name = "users")
+@Table//(name = "users")
 @lombok.Data
 public class User {
     @Id
+    @GeneratedValue
     @Column(name = "id")
-    private String id;
+    private Long id;
     @Validate(validatorClass = UsernameValidation.class)
     private String username;
     @Validate(validatorClass = EmailValidation.class)
