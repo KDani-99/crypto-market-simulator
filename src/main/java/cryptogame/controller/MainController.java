@@ -45,12 +45,10 @@ public class MainController extends BaseController {
 
             var loader = new FXMLLoader(Main.class.getResource("/views/app/components/navbar/Navbar.fxml"));
             hBox.getChildren().add(loader.load());
-           // mainComponent.setLeft(loader.load());
+
             navbarController = loader.getController();
 
             navbarController.vBox.setMaxHeight(Double.MAX_VALUE);
-
-
 
         } catch (Exception ex) {
             System.out.println(ex.toString());
@@ -63,10 +61,7 @@ public class MainController extends BaseController {
             var loader = new FXMLLoader(Main.class.getResource("/views/app/components/home/HomeView.fxml"));
             hBox.getChildren().add(loader.load());
 
-           // mainComponent.setCenter(loader.load());
             homeController = loader.getController();
-
-           // splitPane.
 
         } catch (Exception ex) {
             System.out.println(ex.toString());
@@ -78,14 +73,13 @@ public class MainController extends BaseController {
 
             var loader = new FXMLLoader(Main.class.getResource("/views/app/components/market/MarketView.fxml"));
             Node n = loader.load();
-            n.prefWidth(Double.MAX_VALUE);
+           // n.prefWidth(Double.MAX_VALUE);
 
             hBox.getChildren().add(n);
             marketController = loader.getController();
             marketController.setMarketManager(this.marketManager);
 
             marketController.initialize();
-
 
         } catch (Exception ex) {
             System.out.println(ex.toString());
