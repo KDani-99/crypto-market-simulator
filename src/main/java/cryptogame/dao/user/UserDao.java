@@ -7,15 +7,15 @@ import javax.persistence.EntityManager;
 import java.util.Optional;
 import java.util.UUID;
 
-public final class UserDao extends Dao<User, String> {
+public final class UserDao extends Dao<User> {
 
     public UserDao(EntityManager entityManager) {
         super(entityManager);
     }
 
-    private String generateUID() {
+   /* private String generateUID() {
         return UUID.randomUUID().toString();
-    }
+    }*/
 
     @Override
     public Optional<User> getEntity(String id) {
