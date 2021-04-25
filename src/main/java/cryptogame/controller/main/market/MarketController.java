@@ -3,6 +3,7 @@ package cryptogame.controller.main.market;
 import cryptogame.Main;
 import cryptogame.common.Initializable;
 import cryptogame.containers.CryptoCurrency;
+import cryptogame.controller.dialog.PurchaseDialogController;
 import cryptogame.controller.main.market.components.CurrencyComponent;
 import cryptogame.service.exception.ValidationException;
 import cryptogame.service.manager.market.MarketManager;
@@ -10,13 +11,18 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -36,11 +42,16 @@ public class MarketController implements Initializable {
     private Label rankHeaderLabel;
 
     private boolean sorted = true;
+
     private MarketManager marketManager;
+    private Stage primaryStage;
+
+    private Stage activePurchaseDialog = null;
 
     public void setMarketManager(MarketManager marketManager) {
         this.marketManager = marketManager;
     }
+    public void setPrimaryStage(Stage primaryStage) {this.primaryStage = primaryStage;}
 
     @Override
     public void initialize() {
@@ -108,6 +119,32 @@ public class MarketController implements Initializable {
 
         this.vBox.getChildren().clear();
         this.vBox.getChildren().addAll(sortedList);
+    }
+
+    private void disposeActivePurchaseDialog() {
+        if(activePurchaseDialog != null) {
+            activePurchaseDialog.close();
+            activePurchaseDialog = null;
+        }
+    }
+
+    private void createPurchaseDialog() throws Exception {
+
+        disposeActivePurchaseDialog();
+
+        var loader = new FXMLLoader(Main.class.getResource("/views/dialog/purchase/PurchaseDialogView.fxml"));
+
+        activePurchaseDialog = new Stage();
+        activePurchaseDialog.initModality(Modality.APPLICATION_MODAL);
+        activePurchaseDialog.initOwner(primaryStage);
+
+        Scene scene = new Scene(loader.load(), 250, 135);
+        activePurchaseDialog.setResizable(false);
+        activePurchaseDialog.setScene(scene);
+        activePurchaseDialog.show();
+
+        PurchaseDialogController purchaseDialogController = loader.getController(); // -> place it to currency component
+        purchaseDialogController.setCurrencyContainer("Bitcoin",591231.23);
     }
 
     private void loadMarket() {
