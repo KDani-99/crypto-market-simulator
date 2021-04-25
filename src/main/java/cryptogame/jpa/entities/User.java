@@ -30,6 +30,7 @@ public class User {
     @OneToOne(mappedBy = "user")
     private UserSettings settings;
 
+    private double balance;
     @OneToMany(mappedBy = "user")
     private Set<CryptoCurrency> wallet;
 
