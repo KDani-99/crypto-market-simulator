@@ -31,8 +31,15 @@ public class User {
     private UserSettings settings;
 
     private double balance;
+
     @OneToMany(mappedBy = "user")
     private Set<CryptoCurrency> wallet;
+
+    @OneToMany(mappedBy = "user")
+    private Set<ActionHistory> purchaseHistory;
+
+    @OneToMany(mappedBy = "user")
+    private Set<ActionHistory> sellHistory;
 
     public User() {}
 
