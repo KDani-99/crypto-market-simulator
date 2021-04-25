@@ -1,8 +1,7 @@
 package cryptogame;
 
 import cryptogame.dao.IDao;
-import cryptogame.dao.SessionDao;
-import cryptogame.dao.UserDao;
+import cryptogame.dao.user.UserDao;
 import cryptogame.service.manager.market.DefaultMarketManager;
 import cryptogame.service.manager.market.MarketManager;
 import cryptogame.service.manager.scene.SceneManager;
@@ -24,8 +23,12 @@ public class Main extends Application {
 
     ServiceHandler services = null;
 
+    public static Stage temp;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
+
+        temp = primaryStage;
 
         services = new DefaultServiceHandler();
 
