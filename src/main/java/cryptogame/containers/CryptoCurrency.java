@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 @lombok.Data
-public class CryptoCurrency implements Comparable {
+public class CryptoCurrency implements CurrencyContainer,Comparable {
     private String id;
     private int rank;
     private String symbol;
