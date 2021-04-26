@@ -1,4 +1,4 @@
-package cryptogame.service.exception;
+package cryptogame.services.exception;
 
 import cryptogame.common.validation.ValidationError;
 
