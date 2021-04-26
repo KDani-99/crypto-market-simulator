@@ -5,6 +5,6 @@ import cryptogame.controllers.Controller;
 import javafx.stage.Stage;
 
 public interface SceneManager extends Initializable {
-    <T extends Controller> void showScene(Class<T> controllerClass) throws Exception;
+    <T extends WindowController> void showScene(Class<T> controllerClass) throws Exception; // deprecated
     Stage getPrimaryStage();
 }
