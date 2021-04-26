@@ -28,12 +28,14 @@ public class PurchaseDialogController implements Controller {
     @FXML private TextField amountTextField;
     @FXML private Button purchaseButton;
 
-    //private UserDao userDao;
-
-    // @Autowired
-    private Service serviceHandler;
+    private final Service serviceHandler;
 
     private CurrencyContainer currency;
+
+    @Autowired
+    public PurchaseDialogController(Service serviceHandler) {
+        this.serviceHandler = serviceHandler;
+    }
 
     @Override
     public void initialize() {
