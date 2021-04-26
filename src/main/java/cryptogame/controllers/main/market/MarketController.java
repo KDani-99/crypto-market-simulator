@@ -42,20 +42,24 @@ public class MarketController implements Initializable, Controller {
 
     private boolean sorted = true;
 
-    private MarketManager marketManager;
-    private Stage primaryStage;
+    private Service serviceHandler;
 
     private Stage activePurchaseDialog = null;
+    private boolean initialized = false;
 
-    public void setMarketManager(MarketManager marketManager) {
-        this.marketManager = marketManager;
+    @Autowired
+    public MarketController(Service serviceHandler) {
+        this.serviceHandler = serviceHandler;
     }
-    public void setPrimaryStage(Stage primaryStage) {this.primaryStage = primaryStage;}
+    //public void setMarketManager(MarketManager marketManager) {
+       // this.marketManager = marketManager;
+    //}
+   /* public void setPrimaryStage(Stage primaryStage) {this.primaryStage = primaryStage;}*/
 
     @Override
     public void initialize() {
 
-        if(this.marketManager == null) return; // TODO: Fix init call
+        if(initialized) return; // TODO: Fix init call
 
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
@@ -80,6 +84,8 @@ public class MarketController implements Initializable, Controller {
         });
 
         this.loadMarket();
+
+        initialized = true;
     }
 
     private void changeRankHeaderOrderIndicator() {
@@ -135,24 +141,24 @@ public class MarketController implements Initializable, Controller {
 
         activePurchaseDialog = new Stage();
         activePurchaseDialog.initModality(Modality.APPLICATION_MODAL);
-        activePurchaseDialog.initOwner(primaryStage);
+        activePurchaseDialog.initOwner(serviceHandler.getSceneManager().getPrimaryStage());
 
         Scene scene = new Scene(loader.load(), 250, 135);
         activePurchaseDialog.setResizable(false);
         activePurchaseDialog.setScene(scene);
         activePurchaseDialog.show();
 
-        PurchaseDialogController purchaseDialogController = loader.getController(); // -> place it to currency component
-        purchaseDialogController.setCurrencyContainer("Bitcoin",591231.23);
+        PurchaseDialogController purchaseDialogController = loader.getController(); // -> place it into currency component
+        //purchaseDialogController.setCurrencyContainer("Bitcoin",591231.23);
     }
 
     private void loadMarket() {
         try {
             var currencies = sorted
                     ?
-                    marketManager.getCurrencies().stream().sorted().collect(Collectors.toList())
+                    serviceHandler.getMarketManager().getCurrencies().stream().sorted().collect(Collectors.toList())
                     :
-                    marketManager.getCurrencies().stream().sorted(Comparator.comparingInt(CryptoCurrency::getRank).reversed()).collect(Collectors.toList());
+                    serviceHandler.getMarketManager().getCurrencies().stream().sorted(Comparator.comparingInt(CryptoCurrency::getRank).reversed()).collect(Collectors.toList());
 
             for(var currency : currencies) {
                 var loader = new FXMLLoader(Main.class.getResource("/views/app/components/market/components/CurrencyComponent.fxml"));
@@ -168,5 +174,10 @@ public class MarketController implements Initializable, Controller {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    @Override
+    public Node getRoot() {
+        return this.scrollPane;
     }
 }
