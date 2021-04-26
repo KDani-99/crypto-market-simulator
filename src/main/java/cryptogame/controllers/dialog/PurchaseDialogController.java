@@ -104,4 +104,14 @@ public class PurchaseDialogController implements Controller {
         this.currency = currency;
         this.setCryptoDetails(currency.getName(), currency.getPriceUsd());
     }
+
+    @Override
+    public Node getRoot() {
+        return null;
+    }
+
+    @Override
+    public boolean isResizable() {
+        return false;
+    }
 }
