@@ -1,11 +1,11 @@
-package cryptogame.controller.dialog;
+package cryptogame.controllers.dialog;
 
 import cryptogame.common.Initializable;
 import cryptogame.containers.CurrencyContainer;
 import cryptogame.dao.user.UserDao;
 import cryptogame.exception.EntityDoesNotExistException;
-import cryptogame.jpa.entities.User;
-import cryptogame.service.exception.ValidationException;
+import cryptogame.models.UserModel;
+import cryptogame.services.Service;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -21,7 +21,11 @@ public class PurchaseDialogController implements Initializable {
     @FXML private TextField amountTextField;
     @FXML private Button purchaseButton;
 
-    private UserDao userDao;
+    //private UserDao userDao;
+
+    // @Autowired
+    private Service serviceHandler;
+
     private CurrencyContainer currency;
 
     @Override
@@ -43,16 +47,17 @@ public class PurchaseDialogController implements Initializable {
                     }
 
                     // Get user object
-                    var user = userDao.getEntity(); // get id from session
+                    var userId = serviceHandler.getSession().getActiveUserId();
+                    var user = serviceHandler.getUserDao().getEntity(userId); // get id from session
                     if(user.isEmpty()) {
-                        throw new EntityDoesNotExistException(User.class);
+                        throw new EntityDoesNotExistException(UserModel.class);
                     }
 
                     // Purchase the given currency
-                    userDao.purchaseCurrency(user.get(),amount,currency);
+                    serviceHandler.getUserDao().purchaseCurrency(user.get(),amount,currency);
 
                 } catch (Exception ex) {
-                    // TODO: log error ! -<> user factory
+                    // TODO: log error !
                     //showError(ex.getMessage(),ex.getMessage());
                     System.out.println(ex.toString());
                 }
@@ -84,10 +89,6 @@ public class PurchaseDialogController implements Initializable {
         headerLabel.setText(
                 String.format("Purchase %s @ $%.2f",name,price)
         );
-    }
-
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
     }
 
     public void setCurrencyContainer(CurrencyContainer currency) {
