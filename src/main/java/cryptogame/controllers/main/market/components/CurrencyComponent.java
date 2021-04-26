@@ -3,11 +3,22 @@ package cryptogame.controllers.main.market.components;
 import cryptogame.common.Initializable;
 import cryptogame.containers.CryptoCurrency;
 import cryptogame.controllers.Controller;
+import cryptogame.controllers.dialog.PurchaseDialogController;
+import cryptogame.services.Service;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
+@Component
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class CurrencyComponent implements Initializable, Controller {
 
     private CryptoCurrency currency;
