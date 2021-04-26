@@ -32,4 +32,9 @@ public class NavbarController implements Controller {
         return this.vBox;
     }
 
+    @Override
+    public boolean isResizable() {
+        return false;
+    }
+
 }
