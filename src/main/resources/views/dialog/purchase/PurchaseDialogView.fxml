@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="TOP_CENTER" maxHeight="135.0" maxWidth="250.0" minHeight="135.0" minWidth="250.0" prefHeight="135.0" prefWidth="250.0" spacing="15.0" styleClass="main" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cryptogame.controllers.dialog.PurchaseDialogController">
+<VBox alignment="TOP_CENTER" maxHeight="135.0" maxWidth="250.0" minHeight="135.0" minWidth="250.0" prefHeight="135.0" prefWidth="250.0" spacing="15.0" styleClass="main" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="headerLabel" alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="250.0" text="Purchase $NAME @ $PRICE" textFill="WHITE" />
       <TextField fx:id="amountTextField" alignment="CENTER" promptText="Enter amount" styleClass="input" />
