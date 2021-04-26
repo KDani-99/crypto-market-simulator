@@ -6,7 +6,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.shape.*?>
 
-<GridPane maxHeight="65.0" minHeight="65.0" prefHeight="65.0" styleClass="currencyPane" stylesheets="@CurrencyComponent.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cryptogame.controller.main.market.components.CurrencyComponent">
+<GridPane maxHeight="65.0" minHeight="65.0" prefHeight="65.0" styleClass="currencyPane" stylesheets="@CurrencyComponent.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cryptogame.controllers.main.market.components.CurrencyComponent">
     <properties>
         <foo><fx:reference source="controller" /></foo>
     </properties>
