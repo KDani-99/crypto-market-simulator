@@ -180,4 +180,9 @@ public class MarketController implements Initializable, Controller {
     public Node getRoot() {
         return this.scrollPane;
     }
+
+    @Override
+    public boolean isResizable() {
+        return false;
+    }
 }
