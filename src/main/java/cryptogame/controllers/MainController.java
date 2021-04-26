@@ -1,42 +1,50 @@
-package cryptogame.controller;
+package cryptogame.controllers;
 
 import cryptogame.Main;
-import cryptogame.controller.main.HomeController;
-import cryptogame.controller.main.market.MarketController;
-import cryptogame.controller.main.NavbarController;
-import cryptogame.service.manager.market.MarketManager;
-import cryptogame.service.manager.scene.SceneManager;
+import cryptogame.controllers.main.HomeController;
+import cryptogame.controllers.main.market.MarketController;
+import cryptogame.controllers.main.NavbarController;
+import cryptogame.services.Service;
+import cryptogame.services.manager.market.MarketManager;
+import cryptogame.services.manager.scene.SceneManager;
 import cryptogame.model.services.session.ISession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MainController extends BaseController {
 
     private NavbarController navbarController;
     private HomeController homeController;
     private MarketController marketController;
 
-    private final MarketManager marketManager;
-
     @FXML private BorderPane mainComponent;
 
     @FXML private HBox hBox;
 
-    public MainController(ISession sessionManager, SceneManager sceneManager, MarketManager marketManager) {
-        super(sessionManager,sceneManager,"/views/app/AppView.fxml",true,1024,768);
-        this.marketManager = marketManager;
+    private final Service serviceHandler;
+
+    @Autowired
+    public MainController(Service serviceHandler) {
+
+        super(true,1024,768);
+        this.serviceHandler = serviceHandler;
+
     }
 
     @Override
     public void initScene() {
 
-        this.sceneManager.getPrimaryStage()
+        this.serviceHandler.getSceneManager()
+                .getPrimaryStage()
                 .setMinHeight(450);
 
         this.setNavbar();
-      //  this.setHome();
+
         this.setMarket(); // @test -> default
     }
 
@@ -71,18 +79,14 @@ public class MainController extends BaseController {
     private void setMarket() {
         try {
 
-            var loader = new FXMLLoader(Main.class.getResource("/views/app/components/market/MarketView.fxml"));
-            Node n = loader.load();
-           // n.prefWidth(Double.MAX_VALUE);
+            var marketController = serviceHandler.getSceneManager().getMarketComponentController();
 
-            hBox.getChildren().add(n);
-            marketController = loader.getController();
-            marketController.setMarketManager(this.marketManager);
-
+            hBox.getChildren().add(marketController.getRoot());
             marketController.initialize();
 
+
         } catch (Exception ex) {
-            System.out.println(ex.toString());
+            System.out.println("Errror => "+ex.getMessage());
         }
     }
 
@@ -93,6 +97,11 @@ public class MainController extends BaseController {
 
     @Override
     public void hideError() {
+
+    }
+
+    @Override
+    public void initialize() throws Exception {
 
     }
 }

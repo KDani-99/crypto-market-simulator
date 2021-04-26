@@ -1,15 +1,19 @@
-package cryptogame.controller;
+package cryptogame.controllers;
 
-import cryptogame.Main;
-import cryptogame.service.manager.scene.SceneManager;
+import cryptogame.services.Service;
+import cryptogame.services.manager.scene.SceneManager;
 import cryptogame.model.services.session.ISession;
-import cryptogame.service.exception.ValidationException;
+import cryptogame.services.exception.ValidationException;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.event.EventHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RegistrationController extends BaseController {
 
     @FXML private TextField usernameInput;
@@ -22,10 +26,13 @@ public class RegistrationController extends BaseController {
     @FXML private Pane errorPane;
     @FXML private Label errorLabel;
 
-    public RegistrationController(ISession sessionManager, SceneManager sceneManager) {
-        super(sessionManager,sceneManager,
-                "/views/registration/RegistrationView.fxml"
-                ,false,400,500);
+    private final Service serviceHandler;
+
+    @Autowired
+    public RegistrationController(Service serviceHandler) {
+        super(
+                false,400,500);
+        this.serviceHandler = serviceHandler;
     }
 
     @Override
@@ -61,7 +68,7 @@ public class RegistrationController extends BaseController {
                     //getPrimaryStage().setScene(getController(LoginController.class).getScene());
                    // getPrimaryStage().setResizable(false);
 
-                    sceneManager.showScene(LoginController.class);
+                    serviceHandler.getSceneManager().showScene(LoginController.class);
 
                 } catch (Exception ex) {
                     showError(ex.getMessage(),ex.getMessage());
@@ -80,10 +87,10 @@ public class RegistrationController extends BaseController {
                     var email = emailInput.getText();
                     var password = passwordInput.getText();
 
-                    getSessionManager().register(username, email, password);
-                } catch(ValidationException ex) {
+                   // getSessionManager().register(username, email, password);
+                } /*catch(ValidationException ex) {
                     // TODO: 
-                } catch (Exception ex) {
+                }*/ catch (Exception ex) {
 
                     String error = "";
 
@@ -100,5 +107,9 @@ public class RegistrationController extends BaseController {
                 }
             }
         });
+    }
+    @Override
+    public void initialize() throws Exception {
+
     }
 }

@@ -1,10 +1,11 @@
-package cryptogame.controller;
+package cryptogame.controllers;
 
-import cryptogame.Main;
-import cryptogame.service.manager.scene.SceneManager;
+import cryptogame.services.Service;
+import cryptogame.services.manager.scene.SceneManager;
 import cryptogame.model.services.session.ISession;
-import cryptogame.service.exception.ValidationException;
+import cryptogame.services.exception.ValidationException;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -12,10 +13,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.event.EventHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.net.URL;
 
-
+@Component
 public class LoginController extends BaseController {
 
     @FXML private TextField usernameInput;
@@ -27,7 +30,13 @@ public class LoginController extends BaseController {
     @FXML private Pane errorPane;
     @FXML private Label errorLabel;
 
-    public LoginController(ISession sessionManager, SceneManager sceneManager) {super(sessionManager,sceneManager, "/views/login/LoginView.fxml",false,400,500);}
+    private final Service serviceHandler;
+
+    @Autowired
+    public LoginController(Service serviceHandler) {
+        super( false,400,500);
+        this.serviceHandler = serviceHandler;
+    }
 
     @Override
     public void initScene() {
@@ -46,11 +55,6 @@ public class LoginController extends BaseController {
         errorPane.setVisible(false);
     }
 
-    @Override
-    public URL getResourceURL() {
-        return null;
-    }
-
     private void setupUsernameInput() {
 
     }
@@ -66,11 +70,11 @@ public class LoginController extends BaseController {
                     var username = usernameInput.getText();
                     var password = passwordInput.getText();
 
-                    getSessionManager().login(username, password);
+                    //getSessionManager().login(username, password);
 
-                }  catch(ValidationException ex) {
+                } /* catch(ValidationException ex) {
                     // TODO: mark invalid fields
-                } catch (Exception ex) {
+                } */catch (Exception ex) {
 
                     showError(ex.getMessage(),ex.getMessage());
                     System.out.println(ex.toString());
@@ -84,14 +88,19 @@ public class LoginController extends BaseController {
             public void handle(MouseEvent event) {
                 try {
                     hideError();
-                    sceneManager.showScene(RegistrationController.class);
-                } catch(ValidationException ex) {
+                   // sceneManager.showScene(RegistrationController.class);
+                } /*catch(ValidationException ex) {
                     // TODO: mark invalid fields
-                } catch (Exception ex) {
+                } */catch (Exception ex) {
                     showError(ex.getMessage(),ex.getMessage());
                     System.out.println(ex.toString());
                 }
             }
         });
+    }
+
+    @Override
+    public void initialize() throws Exception {
+
     }
 }
