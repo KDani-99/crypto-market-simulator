@@ -1,19 +1,15 @@
 package cryptogame;
 
-import cryptogame.dao.IDao;
-import cryptogame.dao.user.UserDao;
-import cryptogame.service.manager.market.DefaultMarketManager;
-import cryptogame.service.manager.market.MarketManager;
-import cryptogame.service.manager.scene.SceneManager;
-import cryptogame.service.manager.scene.DefaultSceneManager;
-import cryptogame.model.services.session.ISession;
-import cryptogame.model.services.session.SessionManager;
-import cryptogame.service.DefaultServiceHandler;
-import cryptogame.service.ServiceHandler;
+import cryptogame.controllers.MainController;
+import cryptogame.controllers.RegistrationController;
+import cryptogame.services.manager.scene.SceneManager;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.stage.Stage;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -21,27 +17,44 @@ public class Main extends Application {
 
     private static final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("crypto_trading_game");
 
-    ServiceHandler services = null;
-
-    public static Stage temp;
+    public static Stage primaryStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        temp = primaryStage;
+        Main.primaryStage = primaryStage;
 
-        services = new DefaultServiceHandler();
+       /* services = new DefaultServiceHandler();
 
         services.addServiceInstance(Stage.class,primaryStage);
         services.addServiceInstance(EntityManager.class,entityManagerFactory.createEntityManager());
         services.addService(MarketManager.class, DefaultMarketManager.class);
 
-        services.addService(IDao.class,UserDao.class);
-        services.addService(IDao.class,SessionDao.class);
-        services.addService(ISession.class,SessionManager.class);
+        services.addService(UserDao.class,UserDao.class);
+        //services.addService(ISession.class,SessionManager.class);
         services.addService(SceneManager.class, DefaultSceneManager.class);
 
-        //entityManagerFactory.close();
+        //entityManagerFactory.close();*/
+
+       // ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+
+
+        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+        ctx.register(AppConfig.class);
+        ctx.refresh();
+
+        /*var loader = new FXMLLoader(Main.class.getResource("/views/app/AppView.fxml"));
+        Node n = loader.load();
+
+       // MainController controller = ctx.getBean(MainController.class);
+       // temp.setScene(controller.getScene());
+        temp.setScene(n.getScene());
+        temp.setResizable(true);
+        temp.show();*/
+
+        var test = ctx.getBean(SceneManager.class);
+        test.showMainScene();
+
 
     }
     public static void main(String[] args) {
