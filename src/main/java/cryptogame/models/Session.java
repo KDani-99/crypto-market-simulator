@@ -1,4 +1,4 @@
-package cryptogame.jpa.entities;
+package cryptogame.models;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -21,7 +21,7 @@ public class Session {
 
     @ManyToOne
     @JoinColumn(name = "user_id",insertable = false,updatable = false,nullable = false)
-    private User user;
+    private UserModel user;
 
     public Session() {
         this.startTime = Instant.now().getEpochSecond();
