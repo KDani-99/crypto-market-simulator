@@ -18,6 +18,16 @@ public class CurrencyComponent implements Initializable, Controller {
     @FXML private Label marketCapLabel;
     @FXML private Label supplyLabel;
     @FXML private Label changePercentLabel;
+    @FXML private Button purchaseButton;
+
+    private boolean initialized = false;
+
+    private final Service serviceHandler;
+
+    @Autowired
+    public CurrencyComponent(Service serviceHandler) {
+        this.serviceHandler = serviceHandler;
+    }
 
     public void setCurrency(CryptoCurrency currency) {
         this.currency = currency;
