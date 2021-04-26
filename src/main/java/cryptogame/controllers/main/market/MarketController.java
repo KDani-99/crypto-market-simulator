@@ -1,12 +1,12 @@
-package cryptogame.controller.main.market;
+package cryptogame.controllers.main.market;
 
 import cryptogame.Main;
 import cryptogame.common.Initializable;
 import cryptogame.containers.CryptoCurrency;
-import cryptogame.controller.dialog.PurchaseDialogController;
-import cryptogame.controller.main.market.components.CurrencyComponent;
-import cryptogame.service.exception.ValidationException;
-import cryptogame.service.manager.market.MarketManager;
+import cryptogame.controllers.Controller;
+import cryptogame.controllers.dialog.PurchaseDialogController;
+import cryptogame.controllers.main.market.components.CurrencyComponent;
+import cryptogame.services.Service;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,18 +18,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-public class MarketController implements Initializable {
+@Component
+public class MarketController implements Initializable, Controller {
 
     @FXML
     private ScrollPane scrollPane;
