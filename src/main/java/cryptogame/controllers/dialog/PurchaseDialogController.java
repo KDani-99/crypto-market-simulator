@@ -1,8 +1,7 @@
 package cryptogame.controllers.dialog;
 
-import cryptogame.common.Initializable;
 import cryptogame.containers.CurrencyContainer;
-import cryptogame.dao.user.UserDao;
+import cryptogame.controllers.Controller;
 import cryptogame.exception.EntityDoesNotExistException;
 import cryptogame.models.UserModel;
 import cryptogame.services.Service;
@@ -10,12 +9,20 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-public class PurchaseDialogController implements Initializable {
+
+@Component
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
+public class PurchaseDialogController implements Controller {
 
     @FXML private Label headerLabel;
     @FXML private TextField amountTextField;
