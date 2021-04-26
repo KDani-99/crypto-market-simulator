@@ -1,40 +1,37 @@
-package cryptogame.controller;
+package cryptogame.controllers;
 
 import cryptogame.Main;
-import cryptogame.service.manager.scene.SceneManager;
+import cryptogame.services.manager.scene.SceneManager;
 import cryptogame.model.services.session.ISession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 
 import java.net.URL;
 
-public abstract class BaseController implements Controller {
+public abstract class BaseController implements WindowController,Controller {
 
     @FXML protected Label versionLabel;
 
-    private final ISession sessionManager;
-
     //protected Map<Class<? extends BaseController>, BaseController> controllers;
-    protected final SceneManager sceneManager;
     protected Scene scene;
     protected final boolean isResizable;
     protected final int initialWidth;
     protected final int initialHeight;
-    protected final String resourceURL;
 
-    protected BaseController(ISession sessionManager, SceneManager scenemanager,String url, boolean isResizable, int initialWidth, int initialHeight) {
-        this.sessionManager = sessionManager;
-        this.sceneManager = scenemanager;
-        this.resourceURL = url;
+    protected Node root;
+
+    protected BaseController( boolean isResizable, int initialWidth, int initialHeight) {
         this.isResizable = isResizable;
         this.initialWidth = initialWidth;
         this.initialHeight = initialHeight;
     }
 
     public void createScene(Parent parent) {
+        root = parent;
         this.scene = new Scene(parent,this.initialWidth,this.initialHeight);
     }
     //protected BaseController() {}
@@ -43,9 +40,6 @@ public abstract class BaseController implements Controller {
         this.controllers = controllers;
     }*/
 
-    protected ISession getSessionManager() {
-        return this.sessionManager;
-    }
     /*protected BaseController getController(Class<? extends BaseController> controllerClass) {
         return controllers.get(controllerClass);
     }*/
@@ -72,7 +66,7 @@ public abstract class BaseController implements Controller {
     @Override
     public abstract void hideError();
     @Override
-    public URL getResourceURL() {
-        return Main.class.getResource(this.resourceURL);
+    public Node getRoot() {
+        return this.root;
     }
 }
