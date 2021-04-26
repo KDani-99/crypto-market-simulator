@@ -9,4 +9,5 @@ import java.net.URL;
 
 public interface Controller extends Initializable {
     Node getRoot();
+    boolean isResizable();
 }

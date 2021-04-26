@@ -9,5 +9,4 @@ public interface WindowController extends Controller {
     void hideError();
     void createScene(Parent view);
     Scene getScene();
-    boolean isResizable();
 }
