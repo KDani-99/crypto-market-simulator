@@ -1,8 +1,5 @@
 package cryptogame.controllers;
 
-import cryptogame.Main;
-import cryptogame.services.manager.scene.SceneManager;
-import cryptogame.model.services.session.ISession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

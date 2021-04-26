@@ -1,9 +1,6 @@
 package cryptogame.controllers;
 
 import cryptogame.services.Service;
-import cryptogame.services.manager.scene.SceneManager;
-import cryptogame.model.services.session.ISession;
-import cryptogame.services.exception.ValidationException;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;

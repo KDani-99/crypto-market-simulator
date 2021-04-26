@@ -5,12 +5,8 @@ import cryptogame.controllers.main.HomeController;
 import cryptogame.controllers.main.market.MarketController;
 import cryptogame.controllers.main.NavbarController;
 import cryptogame.services.Service;
-import cryptogame.services.manager.market.MarketManager;
-import cryptogame.services.manager.scene.SceneManager;
-import cryptogame.model.services.session.ISession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.layout.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -86,7 +82,7 @@ public class MainController extends BaseController {
 
 
         } catch (Exception ex) {
-            System.out.println("Errror => "+ex.getMessage());
+            System.out.println("Error => "+ex.getMessage());
         }
     }
 
