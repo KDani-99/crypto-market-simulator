@@ -11,14 +11,16 @@ import java.util.Set;
 @Entity//(name = "users")
 @Table//(name = "users")
 @lombok.Data
-public class User {
+public class UserModel {
     @Id
     @GeneratedValue
     @Column(name = "id")
     private Long id;
+    @Column(nullable = false,unique = true)
     @Validate(validatorClass = UsernameValidation.class)
     private String username;
     @Validate(validatorClass = EmailValidation.class)
+    @Column(nullable = false,unique = true)
     private String email;
     @Validate(validatorClass = PasswordValidation.class)
     private String password;
@@ -26,23 +28,20 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Session> sessions;
 
-    @OneToOne(mappedBy = "user")
-    private UserSettings settings;
-
     private double balance;
 
     @OneToMany(mappedBy = "user")
-    private Set<CryptoCurrency> wallet;
+    private Set<CryptoCurrencyModel> wallet;
 
     @OneToMany(mappedBy = "user")
-    private Set<ActionHistory> purchaseHistory;
+    private Set<ActionHistoryModel> purchaseHistory;
 
     @OneToMany(mappedBy = "user")
-    private Set<ActionHistory> sellHistory;
+    private Set<ActionHistoryModel> sellHistory;
 
-    public User() {}
+    public UserModel() {}
 
-    public User(String username, String email, String password) {
+    public UserModel(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
