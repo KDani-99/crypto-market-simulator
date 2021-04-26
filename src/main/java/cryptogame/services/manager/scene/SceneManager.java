@@ -13,4 +13,6 @@ public interface SceneManager extends Initializable {
     void showRegistrationScene() throws Exception;
 
     Controller getMarketComponentController() throws Exception;
+    Controller createCurrencyComponent() throws Exception;
+    Controller createPurchaseWindow() throws Exception;
 }
