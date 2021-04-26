@@ -12,6 +12,7 @@ public class CurrencyComponent implements Initializable, Controller {
 
     private CryptoCurrency currency;
 
+    @FXML private GridPane gridPane;
     @FXML private Label rankLabel;
     @FXML private Label nameLabel;
     @FXML private Label priceLabel;
