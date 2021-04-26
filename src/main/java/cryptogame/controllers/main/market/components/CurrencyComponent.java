@@ -53,6 +53,9 @@ public class CurrencyComponent implements Initializable, Controller {
         if(currency == null) return;
 
         this.bindData();
+        this.bindPurchaseButton();
+
+        initialized = true;
     }
 
     private void bindData() {
@@ -115,6 +118,24 @@ public class CurrencyComponent implements Initializable, Controller {
         } else {
             changePercentLabel.getStyleClass().add("negChangePercent");
         }
+    }
+
+    private void bindPurchaseButton() {
+        this.purchaseButton.setOnMouseClicked(new EventHandler<>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    var purchaseWindow = (PurchaseDialogController) serviceHandler.getSceneManager()
+                            .createPurchaseWindow();
+
+                    purchaseWindow.setCurrencyContainer(currency);
+
+                    System.out.println("PUCHASE ? => " + (serviceHandler == null));
+                } catch (Exception ex) {
+                    System.out.println("ERR! " + ex.getMessage());
+                }
+            }
+        });
     }
 
     @Override
