@@ -1,45 +1,36 @@
 package cryptogame.dao.user;
 
-import cryptogame.jpa.entities.CryptoCurrency;
+import cryptogame.models.ActionHistoryModel;
+import cryptogame.models.CryptoCurrencyModel;
 import cryptogame.containers.CurrencyContainer;
-import cryptogame.dao.Dao;
 import cryptogame.dao.DaoBase;
-import cryptogame.jpa.entities.*;
 
 import javax.persistence.EntityManager;
 import java.util.Optional;
 
-import cryptogame.dao.Dao;
-import cryptogame.jpa.entities.User;
-import cryptogame.jpa.entities.UserSettings;
+import cryptogame.models.UserModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-import java.util.Optional;
-import java.util.UUID;
+@Component("userDao")
+public final class UserDaoImplementation extends DaoBase<UserModel> implements UserDao {
 
-
-public final class UserDaoImplementation extends DaoBase<User> implements UserDao {
-
-    public UserDaoImplementation(EntityManager entityManager) {
+   /* public UserDaoImplementation(EntityManager entityManager) {
         super(entityManager);
-    }
-
-   /* private String generateUID() {
-        return UUID.randomUUID().toString();
     }*/
 
     @Override
-    public <TId> Optional<User> getEntity(TId id) {
-        var user = this.entityManager.find(User.class,id);
+    public <TId> Optional<UserModel> getEntity(TId id) {
+        var user = this.entityManager.find(UserModel.class,id);
         return Optional.of(user);
     }
     @Override
-    public Optional<User> getEntityBy(String field, Object value) {
+    public Optional<UserModel> getEntityBy(String field, Object value) {
 
-        var query = this.entityManager.createQuery("SELECT user FROM users user WHERE "+field+" = :value",User.class);
+        var query = this.entityManager.createQuery("SELECT user FROM users user WHERE "+field+" = :value", UserModel.class);
         query.setParameter("value",value);
 
-        User user = null;
+        UserModel user = null;
 
         try {
             user = query.getSingleResult();
@@ -51,7 +42,7 @@ public final class UserDaoImplementation extends DaoBase<User> implements UserDa
     }
 
     @Override
-    public void persistEntity(User entity) throws Exception {
+    public void persistEntity(UserModel entity) throws Exception {
        // entity.setId(this.generateUID());
 
       //  var userSettings = new UserSettings();
@@ -64,7 +55,7 @@ public final class UserDaoImplementation extends DaoBase<User> implements UserDa
        // this.executeTransaction(entityManager -> entityManager.persist(userSettings));
     }
 
-    private void purchaseAddToWallet(User user,double amount,CurrencyContainer currency) {
+    private void purchaseAddToWallet(UserModel user, double amount, CurrencyContainer currency) {
         var tempWallet = user.getWallet().stream()
                 .filter(elem -> elem.getIdName().equals(currency.getId())).findFirst();
 
@@ -76,14 +67,14 @@ public final class UserDaoImplementation extends DaoBase<User> implements UserDa
             user.getWallet().remove(tmp);
             user.getWallet().add(tmp);
         } else {
-            var tmp = new CryptoCurrency();
+            var tmp = new CryptoCurrencyModel();
             tmp.setUser(user);
             tmp.setAmount(amount);
             tmp.setIdName(currency.getId());
         }
     }
 
-    private void purchaseDecreaseBalance(User user,double amount, CurrencyContainer currency)
+    private void purchaseDecreaseBalance(UserModel user, double amount, CurrencyContainer currency)
     {
         var newBalance = user.getBalance();
         newBalance -= (amount * currency.getPriceUsd());
@@ -91,14 +82,14 @@ public final class UserDaoImplementation extends DaoBase<User> implements UserDa
     }
 
     @Override
-    public void purchaseCurrency(User user,double amount, CurrencyContainer currency) {
+    public void purchaseCurrency(UserModel user, double amount, CurrencyContainer currency) {
 
         purchaseAddToWallet(user,amount,currency);
         purchaseDecreaseBalance(user,amount,currency);
 
         this.executeTransaction(entityManager -> entityManager.merge(user)); // update data
 
-        var purchase = new ActionHistory();
+        var purchase = new ActionHistoryModel();
         purchase.setActionTime(System.currentTimeMillis());
         purchase.setAmount(amount);
         purchase.setUser(user);
