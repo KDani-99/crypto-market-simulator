@@ -97,6 +97,11 @@ public class CurrencyComponent implements Initializable, Controller {
 
     @Override
     public Node getRoot() {
-        return null;
+        return this.gridPane;
+    }
+
+    @Override
+    public boolean isResizable() {
+        return false;
     }
 }
