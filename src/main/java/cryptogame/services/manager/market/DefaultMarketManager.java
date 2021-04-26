@@ -9,29 +9,31 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Set;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Component;
 
+@Component("marketManager")
 public class DefaultMarketManager implements MarketManager {
 
-    private final Duration timeout = Duration.ofMinutes(1);
-    private final HttpClient httpClient;
-    private final String apiURL = "https://api.coincap.io/v2";
-    private final ObjectMapper mapper = new ObjectMapper();
+    private Duration timeout = Duration.ofMinutes(1);
+    private HttpClient httpClient;
+    private String apiURL = "https://api.coincap.io/v2";
+    private ObjectMapper mapper = new ObjectMapper();
 
     private final HashMap<String, CryptoCurrency> currencies = new HashMap<>();
     private final HashMap<String, CryptoCurrency> previousCurrencies = new HashMap<>();
 
     private long previousRefreshTimestamp = 0L;
 
-    public DefaultMarketManager() throws Exception {
+   public DefaultMarketManager() throws Exception {
         this.httpClient = buildHttpClient();
 
         // test
         this.refreshAssets();
     }
 
+   // public DefaultMarketManager() {}
     private HttpClient buildHttpClient() {
         return HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_1_1)
