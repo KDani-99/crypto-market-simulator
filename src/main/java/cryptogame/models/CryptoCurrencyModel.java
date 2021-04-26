@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @lombok.Data
-public class CryptoCurrency {
+public class CryptoCurrencyModel {
 
     @Id
     private long id;
@@ -17,13 +17,13 @@ public class CryptoCurrency {
 
     @ManyToOne
     @JoinColumn(insertable = false,updatable = false,nullable = false)
-    private User user;
+    private UserModel user;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CryptoCurrency that = (CryptoCurrency) o;
+        CryptoCurrencyModel that = (CryptoCurrencyModel) o;
         return id == that.id;
     }
 

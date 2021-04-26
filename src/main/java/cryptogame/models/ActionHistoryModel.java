@@ -13,5 +13,5 @@ public class ActionHistoryModel {
 
     @ManyToOne
     @JoinColumn(insertable = false,updatable = false,nullable = false)
-    private User user;
+    private UserModel user;
 }
