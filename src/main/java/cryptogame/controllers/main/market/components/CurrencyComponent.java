@@ -1,12 +1,14 @@
-package cryptogame.controller.main.market.components;
+package cryptogame.controllers.main.market.components;
 
 import cryptogame.common.Initializable;
 import cryptogame.containers.CryptoCurrency;
+import cryptogame.controllers.Controller;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
-import org.apache.commons.codec.digest.Crypt;
 
-public class CurrencyComponent implements Initializable {
+public class CurrencyComponent implements Initializable, Controller {
 
     private CryptoCurrency currency;
 
@@ -93,4 +95,8 @@ public class CurrencyComponent implements Initializable {
         }
     }
 
+    @Override
+    public Node getRoot() {
+        return null;
+    }
 }
