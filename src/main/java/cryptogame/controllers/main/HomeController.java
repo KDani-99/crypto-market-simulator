@@ -18,4 +18,9 @@ public class HomeController implements Controller {
     public Node getRoot() {
         return this.areaChart;
     }
+
+    @Override
+    public boolean isResizable() {
+        return false;
+    }
 }
