@@ -44,17 +44,12 @@ public class MarketController implements Initializable, Controller {
 
     private Service serviceHandler;
 
-    private Stage activePurchaseDialog = null;
     private boolean initialized = false;
 
     @Autowired
     public MarketController(Service serviceHandler) {
         this.serviceHandler = serviceHandler;
     }
-    //public void setMarketManager(MarketManager marketManager) {
-       // this.marketManager = marketManager;
-    //}
-   /* public void setPrimaryStage(Stage primaryStage) {this.primaryStage = primaryStage;}*/
 
     @Override
     public void initialize() {
@@ -109,47 +104,28 @@ public class MarketController implements Initializable, Controller {
 
         var sortedList = children.stream().sorted((child,child2) -> {
 
-            var controller = (CurrencyComponent)child.getProperties().get("foo");
-            if(controller == null) {
+            var rankNode = (Label)child.lookup("#rankLabel");
+            if(rankNode == null) {
                 return 0;
             }
 
-            var controller2 = (CurrencyComponent)child2.getProperties().get("foo");
-            if(controller2 == null) {
+            var rankNode2 = (Label)child2.lookup("#rankLabel");
+            if(rankNode2 == null) {
                 return 0;
             }
 
-            return controller2.getCurrency().compareTo(controller.getCurrency()) * (sorted ? -1 : 1);
+            String rankStr = rankNode.getText().split("#")[1];
+            String rankStr2 = rankNode2.getText().split("#")[1];
+
+            int val1 = Integer.parseInt(rankStr);
+            int val2 = Integer.parseInt(rankStr2);
+
+            return Integer.compare(val1,val2) * (sorted ? 1 : -1);
+
         }).collect(Collectors.toList());
 
         this.vBox.getChildren().clear();
         this.vBox.getChildren().addAll(sortedList);
-    }
-
-    private void disposeActivePurchaseDialog() {
-        if(activePurchaseDialog != null) {
-            activePurchaseDialog.close();
-            activePurchaseDialog = null;
-        }
-    }
-
-    private void createPurchaseDialog() throws Exception {
-
-        disposeActivePurchaseDialog();
-
-        var loader = new FXMLLoader(Main.class.getResource("/views/dialog/purchase/PurchaseDialogView.fxml"));
-
-        activePurchaseDialog = new Stage();
-        activePurchaseDialog.initModality(Modality.APPLICATION_MODAL);
-        activePurchaseDialog.initOwner(serviceHandler.getSceneManager().getPrimaryStage());
-
-        Scene scene = new Scene(loader.load(), 250, 135);
-        activePurchaseDialog.setResizable(false);
-        activePurchaseDialog.setScene(scene);
-        activePurchaseDialog.show();
-
-        PurchaseDialogController purchaseDialogController = loader.getController(); // -> place it into currency component
-        //purchaseDialogController.setCurrencyContainer("Bitcoin",591231.23);
     }
 
     private void loadMarket() {
@@ -161,6 +137,9 @@ public class MarketController implements Initializable, Controller {
                     serviceHandler.getMarketManager().getCurrencies().stream().sorted(Comparator.comparingInt(CryptoCurrency::getRank).reversed()).collect(Collectors.toList());
 
             for(var currency : currencies) {
+
+                // TODO: Load component from SceneManager
+               /* System.out.println("LOAD");
                 var loader = new FXMLLoader(Main.class.getResource("/views/app/components/market/components/CurrencyComponent.fxml"));
                 Node node = loader.load();
 
@@ -168,7 +147,13 @@ public class MarketController implements Initializable, Controller {
                 nodeController.setCurrency(currency);
                 nodeController.initialize();
 
-                vBox.getChildren().add(node);
+                vBox.getChildren().add(node);*/
+
+                var currencyComponent = (CurrencyComponent) serviceHandler.getSceneManager().createCurrencyComponent();
+                currencyComponent.setCurrency(currency);
+                currencyComponent.initialize();
+
+                vBox.getChildren().add(currencyComponent.getRoot());
             }
 
         } catch (Exception ex) {
