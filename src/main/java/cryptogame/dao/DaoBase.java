@@ -1,16 +1,18 @@
 package cryptogame.dao;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Optional;
 import java.util.function.Consumer;
 
 public abstract class DaoBase<T> implements Dao<T> {
 
-    protected final EntityManager entityManager;
+    @PersistenceContext
+    protected EntityManager entityManager;
 
-    protected DaoBase(EntityManager entityManager) {
+    /*protected DaoBase(EntityManager entityManager) {
         this.entityManager = entityManager;
-    }
+    }*/
 
     @Override
     public abstract <TId> Optional<T> getEntity(TId id);
