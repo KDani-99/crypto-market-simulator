@@ -1,7 +1,7 @@
 package cryptogame.service.manager.scene;
 
 import cryptogame.common.Initializable;
-import cryptogame.controller.Controller;
+import cryptogame.controllers.Controller;
 import javafx.stage.Stage;
 
 public interface SceneManager extends Initializable {

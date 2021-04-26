@@ -1,11 +1,10 @@
-package cryptogame.jpa.entities;
+package cryptogame.models;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @lombok.Data
-public class ActionHistory {
+public class ActionHistoryModel {
     @Id
     @GeneratedValue
     private long id;

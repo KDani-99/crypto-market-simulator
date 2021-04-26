@@ -1,4 +1,4 @@
-package cryptogame.jpa.entities;
+package cryptogame.models;
 
 import cryptogame.common.validation.EmailValidation;
 import cryptogame.common.validation.PasswordValidation;
@@ -6,7 +6,6 @@ import cryptogame.common.validation.UsernameValidation;
 import cryptogame.common.validation.Validate;
 
 import javax.persistence.*;
-import javax.swing.*;
 import java.util.Set;
 
 @Entity//(name = "users")

@@ -1,10 +1,10 @@
 package cryptogame.service.manager.scene;
 
 import cryptogame.Main;
-import cryptogame.controller.Controller;
-import cryptogame.controller.LoginController;
-import cryptogame.controller.MainController;
-import cryptogame.controller.RegistrationController;
+import cryptogame.controllers.Controller;
+import cryptogame.controllers.LoginController;
+import cryptogame.controllers.MainController;
+import cryptogame.controllers.RegistrationController;
 import cryptogame.service.ServiceHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

@@ -1,4 +1,4 @@
-package cryptogame.jpa.entities;
+package cryptogame.models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
