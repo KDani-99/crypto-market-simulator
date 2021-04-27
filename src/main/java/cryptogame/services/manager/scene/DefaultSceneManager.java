@@ -50,7 +50,7 @@ public class DefaultSceneManager implements SceneManager {
     }
 
     private void loadDefaultScene() throws Exception{
-        this.showScene(MainController.class);
+        this.showScene(MainController.class,"Main");
     }
 
     private URL getResourceURL(String path) {
@@ -121,11 +121,12 @@ public class DefaultSceneManager implements SceneManager {
         return controllerInstance;
     }
 
-    public <T extends WindowController> void showScene(Class<T> controllerClass) throws Exception {
+    public <T extends WindowController> void showScene(Class<T> controllerClass,String title) throws Exception {
         var controllerInstance = loadController(controllerClass);
 
         primaryStage.setScene(controllerInstance.getScene());
         primaryStage.setResizable(controllerInstance.isResizable());
+        primaryStage.setTitle(title);
         primaryStage.show();
     }
 
@@ -136,17 +137,17 @@ public class DefaultSceneManager implements SceneManager {
 
     @Override
     public void showMainScene() throws Exception {
-        showScene(MainController.class);
+        showScene(MainController.class,"Main");
     }
 
     @Override
     public void showLoginScene() throws Exception {
-        showScene(LoginController.class);
+        showScene(LoginController.class,"Login");
     }
 
     @Override
     public void showRegistrationScene() throws Exception {
-        showScene(RegistrationController.class);
+        showScene(RegistrationController.class,"Registration");
     }
 
     @Override
