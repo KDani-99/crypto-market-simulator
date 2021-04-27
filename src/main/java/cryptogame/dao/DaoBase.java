@@ -1,18 +1,21 @@
 package cryptogame.dao;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 import java.util.Optional;
 import java.util.function.Consumer;
 
 public abstract class DaoBase<T> implements Dao<T> {
 
-    @PersistenceContext
-    protected EntityManager entityManager;
+   // @PersistenceContext
+    //protected EntityManager entityManager;
 
-    /*protected DaoBase(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }*/
+    @PersistenceUnit
+    protected EntityManagerFactory entityManagerFactory;
 
     @Override
     public abstract <TId> Optional<T> getEntity(TId id);
@@ -22,23 +25,30 @@ public abstract class DaoBase<T> implements Dao<T> {
 
     @Override
     public void updateEntity(T entity) throws Exception {
-        this.executeTransaction(entityManager -> entityManager.merge(entity));
+        //this.executeTransaction(entityManager -> entityManager.merge(entity));
     }
 
+    @Transactional
     @Override
     public void persistEntity(T entity) throws Exception {
-        this.executeTransaction(entityManager -> entityManager.persist(entity));
+       //this.executeTransaction(entityManager -> entityManager.persist(entity));
+      /*  var transaction = this.entityManager.getTransaction();
+        transaction.begin();
+        entityManager.persist(entity);
+        transaction.commit();*/
     }
 
+    @Transactional
     @Override
     public void deleteEntity(T entity) throws Exception {
-        this.executeTransaction(entityManager -> entityManager.remove(entity));
+        //this.executeTransaction(entityManager -> entityManager.remove(entity));
     }
-    // @Transactional
+    @Transactional
     protected void executeTransaction(Consumer<EntityManager> consumer) {
-        var transaction = this.entityManager.getTransaction();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        var transaction = entityManager.getTransaction();
         transaction.begin();
-        consumer.accept(this.entityManager);
+        consumer.accept(entityManager);
         transaction.commit();
     }
 }

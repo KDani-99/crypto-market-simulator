@@ -11,9 +11,10 @@ import java.util.Optional;
 import cryptogame.models.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component("userDao")
-public final class UserDaoImplementation extends DaoBase<UserModel> implements UserDao {
+public class UserDaoImplementation extends DaoBase<UserModel> implements UserDao {
 
    /* public UserDaoImplementation(EntityManager entityManager) {
         super(entityManager);
@@ -21,13 +22,14 @@ public final class UserDaoImplementation extends DaoBase<UserModel> implements U
 
     @Override
     public <TId> Optional<UserModel> getEntity(TId id) {
-        var user = this.entityManager.find(UserModel.class,id);
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        var user = entityManager.find(UserModel.class,id);
         return Optional.of(user);
     }
     @Override
     public Optional<UserModel> getEntityBy(String field, Object value) {
-
-        var query = this.entityManager.createQuery("SELECT user FROM users user WHERE "+field+" = :value", UserModel.class);
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        var query = entityManager.createQuery("SELECT user FROM UserModel user WHERE "+field+" = :value", UserModel.class);
         query.setParameter("value",value);
 
         UserModel user = null;
@@ -41,18 +43,10 @@ public final class UserDaoImplementation extends DaoBase<UserModel> implements U
         return Optional.ofNullable(user);
     }
 
+    @Transactional
     @Override
     public void persistEntity(UserModel entity) throws Exception {
-       // entity.setId(this.generateUID());
-
-      //  var userSettings = new UserSettings();
-        //userSettings.setUserId(entity.getId());
-      //  userSettings.setUser(entity);
-
-        //entity.setSettings(userSettings);
-
-        this.executeTransaction(entityManager -> entityManager.persist(entity));
-       // this.executeTransaction(entityManager -> entityManager.persist(userSettings));
+        super.executeTransaction(entityManager -> entityManager.persist(entity));
     }
 
     private void purchaseAddToWallet(UserModel user, double amount, CurrencyContainer currency) {
