@@ -11,7 +11,7 @@
 
 <BorderPane maxHeight="500.0" maxWidth="400.0" minHeight="500.0" minWidth="400.0" prefHeight="500.0" prefWidth="400.0" styleClass="pane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <center>
-        <AnchorPane maxHeight="500.0" maxWidth="400.0" minHeight="500.0" minWidth="400.0" prefHeight="500.0" prefWidth="507.0" BorderPane.alignment="CENTER">
+        <AnchorPane maxHeight="500.0" maxWidth="400.0" minHeight="500.0" minWidth="400.0" prefHeight="500.0" prefWidth="507.0" styleClass="pane" BorderPane.alignment="CENTER">
             <children>
                 <Label fx:id="versionLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="440.0" prefHeight="60.0" prefWidth="400.0" text="&lt;label_version&gt;" textAlignment="CENTER" textFill="#c8c8c8" />
                 <Button fx:id="registerButton" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" layoutY="360.0" maxHeight="30.0" maxWidth="200.0" minHeight="30.0" minWidth="200.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Register">
