@@ -138,17 +138,6 @@ public class MarketController implements Initializable, Controller {
 
             for(var currency : currencies) {
 
-                // TODO: Load component from SceneManager
-               /* System.out.println("LOAD");
-                var loader = new FXMLLoader(Main.class.getResource("/views/app/components/market/components/CurrencyComponent.fxml"));
-                Node node = loader.load();
-
-                var nodeController = (CurrencyComponent)loader.getController();
-                nodeController.setCurrency(currency);
-                nodeController.initialize();
-
-                vBox.getChildren().add(node);*/
-
                 var currencyComponent = (CurrencyComponent) serviceHandler.getSceneManager().createCurrencyComponent();
                 currencyComponent.setCurrency(currency);
                 currencyComponent.initialize();
