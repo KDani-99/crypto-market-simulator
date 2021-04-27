@@ -9,7 +9,7 @@ public class PasswordValidation implements IValidation<String>{
     private static final Pattern pattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*])(?=.{6,255})");
     @Override
     public boolean validate(String password) {
-        return pattern.matcher(password).matches();
+        return pattern.matcher(password).find();
     }
 
     @Override
