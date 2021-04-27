@@ -14,7 +14,7 @@ import java.util.Set;
 public class UserModel {
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column
     private Long id;
     @Column(nullable = false,unique = true)
     @Validate(validatorClass = UsernameValidation.class)
