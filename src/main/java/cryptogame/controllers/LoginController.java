@@ -1,6 +1,9 @@
 package cryptogame.controllers;
 
+import cryptogame.common.validation.ValidationError;
 import cryptogame.services.Service;
+import cryptogame.services.auth.AuthService;
+import cryptogame.services.exception.ValidationException;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -13,7 +16,7 @@ import javafx.event.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.net.URL;
+import java.util.Set;
 
 @Component
 public class LoginController extends BaseController {
@@ -67,11 +70,21 @@ public class LoginController extends BaseController {
                     var username = usernameInput.getText();
                     var password = passwordInput.getText();
 
-                    //getSessionManager().login(username, password);
+                    var result = serviceHandler.getUserDao().getEntityBy("username",username);
 
-                } /* catch(ValidationException ex) {
-                    // TODO: mark invalid fields
-                } */catch (Exception ex) {
+                    if(result.isEmpty()) {
+                        throw new Exception("Invalid username or password");
+                    }
+
+                    if(!AuthService.comparePasswords(result.get().getPassword(),password)) {
+                        throw new Exception("Invalid username or password");
+                    }
+
+                    serviceHandler.createSession(result.get().getId());
+
+                    // TODO: Show success message
+
+                }  catch (Exception ex) {
 
                     showError(ex.getMessage(),ex.getMessage());
                     System.out.println(ex.toString());
@@ -85,10 +98,10 @@ public class LoginController extends BaseController {
             public void handle(MouseEvent event) {
                 try {
                     hideError();
-                   // sceneManager.showScene(RegistrationController.class);
-                } /*catch(ValidationException ex) {
-                    // TODO: mark invalid fields
-                } */catch (Exception ex) {
+
+                    serviceHandler.getSceneManager().showRegistrationScene();
+
+                } catch (Exception ex) {
                     showError(ex.getMessage(),ex.getMessage());
                     System.out.println(ex.toString());
                 }
