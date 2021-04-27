@@ -1,7 +1,12 @@
 package cryptogame.controllers;
 
+import cryptogame.common.validation.Validation;
+import cryptogame.common.validation.ValidationError;
+import cryptogame.models.UserModel;
 import cryptogame.services.Service;
 
+import cryptogame.services.auth.AuthService;
+import cryptogame.services.exception.ValidationException;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -10,6 +15,8 @@ import javafx.scene.layout.Pane;
 import javafx.event.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Set;
 
 @Component
 public class RegistrationController extends BaseController {
@@ -63,10 +70,8 @@ public class RegistrationController extends BaseController {
             public void handle(MouseEvent event) {
                 try {
                     hideError();
-                    //getPrimaryStage().setScene(getController(LoginController.class).getScene());
-                   // getPrimaryStage().setResizable(false);
 
-                    serviceHandler.getSceneManager().showScene(LoginController.class);
+                    serviceHandler.getSceneManager().showLoginScene();
 
                 } catch (Exception ex) {
                     showError(ex.getMessage(),ex.getMessage());
@@ -75,32 +80,83 @@ public class RegistrationController extends BaseController {
             }
         });
     }
+
+    private boolean hasValidationError(Set<ValidationError> validationErrorSet,String fieldName) {
+        return validationErrorSet.stream().anyMatch(validationError -> validationError.getFieldName().equals(fieldName));
+    }
+
+    private void removeErrorMarkers() {
+        errorPane.setVisible(false);
+        usernameInput.getStyleClass().remove("input-error");
+        emailInput.getStyleClass().remove("input-error");
+        passwordInput.getStylesheets().remove("input-error");
+    }
+
+    private void markValidationErrors(Set<ValidationError> validationErrorSet) {
+
+        if(hasValidationError(validationErrorSet,"username")) {
+            usernameInput.getStyleClass().add("input-error");
+        }
+
+        if(hasValidationError(validationErrorSet,"email")) {
+            emailInput.getStyleClass().add("input-error");
+        }
+
+        if(hasValidationError(validationErrorSet,"password")) {
+            passwordInput.getStyleClass().add("input-error");
+        }
+
+        errorPane.setVisible(true);
+        errorLabel.setText("Registration failed");
+
+        // + popup error
+    }
+
     private void setupRegisterButton() {
         this.registerButton.setOnMouseClicked(new EventHandler<>(){
             @Override
             public void handle(MouseEvent event) {
                 try {
 
+                    removeErrorMarkers();
+
                     var username = usernameInput.getText();
                     var email = emailInput.getText();
                     var password = passwordInput.getText();
 
-                   // getSessionManager().register(username, email, password);
-                } /*catch(ValidationException ex) {
-                    // TODO: 
-                }*/ catch (Exception ex) {
+                    var user = new UserModel();
+                    user.setUsername(username);
+                    user.setEmail(email);
+                    user.setPassword(password);
 
-                    String error = "";
+                    var validationResult = Validation.validateObject(user);
 
-                 /*   if(ex instanceof InvalidUsernameException) {
-                        error = "Invalid username";
-                    } else if(ex instanceof InvalidEmailException) {
-                        error = "Invalid email";
-                    } else if(ex instanceof InvalidPasswordException) {
-                        error = "Invalid password";
-                    }*/
+                    if(validationResult.size() > 0) {
+                        throw new ValidationException(validationResult);
+                    }
 
-                    showError(error,ex.getMessage());
+                    if(serviceHandler.getUserDao().getEntityBy("username",username).isPresent()) {
+                        validationResult.add(new ValidationError("username","Username is already in use"));
+                        throw new ValidationException(validationResult);
+                    }
+
+                    if(serviceHandler.getUserDao().getEntityBy("email",email).isPresent()) {
+                        validationResult.add(new ValidationError("email","Email address is already in use"));
+                        throw new ValidationException(validationResult);
+                    }
+
+                    user.setPassword(AuthService.generatePasswordHash(password));
+
+                    serviceHandler.getUserDao().persistEntity(user);
+                    System.out.println("Successful");
+
+                } catch(ValidationException ex) {
+
+                    markValidationErrors(ex.getValidationErrors());
+
+                } catch (Exception ex) {
+
+                    showError(ex.getMessage(),ex.getMessage());
                     System.out.println(ex.toString());
                 }
             }
