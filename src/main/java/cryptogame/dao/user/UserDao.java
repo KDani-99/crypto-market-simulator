@@ -2,10 +2,10 @@ package cryptogame.dao.user;
 
 import cryptogame.containers.CurrencyContainer;
 import cryptogame.dao.Dao;
-import cryptogame.jpa.entities.CryptoCurrency;
-import cryptogame.jpa.entities.User;
+import cryptogame.models.UserModel;
+import org.springframework.stereotype.Component;
 
-public interface UserDao extends Dao<User>
+public interface UserDao extends Dao<UserModel>
 {
-    void purchaseCurrency(User user, double amount , CurrencyContainer currency);
+    void purchaseCurrency(UserModel user, double amount , CurrencyContainer currency);
 }

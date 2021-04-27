@@ -1,13 +1,14 @@
-@font-face {
+/*@font-face {
     -fx-font-family: "Lato";
     src: url("/fonts/Lato-Regular.ttf");
 }
 @font-face {
     -fx-font-family: "Lato Bold";
     src: url("/fonts/Lato-Bold.ttf");
-}
+}*/
 .view {
-    -fx-background-color: white;
+    /*-fx-background-color: white;*/
+    -fx-background-color: rgb(45,45,51);
     -fx-font-family: 'Lato Regular';
 }
 .common {
@@ -92,4 +93,9 @@
 #label_version {
     -fx-font-size: 12px;
     -fx-font-family: 'Roboto Thin';
+}
+.input-error {
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
+    -fx-border-color: red;
 }

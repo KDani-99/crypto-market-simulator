@@ -1,47 +1,25 @@
 package cryptogame;
 
-import cryptogame.dao.IDao;
-import cryptogame.dao.user.UserDao;
-import cryptogame.service.manager.market.DefaultMarketManager;
-import cryptogame.service.manager.market.MarketManager;
-import cryptogame.service.manager.scene.SceneManager;
-import cryptogame.service.manager.scene.DefaultSceneManager;
-import cryptogame.model.services.session.ISession;
-import cryptogame.model.services.session.SessionManager;
-import cryptogame.service.DefaultServiceHandler;
-import cryptogame.service.ServiceHandler;
+import cryptogame.services.manager.scene.SceneManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main extends Application {
 
-    private static final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("crypto_trading_game");
-
-    ServiceHandler services = null;
-
-    public static Stage temp;
+    public static Stage primaryStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        temp = primaryStage;
+        Main.primaryStage = primaryStage;
 
-        services = new DefaultServiceHandler();
+        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+        ctx.register(AppConfig.class);
+        ctx.refresh();
 
-        services.addServiceInstance(Stage.class,primaryStage);
-        services.addServiceInstance(EntityManager.class,entityManagerFactory.createEntityManager());
-        services.addService(MarketManager.class, DefaultMarketManager.class);
-
-        services.addService(IDao.class,UserDao.class);
-        services.addService(IDao.class,SessionDao.class);
-        services.addService(ISession.class,SessionManager.class);
-        services.addService(SceneManager.class, DefaultSceneManager.class);
-
-        //entityManagerFactory.close();
+        var sceneManager = ctx.getBean(SceneManager.class);
+        sceneManager.showRegistrationScene();
 
     }
     public static void main(String[] args) {

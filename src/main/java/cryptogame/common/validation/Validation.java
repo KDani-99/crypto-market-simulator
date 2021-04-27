@@ -11,7 +11,12 @@ public abstract class Validation {
         var fields = object.getClass().getDeclaredFields();
 
         for(var field : fields) {
+
             var validationAnnotation = field.getAnnotation(Validate.class);
+
+            if(validationAnnotation == null) continue;
+
+            field.setAccessible(true);
 
             var validatorInstance = (IValidation<Object>)validationAnnotation.validatorClass().getDeclaredConstructor().newInstance();
             var value = field.get(object);
