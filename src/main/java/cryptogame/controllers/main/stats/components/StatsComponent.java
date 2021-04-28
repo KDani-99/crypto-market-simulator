@@ -88,7 +88,7 @@ public class StatsComponent implements Controller {
     }
     private void formatTransactionType() {
         if(actionType.equals(ActionType.PURCHASE)) {
-            this.transactionTypeLabel.setText("Purchased");
+            this.transactionTypeLabel.setText("Purchase");
             this.gridPane.getStyleClass().add("purchased");
         } else {
             this.transactionTypeLabel.setText("Sold");

@@ -72,8 +72,6 @@ public class StatsControllerImplementation implements StatsController {
             var purchaseHistory = user.get().getPurchaseHistory();
             var sellHistory = user.get().getSellHistory();
 
-            System.out.println("History: " + (purchaseHistory.size()));
-
             for(var action : purchaseHistory) {
 
                 var statsComponent = (StatsComponent) serviceHandler.getSceneManager().createStatsComponent();
