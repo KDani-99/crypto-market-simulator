@@ -2,7 +2,7 @@ package cryptogame.common.validation;
 
 public class EmailValidation implements IValidation<String> {
 
-    private final String errorMessage = "Invalid email address";
+    private final String errorMessage = "Invalid email address.";
 
     @Override
     public boolean validate(String email) {

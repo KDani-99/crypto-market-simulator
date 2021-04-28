@@ -3,22 +3,27 @@ package cryptogame.services.manager.scene;
 import cryptogame.Main;
 import cryptogame.controllers.*;
 import cryptogame.controllers.dialog.PurchaseDialogController;
+import cryptogame.controllers.login.LoginControllerImplementation;
+import cryptogame.controllers.main.NavbarController;
+import cryptogame.controllers.main.bank.BankController;
 import cryptogame.controllers.main.market.MarketController;
 import cryptogame.controllers.main.market.components.CurrencyComponent;
+import cryptogame.controllers.main.stats.StatsController;
+import cryptogame.controllers.main.stats.StatsControllerImplementation;
+import cryptogame.controllers.main.stats.components.StatsComponent;
+import cryptogame.controllers.registration.RegistrationControllerImplementation;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import javax.naming.ldap.Control;
-import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.HashSet;
 
 @Component("sceneManager")
 public class DefaultSceneManager implements SceneManager {
@@ -31,6 +36,8 @@ public class DefaultSceneManager implements SceneManager {
 
     private final HashMap<Class<?>,Stage> activeStages;
 
+    private final HashMap<Class<?>, Controller> controllerInstances;
+
     //private final ServiceHandler services;
     private final Stage primaryStage;
 
@@ -41,6 +48,7 @@ public class DefaultSceneManager implements SceneManager {
         this.controllerCollection = new HashMap<>();
         this.mainControllerComponents = new HashMap<>();
         this.dialogControllerCollection = new HashMap<>();
+        controllerInstances = new HashMap<>();
 
         activeStages = new HashMap<>();
 
@@ -59,12 +67,17 @@ public class DefaultSceneManager implements SceneManager {
 
     private void addControllers() {
         this.controllerCollection.put(MainController.class,getResourceURL("/views/app/AppView.fxml"));
-        this.controllerCollection.put(LoginController.class, getResourceURL("/views/login/LoginView.fxml"));
-        this.controllerCollection.put(RegistrationController.class,getResourceURL("/views/registration/RegistrationView.fxml"));
+        this.controllerCollection.put(LoginControllerImplementation.class, getResourceURL("/views/login/LoginView.fxml"));
+        this.controllerCollection.put(RegistrationControllerImplementation.class,getResourceURL("/views/registration/RegistrationView.fxml"));
     }
     private void addMainControllerComponents() {
+        this.mainControllerComponents.put(NavbarController.class,getResourceURL("/views/app/components/navbar/Navbar.fxml"));
+        this.mainControllerComponents.put(StatsComponent.class,getResourceURL("/views/app/components/stats/components/StatsComponent.fxml"));
         this.mainControllerComponents.put(CurrencyComponent.class,getResourceURL("/views/app/components/market/components/CurrencyComponent.fxml"));
+
         this.mainControllerComponents.put(MarketController.class,getResourceURL("/views/app/components/market/MarketView.fxml"));
+        this.mainControllerComponents.put(BankController.class,getResourceURL("/views/app/components/bank/BankView.fxml"));
+        this.mainControllerComponents.put(StatsController.class,getResourceURL("/views/app/components/stats/StatsView.fxml"));
     }
     private void addDialogControllers() {
         this.dialogControllerCollection.put(PurchaseDialogController.class,getResourceURL("/views/dialog/purchase/PurchaseDialogView.fxml"));
@@ -121,13 +134,19 @@ public class DefaultSceneManager implements SceneManager {
         return controllerInstance;
     }
 
-    public <T extends WindowController> void showScene(Class<T> controllerClass,String title) throws Exception {
+    public <T extends WindowController> WindowController showScene(Class<T> controllerClass,String title) throws Exception {
         var controllerInstance = loadController(controllerClass);
+
+        if(!controllerInstances.containsKey(controllerInstance.getClass())) {
+            controllerInstances.put(controllerInstance.getClass(),controllerInstance);
+        }
 
         primaryStage.setScene(controllerInstance.getScene());
         primaryStage.setResizable(controllerInstance.isResizable());
         primaryStage.setTitle(title);
         primaryStage.show();
+
+        return controllerInstance;
     }
 
     @Override
@@ -136,23 +155,48 @@ public class DefaultSceneManager implements SceneManager {
     }
 
     @Override
-    public void showMainScene() throws Exception {
-        showScene(MainController.class,"Main");
+    public WindowController showMainScene() throws Exception {
+        return showScene(MainController.class,"Main");
     }
 
     @Override
-    public void showLoginScene() throws Exception {
-        showScene(LoginController.class,"Login");
+    public WindowController showLoginScene() throws Exception {
+        return showScene(LoginControllerImplementation.class,"Login");
     }
 
     @Override
-    public void showRegistrationScene() throws Exception {
-        showScene(RegistrationController.class,"Registration");
+    public WindowController showRegistrationScene() throws Exception {
+        return showScene(RegistrationControllerImplementation.class,"Registration");
+    }
+
+    @Override
+    public MainController getMainController() {
+        return context.getBean(MainController.class);//controllerInstances.get(MainControllerImplementation.class);
+    }
+
+    @Override
+    public Controller getNavbarController() throws Exception {
+        return loadControllerComponent(NavbarController.class);
     }
 
     @Override
     public Controller getMarketComponentController() throws Exception {
         return loadControllerComponent(MarketController.class);
+    }
+
+    @Override
+    public Controller getBankController() throws Exception {
+        return loadControllerComponent(BankController.class);
+    }
+
+    @Override
+    public StatsController getStatsController() throws Exception {
+        return (StatsController) loadControllerComponent(StatsController.class);
+    }
+
+    @Override
+    public Controller createStatsComponent() throws Exception {
+        return loadControllerComponent(StatsComponent.class);
     }
 
     @Override
@@ -168,6 +212,15 @@ public class DefaultSceneManager implements SceneManager {
         }
 
         return createDialog(PurchaseDialogController.class,"Purchase currency",250,135,false);
+    }
+
+    @Override
+    public void createAlert(Alert.AlertType alertType, String title,String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @Override

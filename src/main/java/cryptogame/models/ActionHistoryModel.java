@@ -1,17 +1,33 @@
 package cryptogame.models;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @lombok.Data
 public class ActionHistoryModel {
     @Id
     @GeneratedValue
+    @Column
     private long id;
+    private String name;
     private double amount;
-    private double actionTime;
+    private double cost;
+    private Long actionTime;
 
     @ManyToOne
-    @JoinColumn(insertable = false,updatable = false,nullable = false)
     private UserModel user;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ActionHistoryModel that = (ActionHistoryModel) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

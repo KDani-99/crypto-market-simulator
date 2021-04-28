@@ -1,6 +1,7 @@
-package cryptogame.controllers;
+package cryptogame.controllers.login;
 
 import cryptogame.common.validation.ValidationError;
+import cryptogame.controllers.BaseController;
 import cryptogame.services.Service;
 import cryptogame.services.auth.AuthService;
 import cryptogame.services.exception.ValidationException;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 @Component
-public class LoginController extends BaseController {
+public class LoginControllerImplementation extends BaseController implements LoginController {
 
     @FXML private TextField usernameInput;
     @FXML private PasswordField passwordInput;
@@ -33,7 +34,7 @@ public class LoginController extends BaseController {
     private final Service serviceHandler;
 
     @Autowired
-    public LoginController(Service serviceHandler) {
+    public LoginControllerImplementation(Service serviceHandler) {
         super( false,400,500);
         this.serviceHandler = serviceHandler;
     }
@@ -45,13 +46,13 @@ public class LoginController extends BaseController {
         this.setupRegisterButton();
         errorPane.setVisible(false);
     }
-    @Override
-    public void showError(String message,String alertMessage) {
+
+    private void showError(String message,String alertMessage) {
         errorLabel.setText(message);
         errorPane.setVisible(true);
     }
-    @Override
-    public void hideError() {
+
+    private void hideError() {
         errorPane.setVisible(false);
     }
 
@@ -82,7 +83,8 @@ public class LoginController extends BaseController {
 
                     serviceHandler.createSession(result.get().getId());
 
-                    // TODO: Show success message
+                    serviceHandler.getSceneManager()
+                            .showMainScene();
 
                 }  catch (Exception ex) {
 

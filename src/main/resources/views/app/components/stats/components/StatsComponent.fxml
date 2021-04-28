@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane fx:id="gridPane" maxHeight="65.0" minHeight="65.0" prefHeight="65.0" styleClass="statsPane" stylesheets="@StatsComponent.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <columnConstraints>
+        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <children>
+        <Label fx:id="transactionIdLabel" contentDisplay="CENTER" layoutX="10.0" layoutY="-7.0" prefWidth="560.0" styleClass="rank" text="TransactionId" wrapText="true" />
+        <Label fx:id="nameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="-7.0" prefWidth="560.0" styleClass="rank" text="Name" textAlignment="CENTER" GridPane.columnIndex="2" />
+      <Label fx:id="costLabel" contentDisplay="CENTER" layoutX="310.0" layoutY="10.0" prefWidth="560.0" styleClass="rank" text="Cost" GridPane.columnIndex="3" />
+      <Label fx:id="amountLabel" contentDisplay="CENTER" layoutX="410.0" layoutY="10.0" prefWidth="560.0" styleClass="rank" text="Amount" GridPane.columnIndex="4" />
+        <Label fx:id="actionDateLabel" contentDisplay="CENTER" layoutX="323.0" layoutY="-7.0" prefWidth="560.0" styleClass="rank" text="ActionDate" GridPane.columnIndex="5" />
+      <Label fx:id="transactionTypeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="210.0" layoutY="10.0" prefWidth="560.0" styleClass="rank" text="Type" textAlignment="CENTER" GridPane.columnIndex="1" />
+    </children>
+</GridPane>

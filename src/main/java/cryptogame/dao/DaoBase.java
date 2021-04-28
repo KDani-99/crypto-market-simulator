@@ -25,30 +25,30 @@ public abstract class DaoBase<T> implements Dao<T> {
 
     @Override
     public void updateEntity(T entity) throws Exception {
-        //this.executeTransaction(entityManager -> entityManager.merge(entity));
+        this.executeTransaction(entityManager -> entityManager.merge(entity));
     }
 
     @Transactional
     @Override
     public void persistEntity(T entity) throws Exception {
-       //this.executeTransaction(entityManager -> entityManager.persist(entity));
-      /*  var transaction = this.entityManager.getTransaction();
-        transaction.begin();
-        entityManager.persist(entity);
-        transaction.commit();*/
+        this.executeTransaction(entityManager -> entityManager.persist(entity));
     }
 
     @Transactional
     @Override
     public void deleteEntity(T entity) throws Exception {
-        //this.executeTransaction(entityManager -> entityManager.remove(entity));
+        this.executeTransaction(entityManager -> entityManager.remove(entity));
     }
+
     @Transactional
     protected void executeTransaction(Consumer<EntityManager> consumer) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
+
         var transaction = entityManager.getTransaction();
         transaction.begin();
         consumer.accept(entityManager);
         transaction.commit();
+
+        entityManager.close();
     }
 }

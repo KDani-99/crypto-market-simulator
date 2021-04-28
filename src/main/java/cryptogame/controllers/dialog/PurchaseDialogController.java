@@ -62,13 +62,21 @@ public class PurchaseDialogController implements Controller {
                         throw new EntityDoesNotExistException(UserModel.class);
                     }
 
+                    if(user.get().getBalance() < (amount * currency.getPriceUsd())) {
+                        System.out.println("Amount: " + amount + "\t Price would be: " + (amount * currency.getPriceUsd()));
+                        throw new IllegalArgumentException("You can't afford to buy that much");
+                    }
+
                     // Purchase the given currency
                     serviceHandler.getUserDao().purchaseCurrency(user.get(),amount,currency);
+
+                    serviceHandler.getSceneManager().getMainController().refreshUser();
+                    serviceHandler.getSceneManager().getStatsController().refreshUser();
 
                 } catch (Exception ex) {
                     // TODO: log error !
                     //showError(ex.getMessage(),ex.getMessage());
-                    System.out.println(ex.toString());
+                    System.out.println(ex.toString() + "\n" + ex.getStackTrace() + "\n" + ex.getMessage());
                 }
             }
         });
@@ -78,18 +86,9 @@ public class PurchaseDialogController implements Controller {
         amountTextField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                try {
-
-                    var value = Double.parseDouble(t1);
-                    amountTextField.setText(Double.toString(value));
-
-                } catch (Exception ex) {
-                    amountTextField.setText(t1.replaceAll("[^\\d^\\.]", ""));
-                    // ignore
+               if (!t1.matches("-?(([1-9][0-9]*)|0)?(\\.[0-9]*)?")) {
+                    amountTextField.setText(t1.replaceAll("[^\\d.]", ""));
                 }
-               /* if (!t1.matches("\\d*")) {
-                    amountTextField.setText(t1.replaceAll("[^\\d]", ""));
-                }*/
             }
         });
     }

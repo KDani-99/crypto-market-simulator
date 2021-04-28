@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<VBox fx:id="vBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="navbar" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cryptogame.controllers.main.NavbarController">
+<VBox fx:id="vBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="navbar" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER_LEFT" maxHeight="126.0" prefHeight="126.0" prefWidth="250.0" styleClass="info">
          <children>
@@ -33,10 +33,10 @@
       </HBox>
       <VBox prefHeight="380.0" prefWidth="250.0" spacing="15.0" styleClass="buttonContainer">
          <children>
-            <Pane prefHeight="42.0" prefWidth="220.0">
+            <Pane fx:id="marketButtonPane" layoutX="25.0" layoutY="25.0" prefHeight="42.0" prefWidth="220.0">
                <children>
-                  <Button fx:id="homeButton" alignment="BASELINE_LEFT" maxWidth="239.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="220.0" styleClass="selected" text="Home" textAlignment="CENTER" />
-                  <SVGPath content="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" disable="true" fill="GAINSBORO" layoutX="10.0" layoutY="11.0" scaleX="0.75" scaleY="0.75" stroke="TRANSPARENT" />
+                  <Button fx:id="marketButton" alignment="BASELINE_LEFT" maxWidth="239.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" text="Market" />
+                  <SVGPath content="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z" fill="GAINSBORO" layoutX="10.0" layoutY="11.0" scaleX="0.75" scaleY="0.75" />
                </children>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -45,17 +45,9 @@
                   <String fx:value="buttonBox" />
                   <String fx:value="button" />
                   <String fx:value="selected" />
-               </styleClass></Pane>
-            <Pane layoutX="25.0" layoutY="25.0" prefHeight="42.0" prefWidth="220.0" styleClass="buttonBox">
-               <children>
-                  <Button fx:id="marketButton" alignment="BASELINE_LEFT" maxWidth="239.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" text="Market" />
-                  <SVGPath content="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z" fill="GAINSBORO" layoutX="10.0" layoutY="11.0" scaleX="0.75" scaleY="0.75" />
-               </children>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
+               </styleClass>
             </Pane>
-            <Pane layoutX="25.0" layoutY="25.0" prefHeight="42.0" prefWidth="220.0">
+            <Pane fx:id="statsButtonPane" layoutX="25.0" layoutY="25.0" prefHeight="42.0" prefWidth="220.0">
                <children>
                   <Button fx:id="statsButton" alignment="BASELINE_LEFT" maxWidth="239.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="220.0" styleClass="selected" text="Stats" textAlignment="CENTER" />
                   <SVGPath content="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z" disable="true" fill="GAINSBORO" layoutX="10.0" layoutY="11.0" scaleX="0.75" scaleY="0.75" stroke="TRANSPARENT" />
@@ -71,7 +63,7 @@
             <Pane layoutX="25.0" layoutY="25.0" prefHeight="42.0" prefWidth="220.0" styleClass="buttonBox">
                <children>
                   <Button fx:id="settingsButton1" alignment="BASELINE_LEFT" contentDisplay="CENTER" maxWidth="239.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" text="Bank" textAlignment="CENTER" />
-                  <SVGPath content="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" fill="GAINSBORO" layoutX="10.0" layoutY="11.0" scaleX="0.75" scaleY="0.75" />
+                  <SVGPath content="M6.5 10h-2v7h2v-7zm6 0h-2v7h2v-7zm8.5 9H2v2h19v-2zm-2.5-9h-2v7h2v-7zm-7-6.74L16.71 6H6.29l5.21-2.74m0-2.26L2 6v2h19V6l-9.5-5z" fill="GAINSBORO" layoutX="10.0" layoutY="11.0" scaleX="0.75" scaleY="0.75" />
                </children>
                <cursor>
                   <Cursor fx:constant="HAND" />

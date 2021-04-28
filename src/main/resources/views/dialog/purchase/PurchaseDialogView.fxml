@@ -12,7 +12,7 @@
       <Button fx:id="purchaseButton" mnemonicParsing="false" styleClass="buyBtn" text="Purchase" />
    </children>
    <stylesheets>
-      <URL value="@../../common/Common.css" />
+
       <URL value="@PurchaseDialogView.css" />
    </stylesheets>
    <opaqueInsets>
