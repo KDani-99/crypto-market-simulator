@@ -18,10 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Component("userDao")
 public class UserDaoImplementation extends DaoBase<UserModel> implements UserDao {
 
-   /* public UserDaoImplementation(EntityManager entityManager) {
-        super(entityManager);
-    }*/
-
     @Override
     public <TId> Optional<UserModel> getEntity(TId id) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -45,12 +41,6 @@ public class UserDaoImplementation extends DaoBase<UserModel> implements UserDao
         return Optional.ofNullable(user);
     }
 
-    @Transactional
-    @Override
-    public void persistEntity(UserModel entity) throws Exception {
-        super.executeTransaction(entityManager -> entityManager.persist(entity));
-    }
-
     private void purchaseAddToWallet(UserModel user, double amount, CurrencyContainer currency) {
 
         var tempWallet = user.getWallet().stream()
@@ -68,6 +58,7 @@ public class UserDaoImplementation extends DaoBase<UserModel> implements UserDao
 
             var tmp = new CryptoCurrencyModel();
             tmp.setUser(user);
+            tmp.setName(currency.getName());
             tmp.setAmount(amount);
             tmp.setIdName(currency.getId());
 
