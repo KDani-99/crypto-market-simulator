@@ -1,8 +1,6 @@
 package cryptogame.controllers;
 
 import cryptogame.Main;
-import cryptogame.controllers.main.HomeController;
-import cryptogame.controllers.main.market.MarketController;
 import cryptogame.controllers.main.NavbarController;
 import cryptogame.services.Service;
 import javafx.fxml.FXML;
@@ -12,11 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MainControllerImplementation extends BaseController {
+public class MainControllerImplementation extends BaseController implements MainController {
 
     private NavbarController navbarController;
-    private HomeController homeController;
-    private MarketController marketController;
+
+    private Controller marketController;
+    private Controller statsController;
 
     @FXML private BorderPane mainComponent;
 
@@ -25,7 +24,7 @@ public class MainControllerImplementation extends BaseController {
     private final Service serviceHandler;
 
     @Autowired
-    public MainController(Service serviceHandler) {
+    public MainControllerImplementation(Service serviceHandler) {
 
         super(true,1024,768);
         this.serviceHandler = serviceHandler;
@@ -43,7 +42,7 @@ public class MainControllerImplementation extends BaseController {
         this.setUserInfo();
 
         this.setMarket(); // @test -> default
-
+        //this.setStats();
     }
 
     private void setUserInfo() {
@@ -52,46 +51,80 @@ public class MainControllerImplementation extends BaseController {
                 .getEntity(serviceHandler.getSession().getActiveUserId());
 
         navbarController.setLoggedInUsernameLabelText(user.get().getUsername());
-        navbarController.setBalanceLabelText(Double.toString(user.get().getBalance()));
+        navbarController.setBalanceLabelText(String.format("~$%.4f",user.get().getBalance()));
+    }
+
+    private void setEmpty() {
+        if(this.hBox.getChildren().size() > 1)
+            this.hBox.getChildren()
+                    .remove(1);
     }
 
     private void setNavbar() {
         try {
 
-            var loader = new FXMLLoader(Main.class.getResource("/views/app/components/navbar/Navbar.fxml"));
-            hBox.getChildren().add(loader.load());
+           // var loader = new FXMLLoader(
+               //     Main.class.getResource());
 
-            navbarController = loader.getController();
+            var navbarController = serviceHandler.getSceneManager().getNavbarController();
 
-            navbarController.vBox.setMaxHeight(Double.MAX_VALUE);
+            hBox.getChildren().add(navbarController.getRoot());
 
+            this.navbarController = (NavbarController) navbarController;//loader.getController();
 
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
-        }
-    }
+            this.navbarController.vBox.setMaxHeight(Double.MAX_VALUE);
 
-    private void setHome() {
-        try {
-
-            var loader = new FXMLLoader(Main.class.getResource("/views/app/components/home/HomeView.fxml"));
-            hBox.getChildren().add(loader.load());
-
-            homeController = loader.getController();
 
         } catch (Exception ex) {
             System.out.println(ex.toString());
         }
     }
 
-    private void setMarket() {
+    @Override
+    public void setMarket() {
         try {
 
-            var marketController = serviceHandler.getSceneManager().getMarketComponentController();
+            this.setEmpty();
+
+            if(marketController == null) {
+                marketController = serviceHandler.getSceneManager().getMarketComponentController();
+                marketController.initialize();
+            }
 
             hBox.getChildren().add(marketController.getRoot());
-            marketController.initialize();
 
+        } catch (Exception ex) {
+            System.out.println("Error => "+ex.getMessage());
+        }
+    }
+    @Override
+    public void setBank() {
+        try {
+
+            this.setEmpty();
+
+            var bankController = serviceHandler.getSceneManager().getBankController();
+
+            hBox.getChildren().add(bankController.getRoot());
+            bankController.initialize();
+
+
+        } catch (Exception ex) {
+            System.out.println("Error => "+ex.getMessage());
+        }
+    }
+    @Override
+    public void setStats() {
+        try {
+
+            this.setEmpty();
+
+            if(statsController == null) {
+                statsController = serviceHandler.getSceneManager().getStatsController();
+                statsController.initialize();
+            }
+
+            hBox.getChildren().add(statsController.getRoot());
 
         } catch (Exception ex) {
             System.out.println("Error => "+ex.getMessage());
@@ -99,17 +132,12 @@ public class MainControllerImplementation extends BaseController {
     }
 
     @Override
-    public void showError(String message, String alertMessage) {
-
-    }
-
-    @Override
-    public void hideError() {
-
-    }
-
-    @Override
     public void initialize() throws Exception {
 
+    }
+
+    @Override
+    public void refreshUser() {
+        this.setUserInfo();
     }
 }
