@@ -8,8 +8,8 @@ import cryptogame.common.validation.Validate;
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity//(name = "users")
-@Table//(name = "users")
+@Entity
+@Table
 @lombok.Data
 public class UserModel {
     @Id
@@ -25,19 +25,16 @@ public class UserModel {
     @Validate(validatorClass = PasswordValidation.class)
     private String password;
 
-    @OneToMany(mappedBy = "user")
-    private Set<Session> sessions;
-
     private double balance;
 
     @OneToMany(mappedBy = "user")
     private Set<CryptoCurrencyModel> wallet;
 
     @OneToMany(mappedBy = "user")
-    private Set<ActionHistoryModel> purchaseHistory;
+    private Set<PurchaseHistoryModel> purchaseHistory;
 
     @OneToMany(mappedBy = "user")
-    private Set<ActionHistoryModel> sellHistory;
+    private Set<SellHistoryModel> sellHistory;
 
     public UserModel() {}
 
