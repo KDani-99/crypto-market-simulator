@@ -86,18 +86,9 @@ public class PurchaseDialogController implements Controller {
         amountTextField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                try {
-
-                    var value = Double.parseDouble(t1);
-                    amountTextField.setText(Double.toString(value));
-
-                } catch (Exception ex) {
-                    amountTextField.setText(t1.replaceAll("[^\\d^\\.]", ""));
-                    // ignore
+               if (!t1.matches("-?(([1-9][0-9]*)|0)?(\\.[0-9]*)?")) {
+                    amountTextField.setText(t1.replaceAll("[^\\d.]", ""));
                 }
-               /* if (!t1.matches("\\d*")) {
-                    amountTextField.setText(t1.replaceAll("[^\\d]", ""));
-                }*/
             }
         });
     }
