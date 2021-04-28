@@ -31,15 +31,7 @@ public abstract class BaseController implements WindowController,Controller {
         root = parent;
         this.scene = new Scene(parent,this.initialWidth,this.initialHeight);
     }
-    //protected BaseController() {}
 
-   /* public void setControllers(Map<Class<? extends BaseController>, BaseController> controllers) {
-        this.controllers = controllers;
-    }*/
-
-    /*protected BaseController getController(Class<? extends BaseController> controllerClass) {
-        return controllers.get(controllerClass);
-    }*/
     public Scene getScene() {
         return this.scene;
     }
@@ -58,10 +50,6 @@ public abstract class BaseController implements WindowController,Controller {
 
     @Override
     public abstract void initScene();
-    @Override
-    public abstract void showError(String message,String alertMessage);
-    @Override
-    public abstract void hideError();
     @Override
     public Node getRoot() {
         return this.root;
