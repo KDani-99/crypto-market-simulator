@@ -12,6 +12,7 @@ public class CryptoCurrencyModel {
     @Column
     private long id;
     private String idName;
+    private String name;
     private double amount;
 
     @ManyToOne
