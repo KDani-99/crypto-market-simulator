@@ -62,13 +62,21 @@ public class PurchaseDialogController implements Controller {
                         throw new EntityDoesNotExistException(UserModel.class);
                     }
 
+                    if(user.get().getBalance() < (amount * currency.getPriceUsd())) {
+                        System.out.println("Amount: " + amount + "\t Price would be: " + (amount * currency.getPriceUsd()));
+                        throw new IllegalArgumentException("You can't afford to buy that much");
+                    }
+
                     // Purchase the given currency
                     serviceHandler.getUserDao().purchaseCurrency(user.get(),amount,currency);
+
+                    serviceHandler.getSceneManager().getMainController().refreshUser();
+                    serviceHandler.getSceneManager().getStatsController().refreshUser();
 
                 } catch (Exception ex) {
                     // TODO: log error !
                     //showError(ex.getMessage(),ex.getMessage());
-                    System.out.println(ex.toString());
+                    System.out.println(ex.toString() + "\n" + ex.getStackTrace() + "\n" + ex.getMessage());
                 }
             }
         });
