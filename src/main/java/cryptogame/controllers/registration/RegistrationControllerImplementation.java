@@ -46,8 +46,8 @@ public class RegistrationController extends BaseController {
         this.setupRegisterButton();
         this.errorPane.setVisible(false);
     }
-    @Override
-    public void showError(String message,String alertMessage) {
+
+    private void showError(String message,String alertMessage) {
 
         errorLabel.setText(message);
         errorPane.setVisible(true);
@@ -59,8 +59,8 @@ public class RegistrationController extends BaseController {
         alert.showAndWait();
 
     }
-    @Override
-    public void hideError() {
+
+    private void hideError() {
         errorPane.setVisible(false);
     }
 
@@ -86,7 +86,10 @@ public class RegistrationController extends BaseController {
     }
 
     private void removeErrorMarkers() {
+
+        errorLabel.setText("");
         errorPane.setVisible(false);
+
         usernameInput.getStyleClass().remove("input-error");
         emailInput.getStyleClass().remove("input-error");
         passwordInput.getStylesheets().remove("input-error");
@@ -109,7 +112,12 @@ public class RegistrationController extends BaseController {
         errorPane.setVisible(true);
         errorLabel.setText("Registration failed");
 
-        // + popup error
+        for(var error : validationErrorSet) {
+
+            serviceHandler.getSceneManager()
+                    .createAlert(Alert.AlertType.ERROR,"Invalid " + error.getFieldName(),error.getMessage());
+        }
+
     }
 
     private void setupRegisterButton() {
@@ -128,6 +136,7 @@ public class RegistrationController extends BaseController {
                     user.setUsername(username);
                     user.setEmail(email);
                     user.setPassword(password);
+                    user.setBalance(1000.d);
 
                     var validationResult = Validation.validateObject(user);
 
@@ -136,19 +145,21 @@ public class RegistrationController extends BaseController {
                     }
 
                     if(serviceHandler.getUserDao().getEntityBy("username",username).isPresent()) {
-                        validationResult.add(new ValidationError("username","Username is already in use"));
+                        validationResult.add(new ValidationError("username","Username is already in use."));
                         throw new ValidationException(validationResult);
                     }
 
                     if(serviceHandler.getUserDao().getEntityBy("email",email).isPresent()) {
-                        validationResult.add(new ValidationError("email","Email address is already in use"));
+                        validationResult.add(new ValidationError("email","Email address is already in use."));
                         throw new ValidationException(validationResult);
                     }
 
                     user.setPassword(AuthService.generatePasswordHash(password));
 
                     serviceHandler.getUserDao().persistEntity(user);
-                    System.out.println("Successful");
+
+                    serviceHandler.getSceneManager()
+                            .createAlert(Alert.AlertType.INFORMATION,"Successful","You can now log in");
 
                 } catch(ValidationException ex) {
 

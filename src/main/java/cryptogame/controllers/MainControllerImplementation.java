@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MainController extends BaseController {
+public class MainControllerImplementation extends BaseController {
 
     private NavbarController navbarController;
     private HomeController homeController;
@@ -40,8 +40,19 @@ public class MainController extends BaseController {
                 .setMinHeight(450);
 
         this.setNavbar();
+        this.setUserInfo();
 
         this.setMarket(); // @test -> default
+
+    }
+
+    private void setUserInfo() {
+
+        var user = serviceHandler.getUserDao()
+                .getEntity(serviceHandler.getSession().getActiveUserId());
+
+        navbarController.setLoggedInUsernameLabelText(user.get().getUsername());
+        navbarController.setBalanceLabelText(Double.toString(user.get().getBalance()));
     }
 
     private void setNavbar() {
@@ -53,6 +64,7 @@ public class MainController extends BaseController {
             navbarController = loader.getController();
 
             navbarController.vBox.setMaxHeight(Double.MAX_VALUE);
+
 
         } catch (Exception ex) {
             System.out.println(ex.toString());

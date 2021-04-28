@@ -45,13 +45,13 @@ public class LoginController extends BaseController {
         this.setupRegisterButton();
         errorPane.setVisible(false);
     }
-    @Override
-    public void showError(String message,String alertMessage) {
+
+    private void showError(String message,String alertMessage) {
         errorLabel.setText(message);
         errorPane.setVisible(true);
     }
-    @Override
-    public void hideError() {
+
+    private void hideError() {
         errorPane.setVisible(false);
     }
 
@@ -82,7 +82,8 @@ public class LoginController extends BaseController {
 
                     serviceHandler.createSession(result.get().getId());
 
-                    // TODO: Show success message
+                    serviceHandler.getSceneManager()
+                            .showMainScene();
 
                 }  catch (Exception ex) {
 
