@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-public class CurrencyComponent implements Initializable, Controller {
+public class CurrencyComponent implements Controller {
 
     private CryptoCurrency currency;
 
@@ -31,8 +31,6 @@ public class CurrencyComponent implements Initializable, Controller {
     @FXML private Label supplyLabel;
     @FXML private Label changePercentLabel;
     @FXML private Button purchaseButton;
-
-    private boolean initialized = false;
 
     private final Service serviceHandler;
 
@@ -54,8 +52,6 @@ public class CurrencyComponent implements Initializable, Controller {
 
         this.bindData();
         this.bindPurchaseButton();
-
-        initialized = true;
     }
 
     private void bindData() {
