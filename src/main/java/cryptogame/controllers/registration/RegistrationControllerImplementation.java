@@ -1,7 +1,8 @@
-package cryptogame.controllers;
+package cryptogame.controllers.registration;
 
 import cryptogame.common.validation.Validation;
 import cryptogame.common.validation.ValidationError;
+import cryptogame.controllers.BaseController;
 import cryptogame.models.UserModel;
 import cryptogame.services.Service;
 
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 @Component
-public class RegistrationController extends BaseController {
+public class RegistrationControllerImplementation extends BaseController implements RegistrationController {
 
     @FXML private TextField usernameInput;
     @FXML private TextField emailInput;
@@ -34,7 +35,7 @@ public class RegistrationController extends BaseController {
     private final Service serviceHandler;
 
     @Autowired
-    public RegistrationController(Service serviceHandler) {
+    public RegistrationControllerImplementation(Service serviceHandler) {
         super(
                 false,400,500);
         this.serviceHandler = serviceHandler;
