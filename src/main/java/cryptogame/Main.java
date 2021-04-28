@@ -19,7 +19,7 @@ public class Main extends Application {
         ctx.refresh();
 
         var sceneManager = ctx.getBean(SceneManager.class);
-        sceneManager.showRegistrationScene();
+        sceneManager.showLoginScene();
 
     }
     public static void main(String[] args) {
