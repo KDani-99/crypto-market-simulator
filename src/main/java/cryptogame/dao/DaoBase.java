@@ -43,12 +43,16 @@ public abstract class DaoBase<T> implements Dao<T> {
     public void deleteEntity(T entity) throws Exception {
         //this.executeTransaction(entityManager -> entityManager.remove(entity));
     }
+
     @Transactional
     protected void executeTransaction(Consumer<EntityManager> consumer) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
+
         var transaction = entityManager.getTransaction();
         transaction.begin();
         consumer.accept(entityManager);
         transaction.commit();
+
+        entityManager.close();
     }
 }
