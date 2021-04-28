@@ -63,14 +63,11 @@ public class MainControllerImplementation extends BaseController implements Main
     private void setNavbar() {
         try {
 
-           // var loader = new FXMLLoader(
-               //     Main.class.getResource());
-
             var navbarController = serviceHandler.getSceneManager().getNavbarController();
 
             hBox.getChildren().add(navbarController.getRoot());
 
-            this.navbarController = (NavbarController) navbarController;//loader.getController();
+            this.navbarController = (NavbarController) navbarController;
 
             this.navbarController.vBox.setMaxHeight(Double.MAX_VALUE);
 
