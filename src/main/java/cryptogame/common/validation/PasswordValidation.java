@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 public class PasswordValidation implements IValidation<String>{
 
-    private final String errorMessage = "Invalid password";
+    private final String errorMessage = "Password must be at least 8 characters long, and must include a number, lowercase and uppercase letter, and a special character.";
 
     private static final Pattern pattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*])(?=.{6,255})");
     @Override
