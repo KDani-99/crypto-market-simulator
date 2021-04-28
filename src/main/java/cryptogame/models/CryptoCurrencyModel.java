@@ -1,9 +1,6 @@
 package cryptogame.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -11,12 +8,13 @@ import java.util.Objects;
 public class CryptoCurrencyModel {
 
     @Id
+    @GeneratedValue
+    @Column
     private long id;
     private String idName;
     private double amount;
 
     @ManyToOne
-    @JoinColumn(insertable = false,updatable = false,nullable = false)
     private UserModel user;
 
     @Override
