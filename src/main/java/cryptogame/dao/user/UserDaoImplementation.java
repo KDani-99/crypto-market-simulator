@@ -6,8 +6,10 @@ import cryptogame.containers.CurrencyContainer;
 import cryptogame.dao.DaoBase;
 
 import javax.persistence.EntityManager;
+import java.util.Calendar;
 import java.util.Optional;
 
+import cryptogame.models.PurchaseHistoryModel;
 import cryptogame.models.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -50,6 +52,7 @@ public class UserDaoImplementation extends DaoBase<UserModel> implements UserDao
     }
 
     private void purchaseAddToWallet(UserModel user, double amount, CurrencyContainer currency) {
+
         var tempWallet = user.getWallet().stream()
                 .filter(elem -> elem.getIdName().equals(currency.getId())).findFirst();
 
@@ -60,12 +63,19 @@ public class UserDaoImplementation extends DaoBase<UserModel> implements UserDao
 
             user.getWallet().remove(tmp);
             user.getWallet().add(tmp);
+
         } else {
+
             var tmp = new CryptoCurrencyModel();
             tmp.setUser(user);
             tmp.setAmount(amount);
             tmp.setIdName(currency.getId());
+
+            user.getWallet().add(tmp);
+
+            executeTransaction(entityManager -> entityManager.persist(tmp));
         }
+
     }
 
     private void purchaseDecreaseBalance(UserModel user, double amount, CurrencyContainer currency)
@@ -75,19 +85,27 @@ public class UserDaoImplementation extends DaoBase<UserModel> implements UserDao
         user.setBalance(newBalance);
     }
 
+    private void createActionHistory(UserModel user, double amount, CurrencyContainer currency) {
+        var purchase = new PurchaseHistoryModel();
+        purchase.setUser(user);
+        purchase.setActionTime(Calendar.getInstance().getTimeInMillis());
+        purchase.setAmount(amount);
+        purchase.setCost(amount * currency.getPriceUsd());
+        purchase.setName(currency.getId());
+
+        user.getPurchaseHistory().add(purchase);
+
+        executeTransaction(entityManager -> entityManager.persist(purchase));
+    }
+
     @Override
     public void purchaseCurrency(UserModel user, double amount, CurrencyContainer currency) {
 
         purchaseAddToWallet(user,amount,currency);
         purchaseDecreaseBalance(user,amount,currency);
+        createActionHistory(user,amount,currency);
 
-        this.executeTransaction(entityManager -> entityManager.merge(user)); // update data
+        executeTransaction(entityManager -> entityManager.merge(user));
 
-        var purchase = new ActionHistoryModel();
-        purchase.setActionTime(System.currentTimeMillis());
-        purchase.setAmount(amount);
-        purchase.setUser(user);
-
-        this.executeTransaction(entityManager -> entityManager.persist(purchase));
     }
 }
