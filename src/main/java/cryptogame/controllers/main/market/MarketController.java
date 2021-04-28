@@ -42,7 +42,7 @@ public class MarketController implements Initializable, Controller {
 
     private boolean sorted = true;
 
-    private Service serviceHandler;
+    private final Service serviceHandler;
 
     private boolean initialized = false;
 
