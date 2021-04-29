@@ -112,7 +112,7 @@ public class LoginControllerImplementation extends BaseController implements Log
     }
 
     @Override
-    public void initialize() throws Exception {
+    public void initialize() {
 
     }
 }
