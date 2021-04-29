@@ -1,4 +1,6 @@
 package cryptogame.controllers.login;
 
-public interface LoginController {
+import cryptogame.controllers.WindowController;
+
+public interface LoginController  extends WindowController {
 }
