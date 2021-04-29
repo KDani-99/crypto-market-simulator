@@ -129,7 +129,7 @@ public class MainControllerImplementation extends BaseController implements Main
     }
 
     @Override
-    public void initialize() throws Exception {
+    public void initialize() {
 
     }
 
