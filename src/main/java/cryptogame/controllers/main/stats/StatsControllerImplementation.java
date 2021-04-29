@@ -46,7 +46,7 @@ public class StatsControllerImplementation implements StatsController {
     }
 
     @Override
-    public void initialize() throws Exception {
+    public void initialize() {
 
         if(initialized) return; // TODO: Fix init call
 
@@ -63,39 +63,38 @@ public class StatsControllerImplementation implements StatsController {
         initialized = true;
     }
 
-    private void loadStats() {
+    private void loadStatsComponent(ActionHistoryModel action,StatsComponent.ActionType actionType) throws Exception {
+
+        var statsComponent = (StatsComponent) serviceHandler.getSceneManager().createStatsComponent();
+        statsComponent.setAction(action);
+        statsComponent.setActionType(StatsComponent.ActionType.SELL);
+        statsComponent.initialize();
+
+        vBox.getChildren().add(statsComponent.getRoot());
+    }
+
+    private void loadStatsComponentWithErrHandling(ActionHistoryModel action,StatsComponent.ActionType actionType) {
         try {
-
-            var user = serviceHandler.getUserDao()
-                    .getEntity(serviceHandler.getSession().getActiveUserId());
-
-            var purchaseHistory = user.get().getPurchaseHistory();
-            var sellHistory = user.get().getSellHistory();
-
-            for(var action : purchaseHistory) {
-
-                var statsComponent = (StatsComponent) serviceHandler.getSceneManager().createStatsComponent();
-                statsComponent.setAction(action);
-                statsComponent.setActionType(StatsComponent.ActionType.PURCHASE);
-                statsComponent.initialize();
-
-                vBox.getChildren().add(statsComponent.getRoot());
-            }
-
-            for(var action : sellHistory) {
-
-                var statsComponent = (StatsComponent) serviceHandler.getSceneManager().createStatsComponent();
-                statsComponent.setAction(action);
-                statsComponent.setActionType(StatsComponent.ActionType.SELL);
-                statsComponent.initialize();
-
-                vBox.getChildren().add(statsComponent.getRoot());
-
-            }
-
-
+            loadStatsComponent(action,actionType);
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            // TODO: add logging
+        }
+    }
+
+    private void loadStats() {
+
+        var user = serviceHandler.getUserDao()
+                .getEntity(serviceHandler.getSession().getActiveUserId());
+
+        var purchaseHistory = user.get().getPurchaseHistory();
+        var sellHistory = user.get().getSellHistory();
+
+        for(var action : purchaseHistory) {
+            loadStatsComponentWithErrHandling(action,StatsComponent.ActionType.PURCHASE);
+        }
+
+        for(var action : sellHistory) {
+            loadStatsComponentWithErrHandling(action,StatsComponent.ActionType.SELL);
         }
     }
 
