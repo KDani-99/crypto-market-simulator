@@ -64,6 +64,14 @@ public class MarketController implements Initializable, Controller {
 
         HBox.setHgrow(scrollPane, Priority.ALWAYS);
 
+        this.bindRankSorting();
+
+        this.loadMarket();
+
+        initialized = true;
+    }
+
+    private void bindRankSorting() {
         rankHeaderLabel.setOnMouseClicked(new EventHandler<>() {
             @Override
             public void handle(MouseEvent event) {
@@ -77,10 +85,6 @@ public class MarketController implements Initializable, Controller {
                 }
             }
         });
-
-        this.loadMarket();
-
-        initialized = true;
     }
 
     private void changeRankHeaderOrderIndicator() {
@@ -128,25 +132,31 @@ public class MarketController implements Initializable, Controller {
         this.vBox.getChildren().addAll(sortedList);
     }
 
-    private void loadMarket() {
+    private void loadCurrencyComponent(CryptoCurrency currency) throws Exception {
+        var currencyComponent = (CurrencyComponent) serviceHandler.getSceneManager().createCurrencyComponent();
+        currencyComponent.setCurrency(currency);
+        currencyComponent.initialize();
+
+        vBox.getChildren().add(currencyComponent.getRoot());
+    }
+
+    private void loadCurrencyComponentWithErrHandling(CryptoCurrency currency) {
         try {
-            var currencies = sorted
-                    ?
-                    serviceHandler.getMarketManager().getCurrencies().stream().sorted().collect(Collectors.toList())
-                    :
-                    serviceHandler.getMarketManager().getCurrencies().stream().sorted(Comparator.comparingInt(CryptoCurrency::getRank).reversed()).collect(Collectors.toList());
-
-            for(var currency : currencies) {
-
-                var currencyComponent = (CurrencyComponent) serviceHandler.getSceneManager().createCurrencyComponent();
-                currencyComponent.setCurrency(currency);
-                currencyComponent.initialize();
-
-                vBox.getChildren().add(currencyComponent.getRoot());
-            }
-
+            loadCurrencyComponent(currency);
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            // TODO: log errors
+        }
+    }
+
+    private void loadMarket() {
+        var currencies = sorted
+                ?
+                serviceHandler.getMarketManager().getCurrencies().stream().sorted().collect(Collectors.toList())
+                :
+                serviceHandler.getMarketManager().getCurrencies().stream().sorted(Comparator.comparingInt(CryptoCurrency::getRank).reversed()).collect(Collectors.toList());
+
+        for(var currency : currencies) {
+            loadCurrencyComponentWithErrHandling(currency);
         }
     }
 
