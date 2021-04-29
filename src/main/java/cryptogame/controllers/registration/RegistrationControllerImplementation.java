@@ -175,7 +175,7 @@ public class RegistrationControllerImplementation extends BaseController impleme
         });
     }
     @Override
-    public void initialize() throws Exception {
+    public void initialize() {
 
     }
 }
