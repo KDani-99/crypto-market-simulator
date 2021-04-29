@@ -1,0 +1,9 @@
+.main .sellBtn {
+    -fx-pref-height: 50px;
+    -fx-pref-width: 150px;
+    -fx-max-height: 50px;
+    -fx-max-width: 150px;
+    -fx-min-height: 50px;
+    -fx-min-width: 150px;
+    -fx-background-color: red;
+}
