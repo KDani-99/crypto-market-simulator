@@ -25,7 +25,7 @@ import java.net.URL;
 import java.util.HashMap;
 
 @Component("sceneManager")
-public class DefaultSceneManager implements SceneManager {
+public class SceneManagerImplementation implements SceneManager {
 
     private final ApplicationContext context;
 
@@ -40,7 +40,7 @@ public class DefaultSceneManager implements SceneManager {
     private final Stage primaryStage;
 
     @Autowired
-    public DefaultSceneManager(ApplicationContext context, Stage primaryStage) {
+    public SceneManagerImplementation(ApplicationContext context, Stage primaryStage) {
         this.context = context;
         this.primaryStage = primaryStage;
         this.controllerCollection = new HashMap<>();

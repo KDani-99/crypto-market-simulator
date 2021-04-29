@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 
 @Component("marketManager")
-public class DefaultMarketManager implements MarketManager {
+public class MarketManagerImplementation implements MarketManager {
 
     private Duration timeout = Duration.ofMinutes(1);
     private HttpClient httpClient;
@@ -26,7 +26,7 @@ public class DefaultMarketManager implements MarketManager {
 
     private long previousRefreshTimestamp = 0L;
 
-   public DefaultMarketManager() throws Exception {
+   public MarketManagerImplementation() throws Exception {
         this.httpClient = buildHttpClient();
 
         // test
