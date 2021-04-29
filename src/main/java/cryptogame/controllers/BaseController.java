@@ -36,13 +36,6 @@ public abstract class BaseController implements WindowController,Controller {
         return this.scene;
     }
 
-    public void setVersionLabelText(String text) {
-        if(this.versionLabel == null) {
-            return;
-        }
-        this.versionLabel.setText(text);
-    }
-
     @Override
     public boolean isResizable() {
         return this.isResizable;
