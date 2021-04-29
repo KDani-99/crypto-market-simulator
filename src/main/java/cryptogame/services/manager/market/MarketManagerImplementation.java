@@ -33,14 +33,11 @@ public class DefaultMarketManager implements MarketManager {
         this.refreshAssets();
     }
 
-   // public DefaultMarketManager() {}
     private HttpClient buildHttpClient() {
         return HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_1_1)
                 .followRedirects(HttpClient.Redirect.NORMAL)
                 .connectTimeout(Duration.ofSeconds(20))
-               // .proxy(ProxySelector.of(new InetSocketAddress("proxy.example.com", 80)))
-               // .authenticator(Authenticator.getDefault())
                 .build();
     }
 
@@ -53,11 +50,15 @@ public class DefaultMarketManager implements MarketManager {
                 .build();
     }
 
+    private void preservePreviousCurrencies() {
+        previousCurrencies.replaceAll((key, value) -> currencies.get(key));
+        currencies.clear();
+    }
+
     @Override
     public void refreshAssets() throws Exception {
 
-        previousCurrencies.replaceAll((key, value) -> currencies.get(key));
-        currencies.clear();
+        preservePreviousCurrencies();
 
         String ep = "assets";
         var request = buildHttpRequest(ep);
@@ -65,16 +66,12 @@ public class DefaultMarketManager implements MarketManager {
         var result = httpClient
                 .sendAsync(request, HttpResponse.BodyHandlers.ofString())
                 .get();
-                /*.thenApply(HttpResponse::body)
-                .thenAccept(System.out::println)
-                .get();*/
 
         var assets = mapper.readTree(result.body()).get("data");
         for(var currency : assets) {
             var tmp = mapper.treeToValue(currency,CryptoCurrency.class);
             currencies.put(tmp.getId(),tmp);
         }
-        System.out.println("Length: " + currencies.size());
     }
     @Override
     public Collection<CryptoCurrency> getCurrencies() {

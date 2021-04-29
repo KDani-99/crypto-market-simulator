@@ -16,8 +16,6 @@ public class ServiceImpl implements Service {
     private MarketManager marketManager;
     private UserDao userDao;
 
-    private Stage primaryStage;
-
     private Session activeSession;
 
     public ServiceImpl() {

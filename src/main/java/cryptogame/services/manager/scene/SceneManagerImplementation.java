@@ -3,15 +3,14 @@ package cryptogame.services.manager.scene;
 import cryptogame.Main;
 import cryptogame.controllers.*;
 import cryptogame.controllers.dialog.PurchaseDialogController;
-import cryptogame.controllers.login.LoginControllerImplementation;
+import cryptogame.controllers.login.LoginController;
 import cryptogame.controllers.main.NavbarController;
 import cryptogame.controllers.main.bank.BankController;
 import cryptogame.controllers.main.market.MarketController;
 import cryptogame.controllers.main.market.components.CurrencyComponent;
 import cryptogame.controllers.main.stats.StatsController;
-import cryptogame.controllers.main.stats.StatsControllerImplementation;
 import cryptogame.controllers.main.stats.components.StatsComponent;
-import cryptogame.controllers.registration.RegistrationControllerImplementation;
+import cryptogame.controllers.registration.RegistrationController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -38,7 +37,6 @@ public class DefaultSceneManager implements SceneManager {
 
     private final HashMap<Class<?>, Controller> controllerInstances;
 
-    //private final ServiceHandler services;
     private final Stage primaryStage;
 
     @Autowired
@@ -57,8 +55,12 @@ public class DefaultSceneManager implements SceneManager {
         this.addDialogControllers();
     }
 
-    private void loadDefaultScene() throws Exception{
-        this.showScene(MainController.class,"Main");
+    private void loadDefaultScene() {
+        try {
+            this.showScene(MainController.class,"Main");
+        } catch (Exception ex) {
+            // TODO: add logging
+        }
     }
 
     private URL getResourceURL(String path) {
@@ -67,8 +69,8 @@ public class DefaultSceneManager implements SceneManager {
 
     private void addControllers() {
         this.controllerCollection.put(MainController.class,getResourceURL("/views/app/AppView.fxml"));
-        this.controllerCollection.put(LoginControllerImplementation.class, getResourceURL("/views/login/LoginView.fxml"));
-        this.controllerCollection.put(RegistrationControllerImplementation.class,getResourceURL("/views/registration/RegistrationView.fxml"));
+        this.controllerCollection.put(LoginController.class, getResourceURL("/views/login/LoginView.fxml"));
+        this.controllerCollection.put(RegistrationController.class,getResourceURL("/views/registration/RegistrationView.fxml"));
     }
     private void addMainControllerComponents() {
         this.mainControllerComponents.put(NavbarController.class,getResourceURL("/views/app/components/navbar/Navbar.fxml"));
@@ -99,7 +101,7 @@ public class DefaultSceneManager implements SceneManager {
     }
 
     private <T extends Controller> Controller loadControllerComponent(Class<T> controller) throws Exception {
-        var controllerInstance = context.getBean(controller); // create new bean
+        var controllerInstance = context.getBean(controller);
 
         var resourceUrl = mainControllerComponents.get(controller);
 
@@ -161,17 +163,17 @@ public class DefaultSceneManager implements SceneManager {
 
     @Override
     public WindowController showLoginScene() throws Exception {
-        return showScene(LoginControllerImplementation.class,"Login");
+        return showScene(LoginController.class,"Login");
     }
 
     @Override
     public WindowController showRegistrationScene() throws Exception {
-        return showScene(RegistrationControllerImplementation.class,"Registration");
+        return showScene(RegistrationController.class,"Registration");
     }
 
     @Override
     public MainController getMainController() {
-        return context.getBean(MainController.class);//controllerInstances.get(MainControllerImplementation.class);
+        return context.getBean(MainController.class);
     }
 
     @Override
@@ -224,7 +226,7 @@ public class DefaultSceneManager implements SceneManager {
     }
 
     @Override
-    public void initialize() throws Exception {
+    public void initialize() {
         this.loadDefaultScene();
     }
 }
