@@ -5,6 +5,7 @@ import cryptogame.controllers.main.NavbarController;
 import cryptogame.services.Service;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.layout.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,18 +32,23 @@ public class MainControllerImplementation extends BaseController implements Main
 
     }
 
+    private void setWindowProperties() {
+        var primaryStage = this.serviceHandler.getSceneManager()
+                .getPrimaryStage();
+
+        primaryStage.setMinWidth(800);
+        primaryStage.setMinHeight(450);
+    }
+
     @Override
     public void initScene() {
 
-        this.serviceHandler.getSceneManager()
-                .getPrimaryStage()
-                .setMinHeight(450);
+        this.setWindowProperties();
 
         this.setNavbar();
         this.setUserInfo();
 
-        this.setMarket(); // @test -> default
-        //this.setStats();
+        this.setMarket();
     }
 
     private void setUserInfo() {
@@ -77,6 +83,10 @@ public class MainControllerImplementation extends BaseController implements Main
         }
     }
 
+    private void displayMainNode(Node node) {
+        hBox.getChildren().add(node);
+    }
+
     @Override
     public void setMarket() {
         try {
@@ -88,7 +98,7 @@ public class MainControllerImplementation extends BaseController implements Main
                 marketController.initialize();
             }
 
-            hBox.getChildren().add(marketController.getRoot());
+           displayMainNode(marketController.getRoot());
 
         } catch (Exception ex) {
             System.out.println("Error => "+ex.getMessage());
@@ -101,10 +111,9 @@ public class MainControllerImplementation extends BaseController implements Main
             this.setEmpty();
 
             var bankController = serviceHandler.getSceneManager().getBankController();
-
-            hBox.getChildren().add(bankController.getRoot());
             bankController.initialize();
 
+            displayMainNode(bankController.getRoot());
 
         } catch (Exception ex) {
             System.out.println("Error => "+ex.getMessage());
@@ -121,7 +130,7 @@ public class MainControllerImplementation extends BaseController implements Main
                 statsController.initialize();
             }
 
-            hBox.getChildren().add(statsController.getRoot());
+            displayMainNode(statsController.getRoot());
 
         } catch (Exception ex) {
             System.out.println("Error => "+ex.getMessage());
