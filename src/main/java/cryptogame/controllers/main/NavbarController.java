@@ -42,7 +42,7 @@ public class NavbarController implements Controller {
     }
 
     @Override
-    public void initialize() throws Exception {
+    public void initialize() {
         if(initialized) return;
 
         this.setupMarketButton();
