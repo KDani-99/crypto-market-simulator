@@ -5,8 +5,6 @@ import javafx.scene.Node;
 
 public class BankController implements Controller {
 
-
-
     @Override
     public Node getRoot() {
         return null;
@@ -18,7 +16,7 @@ public class BankController implements Controller {
     }
 
     @Override
-    public void initialize() throws Exception {
+    public void initialize() {
 
     }
 }
