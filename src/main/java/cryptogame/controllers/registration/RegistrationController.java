@@ -1,4 +1,6 @@
 package cryptogame.controllers.registration;
 
-public interface RegistrationController {
+import cryptogame.controllers.WindowController;
+
+public interface RegistrationController extends WindowController  {
 }
