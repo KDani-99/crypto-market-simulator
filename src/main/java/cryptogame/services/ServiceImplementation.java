@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component("serviceHandler")
-public class ServiceImpl implements Service {
+public class ServiceImplementation implements Service {
 
     private SceneManager sceneManager;
     private MarketManager marketManager;
@@ -18,12 +18,12 @@ public class ServiceImpl implements Service {
 
     private Session activeSession;
 
-    public ServiceImpl() {
+    public ServiceImplementation() {
 
     }
 
     @Autowired
-    public ServiceImpl(SceneManager sceneManager,MarketManager marketManager,UserDao userDao) {
+    public ServiceImplementation(SceneManager sceneManager, MarketManager marketManager, UserDao userDao) {
         this.sceneManager = sceneManager;
         this.marketManager = marketManager;
         this.userDao = userDao;
