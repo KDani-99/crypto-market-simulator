@@ -35,11 +35,11 @@ public abstract class AuthService {
     }
 
     public static boolean comparePasswords(String stored, String plain) throws NoSuchAlgorithmException, InvalidKeyException, DecoderException {
-        var splitted = stored.split("\\$");
+        var splittedPassword = stored.split("\\$");
 
-        int saltSize = Integer.parseInt(splitted[1]);
+        int saltSize = Integer.parseInt(splittedPassword[1]);
 
-        var salt = Arrays.copyOfRange(Hex.decodeHex(splitted[2]),0,saltSize);
+        var salt = Arrays.copyOfRange(Hex.decodeHex(splittedPassword[2]),0,saltSize);
 
         return MessageDigest.isEqual(
                 stored.getBytes(),
