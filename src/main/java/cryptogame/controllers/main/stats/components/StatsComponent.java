@@ -45,7 +45,7 @@ public class StatsComponent implements Controller {
     }
 
     @Override
-    public void initialize() throws Exception {
+    public void initialize(){
 
         if(action == null) return;
 
