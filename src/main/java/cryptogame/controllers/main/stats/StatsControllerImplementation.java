@@ -1,10 +1,6 @@
 package cryptogame.controllers.main.stats;
 
-import cryptogame.containers.CryptoCurrency;
-import cryptogame.controllers.Controller;
-import cryptogame.controllers.main.market.components.CurrencyComponent;
 import cryptogame.controllers.main.stats.components.StatsComponent;
-import cryptogame.controllers.registration.RegistrationController;
 import cryptogame.models.ActionHistoryModel;
 import cryptogame.services.Service;
 import javafx.fxml.FXML;
