@@ -11,9 +11,6 @@ import java.net.URL;
 
 public abstract class BaseController implements WindowController,Controller {
 
-    @FXML protected Label versionLabel;
-
-    //protected Map<Class<? extends BaseController>, BaseController> controllers;
     protected Scene scene;
     protected final boolean isResizable;
     protected final int initialWidth;
