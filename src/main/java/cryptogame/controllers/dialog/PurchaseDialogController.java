@@ -48,41 +48,40 @@ public class PurchaseDialogController implements Controller {
         this.bindPurchaseButton();
     }
 
+    private void refreshData() throws Exception {
+        serviceHandler.getSceneManager().getMainController().refreshUser();
+        serviceHandler.getSceneManager().getStatsController().refreshUser();
+    }
+
     private void bindPurchaseButton() {
-        this.purchaseButton.setOnMouseClicked(new EventHandler<>() {
-            @Override
-            public void handle(MouseEvent event) {
-                try {
+        this.purchaseButton.setOnMouseClicked(event -> {
+            try {
 
-                    // Get amount and parse it
-                    var amount = Double.parseDouble(amountTextField.getText());
-                    if(amount <= 0) {
-                        throw new IllegalArgumentException("Unable to purchase 0 or less item");
-                    }
-
-                    // Get user object
-                    var userId = serviceHandler.getSession().getActiveUserId();
-                    var user = serviceHandler.getUserDao().getEntity(userId); // get id from session
-                    if(user.isEmpty()) {
-                        throw new EntityDoesNotExistException(UserModel.class);
-                    }
-
-                    if(user.get().getBalance() < (amount * currency.getPriceUsd())) {
-                        System.out.println("Amount: " + amount + "\t Price would be: " + (amount * currency.getPriceUsd()));
-                        throw new IllegalArgumentException("You can't afford to buy that much");
-                    }
-
-                    // Purchase the given currency
-                    serviceHandler.getUserDao().purchaseCurrency(user.get(),amount,currency);
-
-                    serviceHandler.getSceneManager().getMainController().refreshUser();
-                    serviceHandler.getSceneManager().getStatsController().refreshUser();
-
-                } catch (Exception ex) {
-                    // TODO: log error !
-                    //showError(ex.getMessage(),ex.getMessage());
-                    System.out.println(ex.toString() + "\n" + ex.getStackTrace() + "\n" + ex.getMessage());
+                // Get amount and parse it
+                var amount = Double.parseDouble(amountTextField.getText());
+                if(amount <= 0) {
+                    throw new IllegalArgumentException("Unable to purchase 0 or less item");
                 }
+
+                // Get user object
+                var userId = serviceHandler.getSession().getActiveUserId();
+                var user = serviceHandler.getUserDao().getEntity(userId); // get id from session
+                if(user.isEmpty()) {
+                    throw new EntityDoesNotExistException(UserModel.class);
+                }
+
+                if(user.get().getBalance() < (amount * currency.getPriceUsd())) {
+                    System.out.println("Amount: " + amount + "\t Price would be: " + (amount * currency.getPriceUsd()));
+                    throw new IllegalArgumentException("You can't afford to buy that much");
+                }
+
+                // Purchase the given currency
+                serviceHandler.getUserDao().purchaseCurrency(user.get(),amount,currency);
+
+                refreshData();
+
+            } catch (Exception exception) {
+                logger.error(exception);
             }
         });
     }
