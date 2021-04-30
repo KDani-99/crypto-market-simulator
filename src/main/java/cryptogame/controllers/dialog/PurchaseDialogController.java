@@ -2,6 +2,7 @@ package cryptogame.controllers.dialog;
 
 import cryptogame.containers.CurrencyContainer;
 import cryptogame.controllers.Controller;
+import cryptogame.controllers.MainController;
 import cryptogame.exception.EntityDoesNotExistException;
 import cryptogame.models.UserModel;
 import cryptogame.services.Service;
@@ -14,6 +15,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -23,6 +26,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class PurchaseDialogController implements Controller {
+
+    private static final Logger logger = LogManager.getLogger(PurchaseDialogController.class);
 
     @FXML private Label headerLabel;
     @FXML private TextField amountTextField;
