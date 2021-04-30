@@ -3,6 +3,7 @@ package cryptogame.controllers.registration;
 import cryptogame.common.validation.Validation;
 import cryptogame.common.validation.ValidationError;
 import cryptogame.controllers.BaseController;
+import cryptogame.controllers.MainController;
 import cryptogame.models.UserModel;
 import cryptogame.services.Service;
 
@@ -14,6 +15,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.event.EventHandler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +24,8 @@ import java.util.Set;
 
 @Component
 public class RegistrationControllerImplementation extends BaseController implements RegistrationController {
+
+    private static final Logger logger = LogManager.getLogger(RegistrationController.class);
 
     @FXML private TextField usernameInput;
     @FXML private TextField emailInput;
@@ -42,16 +47,92 @@ public class RegistrationControllerImplementation extends BaseController impleme
     }
 
     @Override
+    public void initialize() {
+
+    }
+
+    @Override
     public void initScene() {
         this.setupLoginButton();
         this.setupRegisterButton();
         this.errorPane.setVisible(false);
     }
 
+    private void setupLoginButton() {
+        this.loginButton.setOnMouseClicked(event -> {
+
+            removeError();
+
+            try {
+
+                serviceHandler.getSceneManager().showLoginScene();
+
+            } catch (Exception exception) {
+                onError(exception);
+            }
+        });
+    }
+    private void setupRegisterButton() {
+        this.registerButton.setOnMouseClicked(event -> {
+            removeErrorMarkers();
+            try {
+
+                var username = usernameInput.getText();
+                var email = emailInput.getText();
+                var password = passwordInput.getText();
+
+                var user = new UserModel();
+                user.setUsername(username);
+                user.setEmail(email);
+                user.setPassword(password);
+                user.setBalance(1000.d);
+
+                var validationResult = Validation.validateObject(user);
+
+                if(validationResult.size() > 0) {
+                    throw new ValidationException(validationResult);
+                }
+
+                if(serviceHandler.getUserDao().getEntityBy("username",username).isPresent()) {
+                    validationResult.add(new ValidationError("username","Username is already in use."));
+                    throw new ValidationException(validationResult);
+                }
+
+                if(serviceHandler.getUserDao().getEntityBy("email",email).isPresent()) {
+                    validationResult.add(new ValidationError("email","Email address is already in use."));
+                    throw new ValidationException(validationResult);
+                }
+
+                user.setPassword(AuthService.generatePasswordHash(password));
+
+                serviceHandler.getUserDao().persistEntity(user);
+
+                serviceHandler.getSceneManager()
+                        .createAlert(Alert.AlertType.INFORMATION,"Successful","You can now log in");
+
+            } catch(ValidationException exception) {
+
+                logger.warn("Registration failed! A validation error has occured.");
+                markValidationErrors(exception.getValidationErrors());
+
+            } catch (Exception exception) {
+                onError(exception);
+            }
+        });
+    }
+
+    private void showErrorPaneMessage(String message) {
+        errorPane.setVisible(true);
+        errorLabel.setText(message);
+    }
+    private void removeErrorPaneMessage() {
+        errorLabel.setText("");
+        errorPane.setVisible(false);
+    }
+
     private void showError(String message,String alertMessage) {
 
-        errorLabel.setText(message);
-        errorPane.setVisible(true);
+        showErrorPaneMessage(message);
 
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -61,39 +142,26 @@ public class RegistrationControllerImplementation extends BaseController impleme
 
     }
 
-    private void hideError() {
+    private void removeError() {
         errorPane.setVisible(false);
-    }
-
-    private void setupLoginButton() {
-        this.loginButton.setOnMouseClicked(new EventHandler<>(){
-            @Override
-            public void handle(MouseEvent event) {
-                try {
-                    hideError();
-
-                    serviceHandler.getSceneManager().showLoginScene();
-
-                } catch (Exception ex) {
-                    showError(ex.getMessage(),ex.getMessage());
-                    System.out.println(ex.toString());
-                }
-            }
-        });
-    }
-
-    private boolean hasValidationError(Set<ValidationError> validationErrorSet,String fieldName) {
-        return validationErrorSet.stream().anyMatch(validationError -> validationError.getFieldName().equals(fieldName));
     }
 
     private void removeErrorMarkers() {
 
-        errorLabel.setText("");
-        errorPane.setVisible(false);
+        removeErrorPaneMessage();
 
         usernameInput.getStyleClass().remove("input-error");
         emailInput.getStyleClass().remove("input-error");
         passwordInput.getStylesheets().remove("input-error");
+    }
+
+    private void onError(Exception exception) {
+        showError(exception.getMessage(),exception.getMessage());
+        logger.error(exception);
+    }
+
+    private boolean hasValidationError(Set<ValidationError> validationErrorSet,String fieldName) {
+        return validationErrorSet.stream().anyMatch(validationError -> validationError.getFieldName().equals(fieldName));
     }
 
     private void markValidationErrors(Set<ValidationError> validationErrorSet) {
@@ -110,8 +178,7 @@ public class RegistrationControllerImplementation extends BaseController impleme
             passwordInput.getStyleClass().add("input-error");
         }
 
-        errorPane.setVisible(true);
-        errorLabel.setText("Registration failed");
+        showErrorPaneMessage("Registration failed");
 
         for(var error : validationErrorSet) {
 
@@ -121,61 +188,4 @@ public class RegistrationControllerImplementation extends BaseController impleme
 
     }
 
-    private void setupRegisterButton() {
-        this.registerButton.setOnMouseClicked(new EventHandler<>(){
-            @Override
-            public void handle(MouseEvent event) {
-                try {
-
-                    removeErrorMarkers();
-
-                    var username = usernameInput.getText();
-                    var email = emailInput.getText();
-                    var password = passwordInput.getText();
-
-                    var user = new UserModel();
-                    user.setUsername(username);
-                    user.setEmail(email);
-                    user.setPassword(password);
-                    user.setBalance(1000.d);
-
-                    var validationResult = Validation.validateObject(user);
-
-                    if(validationResult.size() > 0) {
-                        throw new ValidationException(validationResult);
-                    }
-
-                    if(serviceHandler.getUserDao().getEntityBy("username",username).isPresent()) {
-                        validationResult.add(new ValidationError("username","Username is already in use."));
-                        throw new ValidationException(validationResult);
-                    }
-
-                    if(serviceHandler.getUserDao().getEntityBy("email",email).isPresent()) {
-                        validationResult.add(new ValidationError("email","Email address is already in use."));
-                        throw new ValidationException(validationResult);
-                    }
-
-                    user.setPassword(AuthService.generatePasswordHash(password));
-
-                    serviceHandler.getUserDao().persistEntity(user);
-
-                    serviceHandler.getSceneManager()
-                            .createAlert(Alert.AlertType.INFORMATION,"Successful","You can now log in");
-
-                } catch(ValidationException ex) {
-
-                    markValidationErrors(ex.getValidationErrors());
-
-                } catch (Exception ex) {
-
-                    showError(ex.getMessage(),ex.getMessage());
-                    System.out.println(ex.toString());
-                }
-            }
-        });
-    }
-    @Override
-    public void initialize() {
-
-    }
 }

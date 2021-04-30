@@ -4,6 +4,7 @@ import cryptogame.containers.CryptoCurrency;
 import cryptogame.controllers.Controller;
 import cryptogame.controllers.main.market.components.CurrencyComponent;
 import cryptogame.controllers.main.stats.components.StatsComponent;
+import cryptogame.controllers.registration.RegistrationController;
 import cryptogame.models.ActionHistoryModel;
 import cryptogame.services.Service;
 import javafx.fxml.FXML;
@@ -13,11 +14,15 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class StatsControllerImplementation implements StatsController {
+
+    private static final Logger logger = LogManager.getLogger(StatsController.class);
 
     @FXML
     private ScrollPane scrollPane;
@@ -76,8 +81,8 @@ public class StatsControllerImplementation implements StatsController {
     private void loadStatsComponentWithErrHandling(ActionHistoryModel action,StatsComponent.ActionType actionType) {
         try {
             loadStatsComponent(action,actionType);
-        } catch (Exception ex) {
-            // TODO: add logging
+        } catch (Exception exception) {
+            logger.error(exception);
         }
     }
 
@@ -107,8 +112,8 @@ public class StatsControllerImplementation implements StatsController {
         this.initialized = false;
         try {
             this.initialize();
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+        } catch (Exception exception) {
+            logger.error(exception);
         }
     }
 }

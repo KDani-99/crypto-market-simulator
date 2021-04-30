@@ -2,6 +2,7 @@ package cryptogame.controllers.login;
 
 import cryptogame.common.validation.ValidationError;
 import cryptogame.controllers.BaseController;
+import cryptogame.controllers.dialog.PurchaseDialogController;
 import cryptogame.services.Service;
 import cryptogame.services.auth.AuthService;
 import cryptogame.services.exception.ValidationException;
@@ -14,6 +15,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.event.EventHandler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +24,8 @@ import java.util.Set;
 
 @Component
 public class LoginControllerImplementation extends BaseController implements LoginController {
+
+    private static final Logger logger = LogManager.getLogger(LoginController.class);
 
     @FXML private TextField usernameInput;
     @FXML private PasswordField passwordInput;
@@ -40,6 +45,11 @@ public class LoginControllerImplementation extends BaseController implements Log
     }
 
     @Override
+    public void initialize() {
+
+    }
+
+    @Override
     public void initScene() {
         this.setupUsernameInput();
         this.setupLoginButton();
@@ -47,7 +57,7 @@ public class LoginControllerImplementation extends BaseController implements Log
         errorPane.setVisible(false);
     }
 
-    private void showError(String message,String alertMessage) {
+    private void showError(String message) {
         errorLabel.setText(message);
         errorPane.setVisible(true);
     }
@@ -61,58 +71,49 @@ public class LoginControllerImplementation extends BaseController implements Log
     }
 
     private void setupLoginButton() {
-        this.loginButton.setOnMouseClicked(new EventHandler<>() {
-            @Override
-            public void handle(MouseEvent event) {
-                try {
+        this.loginButton.setOnMouseClicked(event -> {
+            try {
 
-                    errorPane.setVisible(false);
+                errorPane.setVisible(false);
 
-                    var username = usernameInput.getText();
-                    var password = passwordInput.getText();
+                var username = usernameInput.getText();
+                var password = passwordInput.getText();
 
-                    var result = serviceHandler.getUserDao().getEntityBy("username",username);
+                var result = serviceHandler.getUserDao().getEntityBy("username",username);
 
-                    if(result.isEmpty()) {
-                        throw new Exception("Invalid username or password");
-                    }
-
-                    if(!AuthService.comparePasswords(result.get().getPassword(),password)) {
-                        throw new Exception("Invalid username or password");
-                    }
-
-                    serviceHandler.createSession(result.get().getId());
-
-                    serviceHandler.getSceneManager()
-                            .showMainScene();
-
-                }  catch (Exception ex) {
-
-                    showError(ex.getMessage(),ex.getMessage());
-                    System.out.println(ex.toString());
+                if(result.isEmpty()) {
+                    throw new Exception("Invalid username or password");
                 }
+
+                if(!AuthService.comparePasswords(result.get().getPassword(),password)) {
+                    throw new Exception("Invalid username or password");
+                }
+
+                serviceHandler.createSession(result.get().getId());
+
+                serviceHandler.getSceneManager()
+                        .showMainScene();
+
+            }  catch (Exception exception) {
+                onError(exception);
             }
         });
     }
     private void setupRegisterButton() {
-        this.registerButton.setOnMouseClicked(new EventHandler<>(){
-            @Override
-            public void handle(MouseEvent event) {
-                try {
-                    hideError();
+        this.registerButton.setOnMouseClicked(event -> {
+            try {
+                hideError();
 
-                    serviceHandler.getSceneManager().showRegistrationScene();
+                serviceHandler.getSceneManager().showRegistrationScene();
 
-                } catch (Exception ex) {
-                    showError(ex.getMessage(),ex.getMessage());
-                    System.out.println(ex.toString());
-                }
+            } catch (Exception exception) {
+                onError(exception);
             }
         });
     }
 
-    @Override
-    public void initialize() {
-
+    private void onError(Exception exception) {
+        showError(exception.getMessage());
+        logger.error(exception);
     }
 }

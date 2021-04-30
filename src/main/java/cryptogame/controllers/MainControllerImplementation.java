@@ -10,8 +10,12 @@ import javafx.scene.layout.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import org.apache.logging.log4j.*;
+
 @Component
 public class MainControllerImplementation extends BaseController implements MainController {
+
+    private static final Logger logger = LogManager.getLogger(MainController.class);
 
     private NavbarController navbarController;
 
@@ -70,16 +74,12 @@ public class MainControllerImplementation extends BaseController implements Main
         try {
 
             var navbarController = serviceHandler.getSceneManager().getNavbarController();
-
             hBox.getChildren().add(navbarController.getRoot());
-
             this.navbarController = (NavbarController) navbarController;
-
             this.navbarController.vBox.setMaxHeight(Double.MAX_VALUE);
 
-
-        } catch (Exception ex) {
-            System.out.println(ex.toString());
+        } catch (Exception exception) {
+            logger.error(exception);
         }
     }
 
@@ -100,8 +100,8 @@ public class MainControllerImplementation extends BaseController implements Main
 
            displayMainNode(marketController.getRoot());
 
-        } catch (Exception ex) {
-            System.out.println("Error => "+ex.getMessage());
+        } catch (Exception exception) {
+            logger.error(exception);
         }
     }
     @Override
@@ -116,7 +116,7 @@ public class MainControllerImplementation extends BaseController implements Main
             displayMainNode(bankController.getRoot());
 
         } catch (Exception ex) {
-            System.out.println("Error => "+ex.getMessage());
+            logger.error(ex.getMessage());
         }
     }
     @Override
@@ -132,8 +132,8 @@ public class MainControllerImplementation extends BaseController implements Main
 
             displayMainNode(statsController.getRoot());
 
-        } catch (Exception ex) {
-            System.out.println("Error => "+ex.getMessage());
+        } catch (Exception exception){
+            logger.error(exception);
         }
     }
 

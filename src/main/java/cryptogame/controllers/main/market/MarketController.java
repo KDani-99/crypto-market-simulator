@@ -20,6 +20,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +31,8 @@ import java.util.stream.Collectors;
 
 @Component
 public class MarketController implements Initializable, Controller {
+
+    private static final Logger logger = LogManager.getLogger(MarketController.class);
 
     @FXML
     private ScrollPane scrollPane;
@@ -80,8 +84,8 @@ public class MarketController implements Initializable, Controller {
                     sorted = !sorted;
                     reOrderMarketView();
 
-                } catch (Exception ex) {
-                    System.out.println(ex.toString());
+                } catch (Exception exception) {
+                    logger.error(exception);
                 }
             }
         });
@@ -143,8 +147,8 @@ public class MarketController implements Initializable, Controller {
     private void loadCurrencyComponentWithErrHandling(CryptoCurrency currency) {
         try {
             loadCurrencyComponent(currency);
-        } catch (Exception ex) {
-            // TODO: log errors
+        } catch (Exception exception) {
+            logger.error(exception);
         }
     }
 
