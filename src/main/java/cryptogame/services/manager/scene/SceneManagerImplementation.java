@@ -17,6 +17,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -26,6 +28,8 @@ import java.util.HashMap;
 
 @Component("sceneManager")
 public class SceneManagerImplementation implements SceneManager {
+
+    private static final Logger logger = LogManager.getLogger(SceneManagerImplementation.class);
 
     private final ApplicationContext context;
 
@@ -58,8 +62,8 @@ public class SceneManagerImplementation implements SceneManager {
     private void loadDefaultScene() {
         try {
             this.showScene(MainController.class,"Main");
-        } catch (Exception ex) {
-            // TODO: add logging
+        } catch (Exception exception) {
+            logger.fatal(exception);
         }
     }
 
