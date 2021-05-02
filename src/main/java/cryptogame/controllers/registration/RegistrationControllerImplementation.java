@@ -115,6 +115,8 @@ public class RegistrationControllerImplementation extends BaseController impleme
                 serviceHandler.getSceneManager()
                         .createAlert(Alert.AlertType.INFORMATION,"Successful","You can now log in");
 
+                clearInputFields();
+
             } catch(ValidationException exception) {
 
                 logger.warn("Registration failed! A validation error has occured.");
@@ -191,6 +193,12 @@ public class RegistrationControllerImplementation extends BaseController impleme
                     .createAlert(Alert.AlertType.ERROR,"Invalid " + error.getFieldName(),error.getMessage());
         }
 
+    }
+
+    private void clearInputFields() {
+        usernameInput.setText("");
+        emailInput.setText("");
+        passwordInput.setText("");
     }
 
 }
