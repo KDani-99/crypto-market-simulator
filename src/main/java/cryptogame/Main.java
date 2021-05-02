@@ -10,7 +10,7 @@ public class Main extends Application {
     public static Stage primaryStage;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) {
 
         Main.primaryStage = primaryStage;
 
@@ -19,7 +19,7 @@ public class Main extends Application {
         ctx.refresh();
 
         var sceneManager = ctx.getBean(SceneManager.class);
-        sceneManager.showLoginScene();
+        sceneManager.initialize();
 
     }
     public static void main(String[] args) {
