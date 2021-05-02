@@ -61,7 +61,7 @@ public class SceneManagerImplementation implements SceneManager {
 
     private void loadDefaultScene() {
         try {
-            this.showScene(MainController.class,"Main");
+            this.showLoginScene();
         } catch (Exception exception) {
             logger.fatal(exception);
         }
@@ -167,6 +167,8 @@ public class SceneManagerImplementation implements SceneManager {
 
     @Override
     public WindowController showLoginScene() throws Exception {
+        primaryStage.setWidth(400);
+        primaryStage.setHeight(500);
         return showScene(LoginController.class,"Login");
     }
 
