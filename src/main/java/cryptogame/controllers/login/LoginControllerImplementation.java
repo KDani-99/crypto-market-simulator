@@ -1,26 +1,18 @@
 package cryptogame.controllers.login;
 
-import cryptogame.common.validation.ValidationError;
 import cryptogame.controllers.BaseController;
-import cryptogame.controllers.dialog.PurchaseDialogController;
 import cryptogame.services.Service;
 import cryptogame.services.auth.AuthService;
-import cryptogame.services.exception.ValidationException;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.event.EventHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Set;
 
 @Component
 public class LoginControllerImplementation extends BaseController implements LoginController {
@@ -51,7 +43,7 @@ public class LoginControllerImplementation extends BaseController implements Log
 
     @Override
     public void initScene() {
-        this.setupUsernameInput();
+        this.setWindowProperties();
         this.setupLoginButton();
         this.setupRegisterButton();
         errorPane.setVisible(false);
@@ -66,8 +58,12 @@ public class LoginControllerImplementation extends BaseController implements Log
         errorPane.setVisible(false);
     }
 
-    private void setupUsernameInput() {
+    private void setWindowProperties() {
+        var primaryStage = this.serviceHandler.getSceneManager()
+                .getPrimaryStage();
 
+        primaryStage.setMinWidth(400);
+        primaryStage.setMinHeight(500);
     }
 
     private void setupLoginButton() {
