@@ -13,7 +13,7 @@
    <children>
       <HBox alignment="CENTER_LEFT" maxHeight="126.0" prefHeight="126.0" prefWidth="250.0" styleClass="info">
          <children>
-            <Label prefHeight="75.0" prefWidth="268.0" text="Crypto Trading Game">
+            <Label prefHeight="75.0" prefWidth="268.0" text="Trading Game">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Label>
@@ -31,53 +31,92 @@
             </AnchorPane>
          </children>
       </HBox>
-      <VBox prefHeight="380.0" prefWidth="250.0" spacing="15.0" styleClass="buttonContainer">
+      <VBox prefHeight="380.0" prefWidth="250.0" spacing="15.0" styleClass="buttonContainer" VBox.vgrow="ALWAYS">
          <children>
-            <Pane fx:id="marketButtonPane" layoutX="25.0" layoutY="25.0" prefHeight="42.0" prefWidth="220.0">
+            <AnchorPane fx:id="marketButtonPane" layoutX="25.0" layoutY="79.0" prefHeight="59.0" prefWidth="220.0">
                <children>
-                  <Button fx:id="marketButton" alignment="BASELINE_LEFT" maxWidth="239.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" text="Market" />
-                  <SVGPath content="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z" fill="GAINSBORO" layoutX="10.0" layoutY="11.0" scaleX="0.75" scaleY="0.75" />
+                  <Button fx:id="marketButton" alignment="BASELINE_LEFT" maxWidth="239.0" mnemonicParsing="false" prefHeight="110.0" prefWidth="220.0" text="Market" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <HBox alignment="CENTER_LEFT" disable="true" prefHeight="40.0" prefWidth="220.0" AnchorPane.leftAnchor="0.0">
+                     <children>
+                        <SVGPath content="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z" fill="GAINSBORO" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </HBox>
                </children>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
                <styleClass>
                   <String fx:value="buttonBox" />
-                  <String fx:value="button" />
                   <String fx:value="selected" />
                </styleClass>
-            </Pane>
-            <Pane fx:id="statsButtonPane" layoutX="25.0" layoutY="25.0" prefHeight="42.0" prefWidth="220.0">
+            </AnchorPane>
+            <AnchorPane fx:id="statsButtonPane" layoutX="25.0" layoutY="25.0" prefHeight="59.0" prefWidth="220.0" styleClass="buttonBox">
                <children>
-                  <Button fx:id="statsButton" alignment="BASELINE_LEFT" maxWidth="239.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="220.0" styleClass="selected" text="Stats" textAlignment="CENTER" />
-                  <SVGPath content="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z" disable="true" fill="GAINSBORO" layoutX="10.0" layoutY="11.0" scaleX="0.75" scaleY="0.75" stroke="TRANSPARENT" />
+                  <Button fx:id="statsButton" alignment="BASELINE_LEFT" maxWidth="239.0" mnemonicParsing="false" prefHeight="110.0" prefWidth="220.0" text="Stats" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <HBox alignment="CENTER_LEFT" disable="true" prefHeight="40.0" prefWidth="220.0" AnchorPane.leftAnchor="0.0">
+                     <children>
+                        <SVGPath content="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z" fill="GAINSBORO" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </HBox>
                </children>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
-               <styleClass>
-                  <String fx:value="buttonBox" />
-                  <String fx:value="button" />
-               </styleClass>
-            </Pane>
-            <Pane layoutX="25.0" layoutY="25.0" prefHeight="42.0" prefWidth="220.0" styleClass="buttonBox">
+            </AnchorPane>
+            <AnchorPane fx:id="bankButtonPane" layoutX="25.0" layoutY="78.0" prefHeight="59.0" prefWidth="220.0" styleClass="buttonBox">
                <children>
-                  <Button fx:id="settingsButton1" alignment="BASELINE_LEFT" contentDisplay="CENTER" maxWidth="239.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" text="Bank" textAlignment="CENTER" />
-                  <SVGPath content="M6.5 10h-2v7h2v-7zm6 0h-2v7h2v-7zm8.5 9H2v2h19v-2zm-2.5-9h-2v7h2v-7zm-7-6.74L16.71 6H6.29l5.21-2.74m0-2.26L2 6v2h19V6l-9.5-5z" fill="GAINSBORO" layoutX="10.0" layoutY="11.0" scaleX="0.75" scaleY="0.75" />
+                  <Button fx:id="bankButton" alignment="BASELINE_LEFT" maxWidth="239.0" mnemonicParsing="false" prefHeight="110.0" prefWidth="220.0" text="Bank" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <HBox alignment="CENTER_LEFT" disable="true" prefHeight="40.0" prefWidth="220.0" AnchorPane.leftAnchor="0.0">
+                     <children>
+                        <SVGPath content="M6.5 10h-2v7h2v-7zm6 0h-2v7h2v-7zm8.5 9H2v2h19v-2zm-2.5-9h-2v7h2v-7zm-7-6.74L16.71 6H6.29l5.21-2.74m0-2.26L2 6v2h19V6l-9.5-5z" fill="GAINSBORO" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </HBox>
                </children>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
-            </Pane>
-            <Pane layoutX="25.0" layoutY="232.0" prefHeight="42.0" prefWidth="220.0" styleClass="buttonBox">
+            </AnchorPane>
+            <AnchorPane fx:id="walletButtonPane" layoutX="25.0" layoutY="133.0" prefHeight="59.0" prefWidth="220.0" styleClass="buttonBox">
                <children>
-                  <Button fx:id="settingsButton11" alignment="BASELINE_LEFT" contentDisplay="CENTER" maxWidth="239.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="220.0" text="Wallet" textAlignment="CENTER" />
-                  <SVGPath content="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" fill="GAINSBORO" layoutX="10.0" layoutY="11.0" scaleX="0.75" scaleY="0.75" />
+                  <Button fx:id="walletButton" alignment="BASELINE_LEFT" maxWidth="239.0" mnemonicParsing="false" prefHeight="110.0" prefWidth="220.0" text="Wallet" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <HBox alignment="CENTER_LEFT" disable="true" prefHeight="40.0" prefWidth="220.0">
+                     <children>
+                        <SVGPath content="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" fill="GAINSBORO" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </HBox>
                </children>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
-            </Pane>
+            </AnchorPane>
+            <AnchorPane fx:id="logOutButtonPane" layoutX="25.0" layoutY="188.0" prefHeight="59.0" prefWidth="220.0" styleClass="buttonBox">
+               <children>
+                  <Button fx:id="logOutButton" alignment="BASELINE_LEFT" maxWidth="239.0" mnemonicParsing="false" prefHeight="110.0" prefWidth="220.0" text="Log out" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <HBox alignment="CENTER_LEFT" disable="true" prefHeight="40.0" prefWidth="220.0" AnchorPane.leftAnchor="0.0">
+                     <children>
+                        <SVGPath content="M17,8l-1.41,1.41L17.17,11H9v2h8.17l-1.58,1.58L17,16l4-4L17,8z M5,5h7V3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h7v-2H5V5z" fill="GAINSBORO" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </HBox>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </AnchorPane>
          </children>
          <VBox.margin>
             <Insets />
@@ -85,7 +124,7 @@
       <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
       <AnchorPane minWidth="0.0" prefHeight="65.0" prefWidth="250.0" VBox.vgrow="ALWAYS">
          <children>
-            <HBox alignment="CENTER_LEFT" layoutX="15.0" layoutY="13.0" maxHeight="68.0" maxWidth="309.0" prefHeight="68.0" prefWidth="220.0" spacing="15.0" styleClass="loggedInfo" AnchorPane.bottomAnchor="0.0">
+            <HBox alignment="CENTER" layoutX="15.0" layoutY="13.0" maxHeight="68.0" maxWidth="309.0" prefHeight="68.0" prefWidth="220.0" spacing="15.0" styleClass="loggedInfo" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
                <children>
                   <SVGPath content="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM7.07 18.28c.43-.9 3.05-1.78 4.93-1.78s4.51.88 4.93 1.78C15.57 19.36 13.86 20 12 20s-3.57-.64-4.93-1.72zm11.29-1.45c-1.43-1.74-4.9-2.33-6.36-2.33s-4.93.59-6.36 2.33C4.62 15.49 4 13.82 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8c0 1.82-.62 3.49-1.64 4.83zM12 6c-1.94 0-3.5 1.56-3.5 3.5S10.06 13 12 13s3.5-1.56 3.5-3.5S13.94 6 12 6zm0 5c-.83 0-1.5-.67-1.5-1.5S11.17 8 12 8s1.5.67 1.5 1.5S12.83 11 12 11z" fill="GAINSBORO" scaleX="1.2" scaleY="1.2" scaleZ="1.2" />
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
@@ -97,7 +136,7 @@
                   <VBox alignment="CENTER" layoutX="70.0" layoutY="25.0" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <Label text="Balance" />
-                        <Label fx:id="balanceLabel" layoutX="10.0" layoutY="10.0" text="\$100" textFill="#2ecc71">
+                        <Label fx:id="balanceLabel" layoutX="10.0" layoutY="10.0" text="\$100000" textFill="#2ecc71">
                            <styleClass>
                               <String fx:value="balance" />
                               <String fx:value="positiveBalance" />
@@ -109,7 +148,7 @@
             </HBox>
          </children>
          <padding>
-            <Insets bottom="10.0" right="10.0" />
+            <Insets bottom="10.0" />
          </padding></AnchorPane>
    </children>
    <stylesheets>
