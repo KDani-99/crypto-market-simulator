@@ -68,7 +68,7 @@ public class StatsControllerImplementation implements StatsController {
 
         var statsComponent = (StatsComponent) serviceHandler.getSceneManager().createStatsComponent();
         statsComponent.setAction(action);
-        statsComponent.setActionType(StatsComponent.ActionType.SELL);
+        statsComponent.setActionType(actionType);
         statsComponent.initialize();
 
         vBox.getChildren().add(statsComponent.getRoot());
