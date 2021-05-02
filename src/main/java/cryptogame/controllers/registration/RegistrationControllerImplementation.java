@@ -3,18 +3,14 @@ package cryptogame.controllers.registration;
 import cryptogame.common.validation.Validation;
 import cryptogame.common.validation.ValidationError;
 import cryptogame.controllers.BaseController;
-import cryptogame.controllers.MainController;
 import cryptogame.models.UserModel;
 import cryptogame.services.Service;
 
 import cryptogame.services.auth.AuthService;
-import cryptogame.services.exception.ValidationException;
+import cryptogame.exception.ValidationException;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.event.EventHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +44,7 @@ public class RegistrationControllerImplementation extends BaseController impleme
 
     @Override
     public void initialize() {
-
+        this.setWindowProperties();
     }
 
     @Override
@@ -56,6 +52,14 @@ public class RegistrationControllerImplementation extends BaseController impleme
         this.setupLoginButton();
         this.setupRegisterButton();
         this.errorPane.setVisible(false);
+    }
+
+    private void setWindowProperties() {
+        var primaryStage = this.serviceHandler.getSceneManager()
+                .getPrimaryStage();
+
+        primaryStage.setMinWidth(400);
+        primaryStage.setMinHeight(500);
     }
 
     private void setupLoginButton() {
@@ -72,6 +76,7 @@ public class RegistrationControllerImplementation extends BaseController impleme
             }
         });
     }
+
     private void setupRegisterButton() {
         this.registerButton.setOnMouseClicked(event -> {
             removeErrorMarkers();
