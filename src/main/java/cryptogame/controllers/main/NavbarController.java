@@ -1,6 +1,7 @@
 package cryptogame.controllers.main;
 
 import cryptogame.controllers.Controller;
+import cryptogame.controllers.MainController;
 import cryptogame.services.Service;
 import cryptogame.services.auth.AuthService;
 import javafx.event.EventHandler;
@@ -12,19 +13,26 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class NavbarController implements Controller {
 
+    private static final Logger logger = LogManager.getLogger(NavbarController.class);
+
     @FXML public VBox vBox;
 
     @FXML private Button marketButton;
     @FXML private Button settingsButton;
     @FXML private Button statsButton;
+    @FXML private Button logOutButton;
 
     @FXML private Label loggedInUsernameLabel;
     @FXML private Label balanceLabel;
@@ -47,29 +55,33 @@ public class NavbarController implements Controller {
 
         this.setupMarketButton();
         this.setupStatsButton();
+        this.setupLogOutButton();
 
         initialized = true;
     }
 
     private void setupMarketButton() {
-        this.marketButton.setOnMouseClicked(new EventHandler<>() {
-            @Override
-            public void handle(MouseEvent event) {
+        this.marketButton.setOnMouseClicked(event -> {
 
-                removeButtonStyles();
-                marketButtonPane.getStyleClass().add("selected");
+            removeButtonStyles();
+            marketButtonPane.getStyleClass().add("selected");
 
-                serviceHandler.getSceneManager().getMainController()
-                        .setMarket();
-            }
+            serviceHandler.getSceneManager().getMainController()
+                    .setMarket();
         });
     }
-    private void setupSettingsButton() {
-        this.settingsButton.setOnMouseClicked(new EventHandler<>() {
-            @Override
-            public void handle(MouseEvent event) {
+    private void setupLogOutButton() {
+        this.logOutButton.setOnMouseClicked(event -> {
 
+            serviceHandler.destroyActiveSession();
+
+            try {
+                serviceHandler.getSceneManager().showLoginScene();
+                logger.info("User logged out.");
+            } catch (Exception exception) {
+                logger.error(exception);
             }
+
         });
     }
 
@@ -79,16 +91,13 @@ public class NavbarController implements Controller {
     }
 
     private void setupStatsButton() {
-        this.statsButton.setOnMouseClicked(new EventHandler<>() {
-            @Override
-            public void handle(MouseEvent event) {
+        this.statsButton.setOnMouseClicked(event -> {
 
-                removeButtonStyles();
-                statsButtonPane.getStyleClass().add("selected");
+            removeButtonStyles();
+            statsButtonPane.getStyleClass().add("selected");
 
-                serviceHandler.getSceneManager().getMainController()
-                .setStats();
-            }
+            serviceHandler.getSceneManager().getMainController()
+            .setStats();
         });
     }
 
