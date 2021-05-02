@@ -36,14 +36,6 @@ public class MainControllerImplementation extends BaseController implements Main
 
     }
 
-    private void setWindowProperties() {
-        var primaryStage = this.serviceHandler.getSceneManager()
-                .getPrimaryStage();
-
-        primaryStage.setMinWidth(800);
-        primaryStage.setMinHeight(450);
-    }
-
     @Override
     public void initScene() {
 
@@ -53,6 +45,14 @@ public class MainControllerImplementation extends BaseController implements Main
         this.setUserInfo();
 
         this.setMarket();
+    }
+
+    private void setWindowProperties() {
+        var primaryStage = this.serviceHandler.getSceneManager()
+                .getPrimaryStage();
+
+        primaryStage.setMinWidth(800);
+        primaryStage.setMinHeight(450);
     }
 
     private void setUserInfo() {
