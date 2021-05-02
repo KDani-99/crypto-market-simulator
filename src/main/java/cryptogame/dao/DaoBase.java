@@ -11,9 +11,6 @@ import java.util.function.Consumer;
 
 public abstract class DaoBase<T> implements Dao<T> {
 
-   // @PersistenceContext
-    //protected EntityManager entityManager;
-
     @PersistenceUnit
     protected EntityManagerFactory entityManagerFactory;
 
@@ -24,19 +21,19 @@ public abstract class DaoBase<T> implements Dao<T> {
     public abstract Optional<T> getEntityBy(String field, Object value);
 
     @Override
-    public void updateEntity(T entity) throws Exception {
+    public void updateEntity(T entity) {
         this.executeTransaction(entityManager -> entityManager.merge(entity));
     }
 
     @Transactional
     @Override
-    public void persistEntity(T entity) throws Exception {
+    public void persistEntity(T entity) {
         this.executeTransaction(entityManager -> entityManager.persist(entity));
     }
 
     @Transactional
     @Override
-    public void deleteEntity(T entity) throws Exception {
+    public void deleteEntity(T entity) {
         this.executeTransaction(entityManager -> entityManager.remove(entity));
     }
 
