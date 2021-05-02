@@ -22,7 +22,6 @@ public class MarketManagerImplementation implements MarketManager {
     private ObjectMapper mapper = new ObjectMapper();
 
     private final HashMap<String, CryptoCurrency> currencies = new HashMap<>();
-    private final HashMap<String, CryptoCurrency> previousCurrencies = new HashMap<>();
 
     private long previousRefreshTimestamp = 0L;
 
@@ -50,15 +49,14 @@ public class MarketManagerImplementation implements MarketManager {
                 .build();
     }
 
-    private void preservePreviousCurrencies() {
-        previousCurrencies.replaceAll((key, value) -> currencies.get(key));
+    private void clearCurrencies() {
         currencies.clear();
     }
 
     @Override
     public void refreshAssets() throws Exception {
 
-        preservePreviousCurrencies();
+        clearCurrencies();
 
         String ep = "assets";
         var request = buildHttpRequest(ep);
