@@ -76,17 +76,14 @@ public class MarketController implements Initializable, Controller {
     }
 
     private void bindRankSorting() {
-        rankHeaderLabel.setOnMouseClicked(new EventHandler<>() {
-            @Override
-            public void handle(MouseEvent event) {
-                try {
+        rankHeaderLabel.setOnMouseClicked(event -> {
+            try {
 
-                    sorted = !sorted;
-                    reOrderMarketView();
+                sorted = !sorted;
+                reOrderMarketView();
 
-                } catch (Exception exception) {
-                    logger.error(exception);
-                }
+            } catch (Exception exception) {
+                logger.error(exception);
             }
         });
     }
