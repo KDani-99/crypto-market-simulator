@@ -1,10 +1,8 @@
 package cryptogame.dao;
 
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -16,9 +14,6 @@ public abstract class DaoBase<T> implements Dao<T> {
 
     @Override
     public abstract <TId> Optional<T> getEntity(TId id);
-
-    @Override
-    public abstract Optional<T> getEntityBy(String field, Object value);
 
     @Override
     public void updateEntity(T entity) {
