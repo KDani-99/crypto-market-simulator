@@ -5,7 +5,6 @@ import cryptogame.services.manager.market.MarketManager;
 import cryptogame.services.manager.scene.SceneManager;
 import cryptogame.services.session.Session;
 import cryptogame.services.session.SessionImplementation;
-import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
