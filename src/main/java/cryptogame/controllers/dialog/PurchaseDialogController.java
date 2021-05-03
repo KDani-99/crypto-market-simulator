@@ -71,7 +71,6 @@ public class PurchaseDialogController implements Controller {
                 }
 
                 if(user.get().getBalance() < (amount * currency.getPriceUsd())) {
-                    System.out.println("Amount: " + amount + "\t Price would be: " + (amount * currency.getPriceUsd()));
                     throw new IllegalArgumentException("You can't afford to buy that much");
                 }
 
