@@ -5,6 +5,7 @@ import cryptogame.containers.CryptoCurrency;
 import cryptogame.controllers.Controller;
 import cryptogame.controllers.dialog.PurchaseDialogController;
 import cryptogame.services.Service;
+import cryptogame.services.manager.scene.SceneManagerImplementation;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -12,6 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -20,6 +23,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class CurrencyComponent implements Controller {
+
+    private static final Logger logger = LogManager.getLogger(CurrencyComponent.class);
 
     private CryptoCurrency currency;
 
@@ -125,10 +130,8 @@ public class CurrencyComponent implements Controller {
                             .createPurchaseWindow();
 
                     purchaseWindow.setCurrencyContainer(currency);
-
-                    System.out.println("PUCHASE ? => " + (serviceHandler == null));
-                } catch (Exception ex) {
-                    System.out.println("ERR! " + ex.getMessage());
+                } catch (Exception exception) {
+                    logger.error(exception);
                 }
             }
         });
