@@ -24,9 +24,9 @@
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Name" GridPane.columnIndex="2" />
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Cost" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" />
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="244.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Amount" GridPane.columnIndex="4" />
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="323.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Action Date" GridPane.columnIndex="5" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="323.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Transaction Date" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="5" />
                   <Label fx:id="transactionIdLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="136.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Transaction Id" textAlignment="CENTER" wrapText="true" />
-                  <Label fx:id="actionTypeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="199.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Action" GridPane.columnIndex="1" />
+                  <Label fx:id="actionTypeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="199.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Transaction Type" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" />
                     </children>
                 </GridPane>
             </children></VBox>
