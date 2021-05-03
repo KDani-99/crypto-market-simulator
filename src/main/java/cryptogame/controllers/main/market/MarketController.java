@@ -1,25 +1,18 @@
 package cryptogame.controllers.main.market;
 
-import cryptogame.Main;
 import cryptogame.common.Initializable;
 import cryptogame.containers.CryptoCurrency;
 import cryptogame.controllers.Controller;
-import cryptogame.controllers.dialog.PurchaseDialogController;
 import cryptogame.controllers.main.market.components.CurrencyComponent;
 import cryptogame.services.Service;
-import javafx.event.EventHandler;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +20,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Component
@@ -41,13 +37,15 @@ public class MarketController implements Initializable, Controller {
     @FXML
     private HBox hBox;
 
-    @FXML
-    private Label rankHeaderLabel;
+    @FXML private Label rankHeaderLabel;
+
+    @FXML private Label remaningTimeLabel;
 
     private boolean sorted = true;
 
     private final Service serviceHandler;
 
+    private ScheduledExecutorService executorService;
     private boolean initialized = false;
 
     @Autowired
@@ -60,6 +58,22 @@ public class MarketController implements Initializable, Controller {
 
         if(initialized) return; // TODO: Fix init call
 
+        this.setWindowProperties();
+
+        this.bindRankSorting();
+
+        this.serviceHandler.getMarketManager().startAssetLoadingService();
+        this.loadMarketWhenReady();
+
+        initialized = true;
+    }
+
+    private void initMarket() {
+        this.setupRemainingRefreshTimeDisplay();
+        this.loadMarket();
+    }
+
+    private void setWindowProperties() {
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
 
@@ -67,10 +81,27 @@ public class MarketController implements Initializable, Controller {
         scrollPane.setMaxWidth(Double.MAX_VALUE);
 
         HBox.setHgrow(scrollPane, Priority.ALWAYS);
+    }
+    private ScheduledExecutorService createExecutor() {
+        return Executors.newSingleThreadScheduledExecutor(runnable -> {
+            Thread thread = Executors.defaultThreadFactory().newThread(runnable);
+            thread.setDaemon(true); // this will make it shut down on exit
+            return thread;
+        });
+    }
 
-        this.bindRankSorting();
+    private void loadMarketWhenReady() {
 
-        this.loadMarket();
+        Thread thread = new Thread(()->{
+            while(!serviceHandler.getMarketManager().hasLoaded()) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException exception) {
+                    logger.error(exception);
+                }
+            }
+            Platform.runLater(this::initMarket);
+        });
 
         initialized = true;
     }
