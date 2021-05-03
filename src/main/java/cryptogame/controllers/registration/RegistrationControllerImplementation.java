@@ -98,12 +98,12 @@ public class RegistrationControllerImplementation extends BaseController impleme
                     throw new ValidationException(validationResult);
                 }
 
-                if(serviceHandler.getUserDao().getEntityBy("username",username).isPresent()) {
+                if(serviceHandler.getUserDao().getByUsername(username).isPresent()) {
                     validationResult.add(new ValidationError("username","Username is already in use."));
                     throw new ValidationException(validationResult);
                 }
 
-                if(serviceHandler.getUserDao().getEntityBy("email",email).isPresent()) {
+                if(serviceHandler.getUserDao().getByEmail(email).isPresent()) {
                     validationResult.add(new ValidationError("email","Email address is already in use."));
                     throw new ValidationException(validationResult);
                 }
