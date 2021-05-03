@@ -6,11 +6,13 @@ import cryptogame.containers.CurrencyContainer;
 import cryptogame.dao.DaoBase;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.Calendar;
 import java.util.Optional;
 
 import cryptogame.models.PurchaseHistoryModel;
 import cryptogame.models.UserModel;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,18 +26,33 @@ public class UserDaoImplementation extends DaoBase<UserModel> implements UserDao
         var user = entityManager.find(UserModel.class,id);
         return Optional.of(user);
     }
+
     @Override
-    public Optional<UserModel> getEntityBy(String field, Object value) {
+    public Optional<UserModel> getByUsername(String username) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        var query = entityManager.createQuery("SELECT user FROM UserModel user WHERE "+field+" = :value", UserModel.class);
+        var query = entityManager.createQuery("SELECT user FROM UserModel user WHERE user.username = :value", UserModel.class);
+        return getUserModel(username, query);
+    }
+
+    @Override
+    public Optional<UserModel> getByEmail(String email) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        var query = entityManager.createQuery("SELECT user FROM UserModel user WHERE user.email = :value", UserModel.class);
+        return getUserModel(email, query);
+    }
+
+    @NotNull
+    private Optional<UserModel> getUserModel(String value, TypedQuery<UserModel> query) {
         query.setParameter("value",value);
 
         UserModel user = null;
 
-        try {
-            user = query.getSingleResult();
-        } catch (Exception ex) {
+        var result = query.getResultList();
+
+        if(result.size() == 0) {
             user = null;
+        } else {
+            user = result.get(0);
         }
 
         return Optional.ofNullable(user);
