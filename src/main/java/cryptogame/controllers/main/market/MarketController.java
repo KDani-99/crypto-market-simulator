@@ -103,7 +103,21 @@ public class MarketController implements Initializable, Controller {
             Platform.runLater(this::initMarket);
         });
 
-        initialized = true;
+        thread.start();
+
+    }
+
+    private void setupRemainingRefreshTimeDisplay() {
+        Runnable marketLoadRunnable = () -> Platform.runLater(this::setNextRefreshTimeText);
+
+        executorService = createExecutor();
+
+        executorService.scheduleAtFixedRate(marketLoadRunnable, 0,1, TimeUnit.SECONDS);
+    }
+
+    private void setNextRefreshTimeText() {
+        var minutes = serviceHandler.getMarketManager().getRemainingTimeUntilRefresh() / (60 * 1000);
+        remaningTimeLabel.setText("Next refresh in: " + minutes + " minute(s)");
     }
 
     private void bindRankSorting() {
