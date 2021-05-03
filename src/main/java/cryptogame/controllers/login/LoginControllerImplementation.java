@@ -75,7 +75,7 @@ public class LoginControllerImplementation extends BaseController implements Log
                 var username = usernameInput.getText();
                 var password = passwordInput.getText();
 
-                var result = serviceHandler.getUserDao().getEntityBy("username",username);
+                var result = serviceHandler.getUserDao().getByUsername(username);
 
                 if(result.isEmpty()) {
                     throw new Exception("Invalid username or password");
