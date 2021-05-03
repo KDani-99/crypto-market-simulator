@@ -7,29 +7,41 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import cryptogame.controllers.MainController;
+import cryptogame.controllers.main.market.MarketController;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 @Component("marketManager")
 public class MarketManagerImplementation implements MarketManager {
 
-    private Duration timeout = Duration.ofMinutes(1);
-    private HttpClient httpClient;
-    private String apiURL = "https://api.coincap.io/v2";
-    private ObjectMapper mapper = new ObjectMapper();
+    private static final Logger logger = LogManager.getLogger(MarketController.class);
+    private static final long TIMEOUT = 10 * 60; // 600 seconds
+
+    private final Duration timeout = Duration.ofMinutes(1);
+    private final HttpClient httpClient;
+    private final String apiURL = "https://api.coincap.io/v2";
+    private final ObjectMapper mapper = new ObjectMapper();
 
     private final HashMap<String, CryptoCurrency> currencies = new HashMap<>();
 
-    private long previousRefreshTimestamp = 0L;
+    private ScheduledExecutorService executorService;
 
-   public MarketManagerImplementation() throws Exception {
+    private long refreshTimestamp;
+    private boolean hasLoaded = false;
+
+   public MarketManagerImplementation() {
         this.httpClient = buildHttpClient();
-
-        // test
-        this.refreshAssets();
     }
 
     private HttpClient buildHttpClient() {
@@ -54,26 +66,64 @@ public class MarketManagerImplementation implements MarketManager {
     }
 
     @Override
-    public void refreshAssets() throws Exception {
+    public void loadAssets() {
+       try {
+           refreshTimestamp = Calendar.getInstance().getTimeInMillis();
 
-        clearCurrencies();
+           clearCurrencies();
 
-        String ep = "assets";
-        var request = buildHttpRequest(ep);
+           String ep = "assets";
+           var request = buildHttpRequest(ep);
 
-        var result = httpClient
-                .sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                .get();
+           var result = httpClient
+                   .sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                   .get();
 
-        var assets = mapper.readTree(result.body()).get("data");
-        for(var currency : assets) {
-            var tmp = mapper.treeToValue(currency,CryptoCurrency.class);
-            currencies.put(tmp.getId(),tmp);
-        }
+           var assets = mapper.readTree(result.body()).get("data");
+           for(var currency : assets) {
+               var tmp = mapper.treeToValue(currency,CryptoCurrency.class);
+               currencies.put(tmp.getId(),tmp);
+           }
+
+           hasLoaded = true;
+       } catch (Exception exception) {
+            logger.error(exception);
+       }
     }
+
+    @Override
+    public void startAssetLoadingService() {
+        Runnable marketLoadRunnable = this::loadAssets;
+
+        executorService = Executors.newSingleThreadScheduledExecutor(runnable -> {
+            Thread thread = Executors.defaultThreadFactory().newThread(runnable);
+            thread.setDaemon(true); // this will make it shut down on exit
+            return thread;
+        });
+        executorService.scheduleAtFixedRate(marketLoadRunnable, 0,TIMEOUT, TimeUnit.SECONDS);
+
+        logger.info("Started asset loader service");
+    }
+
+    @Override
+    public void stopAssetLoadingService() {
+        executorService.shutdown();
+        logger.info("Stopped asset loader service");
+    }
+
     @Override
     public Collection<CryptoCurrency> getCurrencies() {
         return this.currencies.values();
+    }
+
+    @Override
+    public long getRemainingTimeUntilRefresh() {
+        return (refreshTimestamp + TIMEOUT * 1000) - Calendar.getInstance().getTimeInMillis();
+    }
+
+    @Override
+    public boolean hasLoaded() {
+        return hasLoaded;
     }
 
 }

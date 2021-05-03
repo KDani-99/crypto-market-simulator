@@ -6,5 +6,9 @@ import java.util.Collection;
 
 public interface MarketManager {
     Collection<CryptoCurrency> getCurrencies();
-    void refreshAssets() throws Exception;
+    void loadAssets();
+    void startAssetLoadingService();
+    void stopAssetLoadingService();
+    long getRemainingTimeUntilRefresh();
+    boolean hasLoaded();
 }
