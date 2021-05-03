@@ -74,6 +74,7 @@ public class NavbarController implements Controller {
         this.logOutButton.setOnMouseClicked(event -> {
 
             serviceHandler.destroyActiveSession();
+            serviceHandler.getMarketManager().stopAssetLoadingService();
 
             try {
                 serviceHandler.getSceneManager().showLoginScene();
