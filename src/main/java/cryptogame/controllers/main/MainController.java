@@ -1,10 +1,12 @@
-package cryptogame.controllers;
+package cryptogame.controllers.main;
 
-import cryptogame.Main;
-import cryptogame.controllers.main.NavbarController;
+import cryptogame.controllers.BaseController;
+import cryptogame.controllers.Controller;
+import cryptogame.common.Refreshable;
+import cryptogame.controllers.WindowController;
+import cryptogame.controllers.main.navbar.NavbarController;
 import cryptogame.services.Service;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Component;
 import org.apache.logging.log4j.*;
 
 @Component
-public class MainControllerImplementation extends BaseController implements MainController {
+public class MainControllerImplementation extends BaseController implements WindowController, Refreshable {
 
     private static final Logger logger = LogManager.getLogger(MainController.class);
 
@@ -30,29 +32,15 @@ public class MainControllerImplementation extends BaseController implements Main
 
     @Autowired
     public MainControllerImplementation(Service serviceHandler) {
-
         super(true,1024,768);
         this.serviceHandler = serviceHandler;
-
     }
 
     @Override
     public void initScene() {
-
-        this.setWindowProperties();
-
         this.setNavbar();
         this.setUserInfo();
-
         this.setMarket();
-    }
-
-    private void setWindowProperties() {
-        var primaryStage = this.serviceHandler.getSceneManager()
-                .getPrimaryStage();
-
-        primaryStage.setMinWidth(800);
-        primaryStage.setMinHeight(450);
     }
 
     private void setUserInfo() {
@@ -74,9 +62,9 @@ public class MainControllerImplementation extends BaseController implements Main
         try {
 
             var navbarController = serviceHandler.getSceneManager().getNavbarController();
-            hBox.getChildren().add(navbarController.getRoot());
+            this.hBox.getChildren().add(navbarController.getRoot());
             this.navbarController = (NavbarController) navbarController;
-            this.navbarController.vBox.setMaxHeight(Double.MAX_VALUE);
+            this.navbarController.initialize();
 
         } catch (Exception exception) {
             logger.error(exception);
@@ -87,7 +75,6 @@ public class MainControllerImplementation extends BaseController implements Main
         hBox.getChildren().add(node);
     }
 
-    @Override
     public void setMarket() {
         try {
 
@@ -95,7 +82,6 @@ public class MainControllerImplementation extends BaseController implements Main
 
             if(marketController == null) {
                 marketController = serviceHandler.getSceneManager().getMarketComponentController();
-                marketController.initialize();
             }
 
            displayMainNode(marketController.getRoot());
@@ -104,7 +90,7 @@ public class MainControllerImplementation extends BaseController implements Main
             logger.error(exception);
         }
     }
-    @Override
+
     public void setBank() {
         try {
 
@@ -119,7 +105,7 @@ public class MainControllerImplementation extends BaseController implements Main
             logger.error(ex.getMessage());
         }
     }
-    @Override
+
     public void setStats() {
         try {
 
@@ -127,8 +113,9 @@ public class MainControllerImplementation extends BaseController implements Main
 
             if(statsController == null) {
                 statsController = serviceHandler.getSceneManager().getStatsController();
-                statsController.initialize();
             }
+
+            statsController.initialize();
 
             displayMainNode(statsController.getRoot());
 
@@ -143,7 +130,8 @@ public class MainControllerImplementation extends BaseController implements Main
     }
 
     @Override
-    public void refreshUser() {
+    public void refresh() {
         this.setUserInfo();
     }
+
 }

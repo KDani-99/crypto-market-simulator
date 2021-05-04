@@ -6,16 +6,10 @@ import cryptogame.services.Service;
 import cryptogame.services.auth.AuthService;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,7 +21,7 @@ public class NavbarController implements Controller {
 
     private static final Logger logger = LogManager.getLogger(NavbarController.class);
 
-    @FXML public VBox vBox;
+    @FXML private VBox vBox;
 
     @FXML private Button marketButton;
     @FXML private Button settingsButton;
@@ -40,8 +34,6 @@ public class NavbarController implements Controller {
     @FXML private Pane marketButtonPane;
     @FXML private Pane statsButtonPane;
 
-    private boolean initialized = false;
-
     private final Service serviceHandler;
 
     @Autowired
@@ -51,13 +43,11 @@ public class NavbarController implements Controller {
 
     @Override
     public void initialize() {
-        if(initialized) return;
-
         this.setupMarketButton();
         this.setupStatsButton();
         this.setupLogOutButton();
 
-        initialized = true;
+        this.vBox.setMaxHeight(Double.MAX_VALUE);
     }
 
     private void setupMarketButton() {
