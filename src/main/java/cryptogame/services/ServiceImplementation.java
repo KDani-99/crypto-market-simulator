@@ -17,10 +17,6 @@ public class ServiceImplementation implements Service {
 
     private Session activeSession;
 
-    public ServiceImplementation() {
-
-    }
-
     @Autowired
     public ServiceImplementation(SceneManager sceneManager, MarketManager marketManager, UserDao userDao) {
         this.sceneManager = sceneManager;
