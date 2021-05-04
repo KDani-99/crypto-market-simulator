@@ -48,11 +48,6 @@ public class StatsController implements Controller, Refreshable {
         return false;
     }
 
-    @Override
-    public void onExit() {
-
-    }
-
     @FXML
     public void initialize() {
         System.out.println("ASD!");
