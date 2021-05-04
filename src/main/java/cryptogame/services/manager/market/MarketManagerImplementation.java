@@ -12,11 +12,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cryptogame.controllers.MainController;
 import cryptogame.controllers.main.market.MarketController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -126,4 +123,8 @@ public class MarketManagerImplementation implements MarketManager {
         return hasLoaded;
     }
 
+    @Override
+    public void onExit() {
+       if(executorService != null) executorService.shutdownNow();
+    }
 }
