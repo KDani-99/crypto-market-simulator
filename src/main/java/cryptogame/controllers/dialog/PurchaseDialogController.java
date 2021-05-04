@@ -2,19 +2,16 @@ package cryptogame.controllers.dialog;
 
 import cryptogame.containers.CurrencyContainer;
 import cryptogame.controllers.Controller;
-import cryptogame.controllers.MainController;
 import cryptogame.exception.EntityDoesNotExistException;
 import cryptogame.models.UserModel;
 import cryptogame.services.Service;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +46,7 @@ public class PurchaseDialogController implements Controller {
     }
 
     private void refreshData() throws Exception {
-        serviceHandler.getSceneManager().getMainController().refreshUser();
-        serviceHandler.getSceneManager().getStatsController().refreshUser();
+        serviceHandler.getSceneManager().refresh();
     }
 
     private void bindPurchaseButton() {
