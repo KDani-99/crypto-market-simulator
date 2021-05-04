@@ -21,4 +21,8 @@ public interface Service {
     Session getSession();
     void createSession(long userId);
     void destroyActiveSession();
+
+    default void onExit() {
+        // empty
+    }
 }
