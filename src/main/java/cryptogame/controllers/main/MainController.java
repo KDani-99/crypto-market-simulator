@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import org.apache.logging.log4j.*;
 
 @Component
-public class MainControllerImplementation extends BaseController implements WindowController, Refreshable {
+public class MainController extends BaseController implements WindowController, Refreshable {
 
     private static final Logger logger = LogManager.getLogger(MainController.class);
 
@@ -31,7 +31,7 @@ public class MainControllerImplementation extends BaseController implements Wind
     private final Service serviceHandler;
 
     @Autowired
-    public MainControllerImplementation(Service serviceHandler) {
+    public MainController(Service serviceHandler) {
         super(true,1024,768);
         this.serviceHandler = serviceHandler;
     }
