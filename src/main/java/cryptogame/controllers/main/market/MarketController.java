@@ -215,4 +215,11 @@ public class MarketController implements Initializable, Controller {
     public boolean isResizable() {
         return false;
     }
+
+    @Override
+    public void onExit() {
+        if(executorService != null)
+            executorService.shutdownNow();
+    }
+
 }
