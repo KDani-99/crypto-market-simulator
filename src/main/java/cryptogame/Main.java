@@ -1,5 +1,6 @@
 package cryptogame;
 
+import cryptogame.services.Service;
 import cryptogame.services.manager.scene.SceneManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -9,19 +10,27 @@ public class Main extends Application {
 
     public static Stage primaryStage;
 
+    private AnnotationConfigApplicationContext context;
+
     @Override
     public void start(Stage primaryStage) {
 
         Main.primaryStage = primaryStage;
 
-        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
-        ctx.register(AppConfig.class);
-        ctx.refresh();
+        context= new AnnotationConfigApplicationContext();
+        context.register(AppConfig.class);
+        context.refresh();
 
-        var sceneManager = ctx.getBean(SceneManager.class);
+        var sceneManager = context.getBean(SceneManager.class);
         sceneManager.initialize();
 
     }
+
+    @Override
+    public void stop(){
+        context.getBean(Service.class).onExit();
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
