@@ -1,7 +1,5 @@
 package cryptogame.containers;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Objects;
 
 @lombok.Data
@@ -33,7 +31,7 @@ public class CryptoCurrency implements CurrencyContainer,Comparable {
     }
 
     @Override
-    public int compareTo(@NotNull Object o) {
+    public int compareTo(Object o) {
         if (this == o) return 0;
         if (getClass() != o.getClass()) return -1;
 
