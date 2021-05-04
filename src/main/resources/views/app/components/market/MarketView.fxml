@@ -3,6 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="main" stylesheets="@MarketView.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <content>
@@ -10,8 +11,14 @@
          <children>
             <AnchorPane prefHeight="39.0" prefWidth="559.0">
                <children>
-                  <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="559.0" text="Showing: 100 currencies" textFill="WHITE" AnchorPane.rightAnchor="0.0" />
-                  <Label fx:id="remaningTimeLabel" prefHeight="50.0" prefWidth="323.0" text="Next refresh in: 10 minute(s)" textFill="WHITE" AnchorPane.leftAnchor="0.0" />
+                  <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="559.0" text="Showing: 100 currencies" textFill="WHITE" AnchorPane.rightAnchor="0.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <Label fx:id="remaningTimeLabel" prefHeight="50.0" prefWidth="323.0" text="Next refresh in: 10 minute(s)" textFill="WHITE" AnchorPane.leftAnchor="0.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
                </children>
             </AnchorPane>
             <GridPane maxHeight="65.0" minHeight="65.0" prefHeight="65.0" styleClass="header" VBox.vgrow="ALWAYS">
