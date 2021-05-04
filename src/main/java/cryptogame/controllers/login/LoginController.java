@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LoginControllerImplementation extends BaseController implements LoginController {
+public class LoginController extends BaseController {
 
     private static final Logger logger = LogManager.getLogger(LoginController.class);
 
@@ -31,7 +31,7 @@ public class LoginControllerImplementation extends BaseController implements Log
     private final Service serviceHandler;
 
     @Autowired
-    public LoginControllerImplementation(Service serviceHandler) {
+    public LoginController(Service serviceHandler) {
         super( false,400,500);
         this.serviceHandler = serviceHandler;
     }
