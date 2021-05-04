@@ -55,4 +55,10 @@ public class ServiceImplementation implements Service {
     public void destroyActiveSession() {
         this.activeSession = null;
     }
+
+    @Override
+    public void onExit() {
+        getSceneManager().onExit();
+        getMarketManager().onExit();
+    }
 }
