@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 @Component
-public class RegistrationControllerImplementation extends BaseController implements RegistrationController {
+public class RegistrationController extends BaseController {
 
     private static final Logger logger = LogManager.getLogger(RegistrationController.class);
 
@@ -36,7 +36,7 @@ public class RegistrationControllerImplementation extends BaseController impleme
     private final Service serviceHandler;
 
     @Autowired
-    public RegistrationControllerImplementation(Service serviceHandler) {
+    public RegistrationController(Service serviceHandler) {
         super(
                 false,400,500);
         this.serviceHandler = serviceHandler;
