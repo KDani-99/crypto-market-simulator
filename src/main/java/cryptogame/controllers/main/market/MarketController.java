@@ -46,17 +46,18 @@ public class MarketController implements Initializable, Controller {
     private final Service serviceHandler;
 
     private ScheduledExecutorService executorService;
-    private boolean initialized = false;
+
+    private boolean isInitialized;
 
     @Autowired
     public MarketController(Service serviceHandler) {
         this.serviceHandler = serviceHandler;
     }
 
-    @Override
+    @FXML
     public void initialize() {
 
-        if(initialized) return; // TODO: Fix init call
+        if(isInitialized) return;
 
         this.setWindowProperties();
 
@@ -65,7 +66,7 @@ public class MarketController implements Initializable, Controller {
         this.serviceHandler.getMarketManager().startAssetLoadingService();
         this.loadMarketWhenReady();
 
-        initialized = true;
+        isInitialized = true;
     }
 
     private void initMarket() {
