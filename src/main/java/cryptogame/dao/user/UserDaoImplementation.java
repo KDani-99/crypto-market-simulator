@@ -1,6 +1,5 @@
 package cryptogame.dao.user;
 
-import cryptogame.models.ActionHistoryModel;
 import cryptogame.models.CryptoCurrencyModel;
 import cryptogame.containers.CurrencyContainer;
 import cryptogame.dao.DaoBase;
@@ -12,14 +11,13 @@ import java.util.Optional;
 
 import cryptogame.models.PurchaseHistoryModel;
 import cryptogame.models.UserModel;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component("userDao")
 public class UserDaoImplementation extends DaoBase<UserModel> implements UserDao {
 
+    @Transactional
     @Override
     public <TId> Optional<UserModel> getEntity(TId id) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -27,21 +25,26 @@ public class UserDaoImplementation extends DaoBase<UserModel> implements UserDao
         return Optional.of(user);
     }
 
+    @Transactional
     @Override
     public Optional<UserModel> getByUsername(String username) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         var query = entityManager.createQuery("SELECT user FROM UserModel user WHERE user.username = :value", UserModel.class);
-        return getUserModel(username, query);
+        var result = getUserModel(username, query);
+        entityManager.close();
+        return result;
     }
 
+    @Transactional
     @Override
     public Optional<UserModel> getByEmail(String email) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         var query = entityManager.createQuery("SELECT user FROM UserModel user WHERE user.email = :value", UserModel.class);
-        return getUserModel(email, query);
+        var result = getUserModel(email, query);
+        entityManager.close();
+        return result;
     }
 
-    @NotNull
     private Optional<UserModel> getUserModel(String value, TypedQuery<UserModel> query) {
         query.setParameter("value",value);
 
