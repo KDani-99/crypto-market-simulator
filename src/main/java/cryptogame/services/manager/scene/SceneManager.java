@@ -2,7 +2,7 @@ package cryptogame.services.manager.scene;
 
 import cryptogame.common.Initializable;
 import cryptogame.controllers.Controller;
-import cryptogame.controllers.MainController;
+import cryptogame.controllers.main.MainController;
 import cryptogame.controllers.WindowController;
 import cryptogame.controllers.main.stats.StatsController;
 import javafx.scene.control.Alert;
@@ -27,4 +27,6 @@ public interface SceneManager extends Initializable {
     Controller createPurchaseWindow() throws Exception;
 
     void createAlert(Alert.AlertType alertType, String title,String message);
+    void refresh();
+    void onExit();
 }
