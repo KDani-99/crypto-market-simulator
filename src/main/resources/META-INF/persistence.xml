@@ -18,7 +18,7 @@
             <property name="hibernate.connection.charSet" value="UTF-8" />
             <property name="hibernate.hbm2ddl.auto" value="update" />
             <property name="hibernate.connection.url"
-                      value="jdbc:h2:./crypto_game;MV_STORE=true"/>
+                      value="jdbc:h2:./crypto_game;MV_STORE=true;"/>
             <property name="hibernate.connection.driver_class" value="org.h2.Driver"/>
         </properties>
     </persistence-unit>
