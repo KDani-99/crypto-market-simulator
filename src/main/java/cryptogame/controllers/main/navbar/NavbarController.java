@@ -1,10 +1,7 @@
-package cryptogame.controllers.main;
+package cryptogame.controllers.main.navbar;
 
 import cryptogame.controllers.Controller;
-import cryptogame.controllers.MainController;
 import cryptogame.services.Service;
-import cryptogame.services.auth.AuthService;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -108,5 +105,4 @@ public class NavbarController implements Controller {
     public void setBalanceLabelText(String text) {
         this.balanceLabel.setText(text);
     }
-
 }
