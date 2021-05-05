@@ -14,9 +14,4 @@ public class BankController implements Controller {
     public boolean isResizable() {
         return false;
     }
-
-    @Override
-    public void initialize() {
-
-    }
 }
