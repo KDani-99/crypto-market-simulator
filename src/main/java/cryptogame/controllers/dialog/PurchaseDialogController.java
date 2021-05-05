@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +20,13 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class PurchaseDialogController implements Controller {
 
     private static final Logger logger = LogManager.getLogger(PurchaseDialogController.class);
 
+    @FXML private VBox vBox;
     @FXML private Label headerLabel;
     @FXML private TextField amountTextField;
     @FXML private Button purchaseButton;
@@ -45,7 +46,7 @@ public class PurchaseDialogController implements Controller {
         this.bindPurchaseButton();
     }
 
-    private void refreshData() throws Exception {
+    private void refreshData() {
         serviceHandler.getSceneManager().refresh();
     }
 
@@ -66,14 +67,21 @@ public class PurchaseDialogController implements Controller {
                     throw new EntityDoesNotExistException(UserModel.class);
                 }
 
-                if(user.get().getBalance() < (amount * currency.getPriceUsd())) {
-                    throw new IllegalArgumentException("You can't afford to buy that much");
+                var price = amount * currency.getPriceUsd();
+                if(user.get().getBalance() < price) {
+                    throw new IllegalArgumentException("You can't afford to buy that much of the given currency");
                 }
 
                 // Purchase the given currency
                 serviceHandler.getUserDao().purchaseCurrency(user.get(),amount,currency);
 
                 refreshData();
+
+                logger.info(
+                        String.format("Purchased %f * `%s` for $%f @ %f by `%s`",amount,currency.getName(),price, currency.getPriceUsd(), user.get().getUsername())
+                );
+
+                serviceHandler.getSceneManager().closeAllDialog();
 
             } catch (Exception exception) {
                 logger.error(exception);
