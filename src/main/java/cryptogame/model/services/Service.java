@@ -21,6 +21,8 @@ public interface Service {
     void createSession(long userId);
     void destroyActiveSession();
 
+    String formatDouble(double number);
+
     default void onExit() {
         // empty
     }
