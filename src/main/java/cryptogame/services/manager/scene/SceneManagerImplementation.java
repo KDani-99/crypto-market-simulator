@@ -157,7 +157,6 @@ public class SceneManagerImplementation implements SceneManager {
         return controllerInstance;
     }
 
-
     private <T extends Controller> Controller createDialog(Class<T> dialog,String title,int width, int height, boolean resizable) throws Exception {
         var controllerInstance = (Controller) context.getBean(dialog);
 
@@ -192,6 +191,19 @@ public class SceneManagerImplementation implements SceneManager {
         return controllerInstance;
     }
 
+    private void setStageMinSizeProperties(double width, double height) {
+        primaryStage.setMinWidth(width);
+        primaryStage.setMinHeight(height);
+    }
+    private void setStageMaxSizeProperties(double width, double height) {
+        primaryStage.setMaxWidth(width);
+        primaryStage.setMaxHeight(height);
+    }
+    private void setStageSizeProperties(double width, double height) {
+        primaryStage.setWidth(width);
+        primaryStage.setHeight(height);
+    }
+
     @Override
     public Stage getPrimaryStage() {
         return this.primaryStage;
@@ -199,22 +211,24 @@ public class SceneManagerImplementation implements SceneManager {
 
     @Override
     public WindowController showMainScene() throws Exception {
-        primaryStage.setWidth(850);
-        primaryStage.setHeight(500);
+        setStageMinSizeProperties(850,500);
+        setStageMaxSizeProperties(Double.MAX_VALUE,Double.MAX_VALUE);
         return showScene(MainController.class,"Main");
     }
 
     @Override
     public WindowController showLoginScene() throws Exception {
-        primaryStage.setWidth(400);
-        primaryStage.setHeight(500);
+        setStageMinSizeProperties(400,500);
+        setStageSizeProperties(400,500);
+        setStageMaxSizeProperties(400,500);
         return showScene(LoginController.class,"Login");
     }
 
     @Override
     public WindowController showRegistrationScene() throws Exception {
-        primaryStage.setWidth(400);
-        primaryStage.setHeight(500);
+        setStageMinSizeProperties(400,500);
+        setStageSizeProperties(400,500);
+        setStageMaxSizeProperties(400,500);
         return showScene(RegistrationController.class,"Registration");
     }
 
