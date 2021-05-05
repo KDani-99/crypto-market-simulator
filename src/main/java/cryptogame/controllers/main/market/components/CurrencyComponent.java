@@ -47,9 +47,6 @@ public class CurrencyComponent implements Controller {
     public void setCurrency(CryptoCurrency currency) {
         this.currency = currency;
     }
-    public CryptoCurrency getCurrency() {
-        return this.currency;
-    }
 
     @Override
     public void initialize() {
@@ -122,17 +119,14 @@ public class CurrencyComponent implements Controller {
     }
 
     private void bindPurchaseButton() {
-        this.purchaseButton.setOnMouseClicked(new EventHandler<>() {
-            @Override
-            public void handle(MouseEvent event) {
-                try {
-                    var purchaseWindow = (PurchaseDialogController) serviceHandler.getSceneManager()
-                            .createPurchaseWindow();
+        this.purchaseButton.setOnMouseClicked(event -> {
+            try {
+                var purchaseWindow = (PurchaseDialogController) serviceHandler.getSceneManager()
+                        .createPurchaseWindow();
 
-                    purchaseWindow.setCurrencyContainer(currency);
-                } catch (Exception exception) {
-                    logger.error(exception);
-                }
+                purchaseWindow.setCurrencyContainer(currency);
+            } catch (Exception exception) {
+                logger.error(exception);
             }
         });
     }
