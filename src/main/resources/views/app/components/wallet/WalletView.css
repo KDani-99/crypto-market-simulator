@@ -1,0 +1,31 @@
+.main > .viewport {
+    -fx-background-color: transparent;
+}
+.main {
+    -fx-background-color: rgb(40,40,46);
+}
+.main .header {
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-background-color: rgba(0,0,0,0.15);
+}
+.main .header .label {
+    -fx-alignment: center;
+    -fx-text-fill: white;
+    -fx-max-height: 65px;
+    -fx-pref-height: 65px;
+    -fx-min-height: 65px;
+    -fx-font-weight: bold;
+}
+.main .stats {
+    -fx-background-color: rgba(255,255,255,0.05);
+}
+.main .stats .label {
+    -fx-font-weight: normal;
+}
+.main .stats .profit {
+    -fx-text-fill: #2ecc71;
+}
+.main .stats .spent {
+    -fx-text-fill: #e74c3c;
+}
