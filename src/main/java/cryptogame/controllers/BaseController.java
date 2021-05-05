@@ -1,13 +1,8 @@
 package cryptogame.controllers;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-
-import java.net.URL;
 
 public abstract class BaseController implements WindowController,Controller {
 
