@@ -1,5 +1,7 @@
 package cryptogame.common;
 
 public interface Initializable {
-    void initialize();
+    default void initialize() {
+        // empty
+    }
 }
