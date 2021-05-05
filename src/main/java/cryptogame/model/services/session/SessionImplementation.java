@@ -1,9 +1,16 @@
 package cryptogame.model.services.session;
 
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class SessionImplementation implements Session {
 
-    private final long userId;
+    private long userId;
 
+    public SessionImplementation() {}
     public SessionImplementation(long userId) {
         this.userId = userId;
     }
@@ -11,5 +18,10 @@ public class SessionImplementation implements Session {
     @Override
     public long getActiveUserId() {
         return this.userId;
+    }
+
+    @Override
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 }
