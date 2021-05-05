@@ -1,9 +1,26 @@
-.main .sellBtn {
-    -fx-pref-height: 50px;
-    -fx-pref-width: 150px;
-    -fx-max-height: 50px;
-    -fx-max-width: 150px;
-    -fx-min-height: 50px;
-    -fx-min-width: 150px;
-    -fx-background-color: red;
+.walletPane {
+    -fx-background-color: rgba(255,255,255,0.05);
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+.walletPane .label {
+    -fx-alignment: center;
+    -fx-text-fill: white;
+    -fx-max-height: 65px;
+    -fx-pref-height: 65px;
+    -fx-min-height: 65px;
+}
+.walletPane .buyBtn {
+    -fx-pref-width: 35px;
+    -fx-pref-height: 35px;
+    -fx-border-radius: 50px;
+    -fx-background-radius: 50px;
+    -fx-background-color: transparent;
+    -fx-cursor: pointer;
+}
+.walletPane .posChangePercent {
+    -fx-text-fill: #2ecc71;
+}
+.walletPane .negChangePercent {
+    -fx-text-fill: red;
 }
