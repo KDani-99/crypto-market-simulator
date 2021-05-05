@@ -10,6 +10,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -65,18 +66,31 @@ public class StatsComponent implements Controller {
         this.formatTransactionType();
     }
 
+    public String formatDouble(double number) {
+
+        NumberFormat numberFormat = NumberFormat.getInstance();
+        numberFormat.setMaximumFractionDigits(6);
+        numberFormat.setMinimumFractionDigits(0);
+
+        return numberFormat.format(number);
+    }
+
     private void formatTransactionId() {
         this.transactionIdLabel.setText(Long.toString(action.getId()));
     }
+
     private void formatName() {
         this.nameLabel.setText(action.getName());
     }
+
     private void formatCost() {
-        this.costLabel.setText(String.format("$%f",action.getCost()));
+        this.costLabel.setText(String.format("$%s",formatDouble(action.getCost())));
     }
+
     private void formatAmount() {
-        this.amountLabel.setText(String.format("%.6f",action.getAmount()));
+        this.amountLabel.setText(formatDouble(action.getAmount()));
     }
+
     private void formatActionDate() {
         Date date = new Date(this.action.getActionTime());
 
@@ -86,6 +100,7 @@ public class StatsComponent implements Controller {
                 dateFormat.format(date)
         );
     }
+
     private void formatTransactionType() {
         if(actionType.equals(ActionType.PURCHASE)) {
             this.transactionTypeLabel.setText("Purchase");
