@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -8,11 +9,10 @@
     <content>
         <VBox fx:id="vBox" alignment="TOP_CENTER" prefHeight="0.0" prefWidth="460.0" spacing="5.0">
             <children>
-                <GridPane fx:id="headerGrid" maxHeight="65.0" minHeight="65.0" prefHeight="65.0" styleClass="header" VBox.vgrow="ALWAYS">
+                <GridPane fx:id="headerStatsGrid" maxHeight="65.0" minHeight="65.0" prefHeight="65.0" styleClass="header" VBox.vgrow="ALWAYS">
                     <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
@@ -21,14 +21,57 @@
                         <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="65.0" valignment="CENTER" vgrow="ALWAYS" />
                     </rowConstraints>
                     <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Name" GridPane.columnIndex="2" />
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Cost" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" />
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="244.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Amount" GridPane.columnIndex="4" />
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="323.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Transaction Date" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="5" />
-                  <Label fx:id="transactionIdLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="136.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Transaction Id" textAlignment="CENTER" wrapText="true" />
-                  <Label fx:id="actionTypeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="199.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Transaction Type" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="70.0" prefWidth="168.0" text="Total Spent ($)" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="10.0" prefHeight="70.0" prefWidth="116.0" text="Total Profit ($)" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="244.0" layoutY="10.0" prefHeight="70.0" prefWidth="155.0" text="Most Valuable" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="4" />
+                  <Label fx:id="transactionIdLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="136.0" layoutY="10.0" prefHeight="70.0" prefWidth="139.0" text="Net. Worth" textAlignment="CENTER" wrapText="true" />
+                  <Label fx:id="actionTypeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="199.0" layoutY="10.0" prefHeight="70.0" prefWidth="126.0" text="Number Of Assets" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" />
                     </children>
                 </GridPane>
+            <GridPane fx:id="statsGrid" layoutX="10.0" layoutY="10.0" maxHeight="65.0" minHeight="65.0" prefHeight="65.0">
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="65.0" valignment="CENTER" vgrow="ALWAYS" />
+               </rowConstraints>
+               <children>
+                  <Label fx:id="totalSpentLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="70.0" prefWidth="169.0" styleClass="spent" text="\$0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" />
+                  <Label fx:id="totalEarnedLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="10.0" prefHeight="70.0" prefWidth="145.0" styleClass="profit" text="\$0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" />
+                  <Label fx:id="mostValuableLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="244.0" layoutY="10.0" prefHeight="70.0" prefWidth="116.0" text="&lt;name&gt;" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="4" />
+                  <Label fx:id="netWorthLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="136.0" layoutY="10.0" prefHeight="70.0" prefWidth="179.0" text="\$0" textAlignment="CENTER" wrapText="true" />
+                  <Label fx:id="numberOfAssetsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="199.0" layoutY="10.0" prefHeight="70.0" prefWidth="178.0" text="0" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" />
+               </children>
+               <styleClass>
+                  <String fx:value="header" />
+                  <String fx:value="stats" />
+               </styleClass>
+            </GridPane>
+            <GridPane fx:id="headerGrid" layoutX="10.0" layoutY="10.0" maxHeight="65.0" minHeight="65.0" prefHeight="65.0" styleClass="header">
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="65.0" valignment="CENTER" vgrow="ALWAYS" />
+               </rowConstraints>
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Name" GridPane.columnIndex="2" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Cost" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="244.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Amount" GridPane.columnIndex="4" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="323.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Transaction Date" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="5" />
+                  <Label fx:id="transactionIdLabel1" alignment="CENTER" contentDisplay="CENTER" layoutX="136.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Transaction Id" textAlignment="CENTER" wrapText="true" />
+                  <Label fx:id="actionTypeLabel1" alignment="CENTER" contentDisplay="CENTER" layoutX="199.0" layoutY="10.0" prefHeight="70.0" prefWidth="78.0" text="Transaction Type" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
             </children></VBox>
     </content>
     <padding>
