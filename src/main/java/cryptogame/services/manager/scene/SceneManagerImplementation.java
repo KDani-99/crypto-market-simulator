@@ -30,7 +30,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Optional;
 
-@Component("sceneManager")
+@Component
 public class SceneManagerImplementation implements SceneManager {
 
     @lombok.Data
