@@ -8,7 +8,7 @@ import cryptogame.services.session.SessionImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component("serviceHandler")
+@Component
 public class ServiceImplementation implements Service {
 
     private SceneManager sceneManager;
