@@ -1,7 +1,7 @@
 package cryptogame.controllers.main.stats.components;
 
 import cryptogame.controllers.Controller;
-import cryptogame.models.ActionHistoryModel;
+import cryptogame.model.models.ActionHistoryModel;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;

@@ -1,4 +1,4 @@
-package cryptogame.dao;
+package cryptogame.model.dao;
 
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;

@@ -1,4 +1,4 @@
-package cryptogame.exception;
+package cryptogame.model.exception;
 
 import cryptogame.common.validation.ValidationError;
 

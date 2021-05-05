@@ -2,9 +2,9 @@ package cryptogame.controllers.dialog;
 
 import cryptogame.containers.CurrencyContainer;
 import cryptogame.controllers.Controller;
-import cryptogame.exception.EntityDoesNotExistException;
-import cryptogame.models.UserModel;
-import cryptogame.services.Service;
+import cryptogame.model.exception.EntityDoesNotExistException;
+import cryptogame.model.models.UserModel;
+import cryptogame.model.services.Service;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;

@@ -1,4 +1,4 @@
-package cryptogame.services.session;
+package cryptogame.model.services.session;
 
 public class SessionImplementation implements Session {
 

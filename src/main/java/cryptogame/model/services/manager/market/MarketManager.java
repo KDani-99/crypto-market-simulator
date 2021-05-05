@@ -1,4 +1,4 @@
-package cryptogame.services.manager.market;
+package cryptogame.model.services.manager.market;
 
 import cryptogame.containers.CryptoCurrency;
 

@@ -1,11 +1,10 @@
-package cryptogame.models;
+package cryptogame.model.models;
 
 import javax.persistence.Entity;
-import java.util.Objects;
 
 @Entity
 @lombok.Data
-public class PurchaseHistoryModel extends ActionHistoryModel {
+public class SellHistoryModel extends ActionHistoryModel {
 
     @Override
     public boolean equals(Object o) {

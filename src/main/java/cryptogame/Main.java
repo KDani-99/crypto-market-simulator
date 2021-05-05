@@ -1,7 +1,7 @@
 package cryptogame;
 
-import cryptogame.services.Service;
-import cryptogame.services.manager.scene.SceneManager;
+import cryptogame.model.services.Service;
+import cryptogame.model.services.manager.scene.SceneManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;

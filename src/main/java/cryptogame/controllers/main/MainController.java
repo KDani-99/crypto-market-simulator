@@ -5,7 +5,7 @@ import cryptogame.controllers.Controller;
 import cryptogame.common.Refreshable;
 import cryptogame.controllers.WindowController;
 import cryptogame.controllers.main.navbar.NavbarController;
-import cryptogame.services.Service;
+import cryptogame.model.services.Service;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.*;

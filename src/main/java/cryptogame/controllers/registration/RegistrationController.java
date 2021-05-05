@@ -3,11 +3,11 @@ package cryptogame.controllers.registration;
 import cryptogame.common.validation.Validation;
 import cryptogame.common.validation.ValidationError;
 import cryptogame.controllers.BaseController;
-import cryptogame.models.UserModel;
-import cryptogame.services.Service;
+import cryptogame.model.models.UserModel;
+import cryptogame.model.services.Service;
 
-import cryptogame.services.auth.AuthService;
-import cryptogame.exception.ValidationException;
+import cryptogame.model.services.auth.AuthService;
+import cryptogame.model.exception.ValidationException;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;

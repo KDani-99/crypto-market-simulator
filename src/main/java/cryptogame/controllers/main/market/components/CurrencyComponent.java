@@ -1,17 +1,13 @@
 package cryptogame.controllers.main.market.components;
 
-import cryptogame.common.Initializable;
 import cryptogame.containers.CryptoCurrency;
 import cryptogame.controllers.Controller;
 import cryptogame.controllers.dialog.PurchaseDialogController;
-import cryptogame.services.Service;
-import cryptogame.services.manager.scene.SceneManagerImplementation;
-import javafx.event.EventHandler;
+import cryptogame.model.services.Service;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

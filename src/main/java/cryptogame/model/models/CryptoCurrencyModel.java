@@ -1,4 +1,4 @@
-package cryptogame.models;
+package cryptogame.model.models;
 
 import javax.persistence.*;
 import java.util.Objects;

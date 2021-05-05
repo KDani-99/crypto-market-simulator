@@ -1,4 +1,4 @@
-package cryptogame.models;
+package cryptogame.model.models;
 
 import cryptogame.common.validation.EmailValidation;
 import cryptogame.common.validation.PasswordValidation;

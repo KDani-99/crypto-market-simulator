@@ -1,9 +1,8 @@
-package cryptogame.dao.user;
+package cryptogame.model.dao.user;
 
 import cryptogame.containers.CurrencyContainer;
-import cryptogame.dao.Dao;
-import cryptogame.models.UserModel;
-import org.springframework.stereotype.Component;
+import cryptogame.model.dao.Dao;
+import cryptogame.model.models.UserModel;
 
 import java.util.Optional;
 

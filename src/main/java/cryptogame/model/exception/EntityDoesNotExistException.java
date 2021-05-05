@@ -1,4 +1,4 @@
-package cryptogame.exception;
+package cryptogame.model.exception;
 
 public class EntityDoesNotExistException extends Exception {
     public EntityDoesNotExistException(Class<?> entity) {

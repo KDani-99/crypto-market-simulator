@@ -1,4 +1,4 @@
-package cryptogame.services.auth;
+package cryptogame.model.services.auth;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;

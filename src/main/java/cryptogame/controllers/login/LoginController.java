@@ -1,8 +1,8 @@
 package cryptogame.controllers.login;
 
 import cryptogame.controllers.BaseController;
-import cryptogame.services.Service;
-import cryptogame.services.auth.AuthService;
+import cryptogame.model.services.Service;
+import cryptogame.model.services.auth.AuthService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

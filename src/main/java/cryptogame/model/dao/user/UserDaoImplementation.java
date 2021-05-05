@@ -1,16 +1,16 @@
-package cryptogame.dao.user;
+package cryptogame.model.dao.user;
 
-import cryptogame.models.CryptoCurrencyModel;
+import cryptogame.model.models.CryptoCurrencyModel;
 import cryptogame.containers.CurrencyContainer;
-import cryptogame.dao.DaoBase;
+import cryptogame.model.dao.DaoBase;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.Calendar;
 import java.util.Optional;
 
-import cryptogame.models.PurchaseHistoryModel;
-import cryptogame.models.UserModel;
+import cryptogame.model.models.PurchaseHistoryModel;
+import cryptogame.model.models.UserModel;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 

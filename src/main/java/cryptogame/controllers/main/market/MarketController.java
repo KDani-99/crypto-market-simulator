@@ -4,7 +4,7 @@ import cryptogame.common.Initializable;
 import cryptogame.containers.CryptoCurrency;
 import cryptogame.controllers.Controller;
 import cryptogame.controllers.main.market.components.CurrencyComponent;
-import cryptogame.services.Service;
+import cryptogame.model.services.Service;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;

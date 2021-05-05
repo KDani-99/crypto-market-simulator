@@ -1,7 +1,7 @@
 package cryptogame.controllers.main.navbar;
 
 import cryptogame.controllers.Controller;
-import cryptogame.services.Service;
+import cryptogame.model.services.Service;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;

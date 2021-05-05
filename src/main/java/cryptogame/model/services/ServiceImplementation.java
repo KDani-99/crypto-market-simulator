@@ -1,10 +1,10 @@
-package cryptogame.services;
+package cryptogame.model.services;
 
-import cryptogame.dao.user.UserDao;
-import cryptogame.services.manager.market.MarketManager;
-import cryptogame.services.manager.scene.SceneManager;
-import cryptogame.services.session.Session;
-import cryptogame.services.session.SessionImplementation;
+import cryptogame.model.dao.user.UserDao;
+import cryptogame.model.services.manager.market.MarketManager;
+import cryptogame.model.services.manager.scene.SceneManager;
+import cryptogame.model.services.session.Session;
+import cryptogame.model.services.session.SessionImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
