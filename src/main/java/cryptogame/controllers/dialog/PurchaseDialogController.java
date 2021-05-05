@@ -105,7 +105,7 @@ public class PurchaseDialogController implements Controller {
 
     @Override
     public Node getRoot() {
-        return null;
+        return this.vBox;
     }
 
     @Override
