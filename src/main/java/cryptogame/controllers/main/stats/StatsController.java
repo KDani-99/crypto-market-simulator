@@ -50,7 +50,6 @@ public class StatsController implements Controller, Refreshable {
 
     @FXML
     public void initialize() {
-        System.out.println("ASD!");
         scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
 
