@@ -264,6 +264,14 @@ public class SceneManagerImplementation implements SceneManager {
     }
 
     @Override
+    public void closeAllDialog() {
+        for(var dialog : activeStages.values()) {
+            dialog.close();
+        }
+        activeStages.clear();
+    }
+
+    @Override
     public void createAlert(Alert.AlertType alertType, String title,String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
