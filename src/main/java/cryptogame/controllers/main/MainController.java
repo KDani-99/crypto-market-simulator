@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 
 import org.apache.logging.log4j.*;
 
+import java.text.NumberFormat;
+
 @Component
 public class MainController extends BaseController implements WindowController, Refreshable {
 
@@ -23,6 +25,7 @@ public class MainController extends BaseController implements WindowController, 
 
     private Controller marketController;
     private Controller statsController;
+    private Controller walletController;
 
     @FXML private BorderPane mainComponent;
 
@@ -46,10 +49,10 @@ public class MainController extends BaseController implements WindowController, 
     private void setUserInfo() {
 
         var user = serviceHandler.getUserDao()
-                .getEntity(serviceHandler.getSession().getActiveUserId());
+                .getEntity(serviceHandler.getSession().getActiveUserId()).get();
 
-        navbarController.setLoggedInUsernameLabelText(user.get().getUsername());
-        navbarController.setBalanceLabelText(String.format("~$%.4f",user.get().getBalance()));
+        navbarController.setLoggedInUsernameLabelText(user.getUsername());
+        navbarController.setBalanceLabelText(String.format("$%s",serviceHandler.formatDouble(user.getBalance())));
     }
 
     private void setEmpty() {
@@ -91,21 +94,6 @@ public class MainController extends BaseController implements WindowController, 
         }
     }
 
-    public void setBank() {
-        try {
-
-            this.setEmpty();
-
-            var bankController = serviceHandler.getSceneManager().getBankController();
-            bankController.initialize();
-
-            displayMainNode(bankController.getRoot());
-
-        } catch (Exception ex) {
-            logger.error(ex.getMessage());
-        }
-    }
-
     public void setStats() {
         try {
 
@@ -120,6 +108,23 @@ public class MainController extends BaseController implements WindowController, 
             displayMainNode(statsController.getRoot());
 
         } catch (Exception exception){
+            logger.error(exception);
+        }
+    }
+
+    public void setWallet() {
+        try {
+            this.setEmpty();
+
+            if(walletController == null) {
+                walletController = serviceHandler.getSceneManager().getWalletController();
+            }
+
+            walletController.initialize();
+
+            displayMainNode(walletController.getRoot());
+
+        } catch (Exception exception) {
             logger.error(exception);
         }
     }
