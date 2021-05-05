@@ -7,11 +7,12 @@ import cryptogame.controllers.dialog.PurchaseDialogController;
 import cryptogame.controllers.login.LoginController;
 import cryptogame.controllers.main.MainController;
 import cryptogame.controllers.main.navbar.NavbarController;
-import cryptogame.controllers.main.bank.BankController;
 import cryptogame.controllers.main.market.MarketController;
 import cryptogame.controllers.main.market.components.CurrencyComponent;
 import cryptogame.controllers.main.stats.StatsController;
 import cryptogame.controllers.main.stats.components.StatsComponent;
+import cryptogame.controllers.main.wallet.WalletController;
+import cryptogame.controllers.main.wallet.components.WalletComponent;
 import cryptogame.controllers.registration.RegistrationController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -95,13 +96,14 @@ public class SceneManagerImplementation implements SceneManager {
         // Loaded into a scene
         this.mainControllerComponents.put(NavbarController.class,new ControllerInfo(getResourceURL("/views/app/components/navbar/Navbar.fxml")));
         this.mainControllerComponents.put(MarketController.class,new ControllerInfo(getResourceURL("/views/app/components/market/MarketView.fxml")));
-        this.mainControllerComponents.put(BankController.class,new ControllerInfo(getResourceURL("/views/app/components/bank/BankView.fxml")));
         this.mainControllerComponents.put(StatsController.class,new ControllerInfo(getResourceURL("/views/app/components/stats/StatsView.fxml")));
+        this.mainControllerComponents.put(WalletController.class,new ControllerInfo(getResourceURL("/views/app/components/wallet/WalletView.fxml")));
     }
 
     private void addPrototypeComponentControllers() {
         // Reusable component
         this.prototypeComponentControllers.put(CurrencyComponent.class, getResourceURL("/views/app/components/market/components/CurrencyComponent.fxml"));
+        this.prototypeComponentControllers.put(WalletComponent.class, getResourceURL("/views/app/components/wallet/components/WalletComponent.fxml"));
         this.prototypeComponentControllers.put(StatsComponent.class,getResourceURL("/views/app/components/stats/components/StatsComponent.fxml"));
     }
 
@@ -248,13 +250,13 @@ public class SceneManagerImplementation implements SceneManager {
     }
 
     @Override
-    public Controller getBankController() throws Exception {
-        return loadControllerComponent(BankController.class);
+    public Controller getStatsController() throws Exception {
+        return loadControllerComponent(StatsController.class);
     }
 
     @Override
-    public StatsController getStatsController() throws Exception {
-        return (StatsController) loadControllerComponent(StatsController.class);
+    public Controller getWalletController() throws Exception {
+        return loadControllerComponent(WalletController.class);
     }
 
     @Override
@@ -265,6 +267,11 @@ public class SceneManagerImplementation implements SceneManager {
     @Override
     public Controller createCurrencyComponent() throws Exception {
         return createPrototypeComponentController(CurrencyComponent.class);
+    }
+
+    @Override
+    public Controller createWalletComponent() throws Exception {
+        return createPrototypeComponentController(WalletComponent.class);
     }
 
     @Override
