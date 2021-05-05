@@ -69,22 +69,6 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </AnchorPane>
-            <AnchorPane fx:id="bankButtonPane" layoutX="25.0" layoutY="78.0" prefHeight="59.0" prefWidth="220.0" styleClass="buttonBox">
-               <children>
-                  <Button fx:id="bankButton" alignment="BASELINE_LEFT" maxWidth="239.0" mnemonicParsing="false" prefHeight="110.0" prefWidth="220.0" text="Bank" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <HBox alignment="CENTER_LEFT" disable="true" prefHeight="40.0" prefWidth="220.0" AnchorPane.leftAnchor="0.0">
-                     <children>
-                        <SVGPath content="M6.5 10h-2v7h2v-7zm6 0h-2v7h2v-7zm8.5 9H2v2h19v-2zm-2.5-9h-2v7h2v-7zm-7-6.74L16.71 6H6.29l5.21-2.74m0-2.26L2 6v2h19V6l-9.5-5z" fill="GAINSBORO" />
-                     </children>
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </HBox>
-               </children>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </AnchorPane>
             <AnchorPane fx:id="walletButtonPane" layoutX="25.0" layoutY="133.0" prefHeight="59.0" prefWidth="220.0" styleClass="buttonBox">
                <children>
                   <Button fx:id="walletButton" alignment="BASELINE_LEFT" maxWidth="239.0" mnemonicParsing="false" prefHeight="110.0" prefWidth="220.0" text="Wallet" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
