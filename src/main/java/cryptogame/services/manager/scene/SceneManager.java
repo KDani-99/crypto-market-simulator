@@ -27,6 +27,7 @@ public interface SceneManager extends Initializable {
     Controller createPurchaseWindow() throws Exception;
 
     void createAlert(Alert.AlertType alertType, String title,String message);
+    void closeAllDialog();
     void refresh();
     void onExit();
 }
