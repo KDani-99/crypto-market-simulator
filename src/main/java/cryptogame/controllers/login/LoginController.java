@@ -37,11 +37,6 @@ public class LoginController extends BaseController {
     }
 
     @Override
-    public void initialize() {
-
-    }
-
-    @Override
     public void initScene() {
         this.setWindowProperties();
         this.setupLoginButton();
