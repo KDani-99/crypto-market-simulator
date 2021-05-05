@@ -23,6 +23,7 @@ public class NavbarController implements Controller {
     @FXML private Button marketButton;
     @FXML private Button settingsButton;
     @FXML private Button statsButton;
+    @FXML private Button walletButton;
     @FXML private Button logOutButton;
 
     @FXML private Label loggedInUsernameLabel;
@@ -30,6 +31,7 @@ public class NavbarController implements Controller {
 
     @FXML private Pane marketButtonPane;
     @FXML private Pane statsButtonPane;
+    @FXML private Pane walletButtonPane;
 
     private final Service serviceHandler;
 
@@ -43,8 +45,15 @@ public class NavbarController implements Controller {
         this.setupMarketButton();
         this.setupStatsButton();
         this.setupLogOutButton();
+        this.setupWalletButton();
 
         this.vBox.setMaxHeight(Double.MAX_VALUE);
+    }
+
+    private void removeButtonStyles() {
+        marketButtonPane.getStyleClass().remove("selected");
+        statsButtonPane.getStyleClass().remove("selected");
+        walletButtonPane.getStyleClass().remove("selected");
     }
 
     private void setupMarketButton() {
@@ -57,6 +66,7 @@ public class NavbarController implements Controller {
                     .setMarket();
         });
     }
+
     private void setupLogOutButton() {
         this.logOutButton.setOnMouseClicked(event -> {
 
@@ -73,11 +83,6 @@ public class NavbarController implements Controller {
         });
     }
 
-    private void removeButtonStyles() {
-        marketButtonPane.getStyleClass().remove("selected");
-        statsButtonPane.getStyleClass().remove("selected");
-    }
-
     private void setupStatsButton() {
         this.statsButton.setOnMouseClicked(event -> {
 
@@ -86,6 +91,17 @@ public class NavbarController implements Controller {
 
             serviceHandler.getSceneManager().getMainController()
             .setStats();
+        });
+    }
+
+    private void setupWalletButton() {
+        this.walletButton.setOnMouseClicked(event -> {
+
+            removeButtonStyles();
+            walletButtonPane.getStyleClass().add("selected");
+
+            serviceHandler.getSceneManager().getMainController()
+                    .setWallet();
         });
     }
 
