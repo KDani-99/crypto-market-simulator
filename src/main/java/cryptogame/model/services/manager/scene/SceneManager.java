@@ -19,10 +19,11 @@ public interface SceneManager extends Initializable {
 
     Controller getNavbarController() throws Exception;
     Controller getMarketComponentController() throws Exception;
-    Controller getBankController() throws Exception;
-    StatsController getStatsController() throws Exception;
+    Controller getWalletController() throws Exception;
+    Controller getStatsController() throws Exception;
 
     Controller createStatsComponent() throws Exception;
+    Controller createWalletComponent() throws Exception;
     Controller createCurrencyComponent() throws Exception;
     Controller createPurchaseWindow() throws Exception;
 
