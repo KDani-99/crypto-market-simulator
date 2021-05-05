@@ -61,6 +61,11 @@ public class LoginController extends BaseController {
         primaryStage.setMinHeight(500);
     }
 
+    private void clearTextFields() {
+        this.usernameInput.setText("");
+        this.passwordInput.setText("");
+    }
+
     private void setupLoginButton() {
         this.loginButton.setOnMouseClicked(event -> {
             try {
@@ -84,6 +89,10 @@ public class LoginController extends BaseController {
 
                 serviceHandler.getSceneManager()
                         .showMainScene();
+
+                clearTextFields();
+
+                logger.info(String.format("User `%s` logged in.",username));
 
             }  catch (Exception exception) {
                 onError(exception);
