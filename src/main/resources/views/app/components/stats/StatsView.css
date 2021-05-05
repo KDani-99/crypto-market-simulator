@@ -17,3 +17,15 @@
     -fx-min-height: 65px;
     -fx-font-weight: bold;
 }
+.main .stats {
+    -fx-background-color: rgba(255,255,255,0.05);
+}
+.main .stats .label {
+    -fx-font-weight: normal;
+}
+.main .stats .profit {
+    -fx-text-fill: #2ecc71;
+}
+.main .stats .spent {
+    -fx-text-fill: #e74c3c;
+}
