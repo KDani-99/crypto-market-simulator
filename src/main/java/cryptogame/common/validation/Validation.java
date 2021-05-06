@@ -1,6 +1,6 @@
 package cryptogame.common.validation;
 
-public interface IValidation<T> {
+public interface Validation<T> {
 
     boolean validate(T object);
     String getErrorMessage();

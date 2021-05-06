@@ -9,7 +9,7 @@ public abstract class BaseValidation {
 
         var result = new HashSet<ValidationError>();
 
-        var validatorInstance = (IValidation<Object>)validationAnnotation.validatorClass().getDeclaredConstructor().newInstance();
+        var validatorInstance = (Validation<Object>)validationAnnotation.validatorClass().getDeclaredConstructor().newInstance();
         var value = field.get(object);
 
         if(!validatorInstance.validate(value)) {

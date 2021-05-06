@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface Validate {
 
-    Class<? extends IValidation<?>> validatorClass();
+    Class<? extends Validation<?>> validatorClass();
 
 }

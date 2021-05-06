@@ -1,6 +1,6 @@
 package cryptogame.common.validation;
 
-public class EmailValidation implements IValidation<String> {
+public class EmailValidation implements Validation<String> {
 
     private final String errorMessage = "Invalid email address.";
 

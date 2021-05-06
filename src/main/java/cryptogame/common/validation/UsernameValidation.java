@@ -2,7 +2,7 @@ package cryptogame.common.validation;
 
 import java.util.regex.Pattern;
 
-public class UsernameValidation implements IValidation<String> {
+public class UsernameValidation implements Validation<String> {
 
     private final String errorMessage = "Username may only contain alphanumeric characters or single hyphens, length must be between 4 and 50 characters, and cannot begin or end with a hyphen.";
 

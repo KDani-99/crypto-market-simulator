@@ -2,7 +2,7 @@ package cryptogame.common.validation;
 
 import java.util.regex.Pattern;
 
-public class PasswordValidation implements IValidation<String>{
+public class PasswordValidation implements Validation<String> {
 
     private final String errorMessage = "Password must be at least 8 characters long, and must include a number, lowercase and uppercase letter, and a special character.";
 
