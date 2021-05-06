@@ -19,7 +19,7 @@
                   <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="65.0" valignment="CENTER" vgrow="ALWAYS" />
                </rowConstraints>
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="65.0" prefWidth="232.0" text="Price" GridPane.columnIndex="2" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="65.0" prefWidth="232.0" text="Current Market Price" GridPane.columnIndex="2" />
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="10.0" prefHeight="65.0" prefWidth="228.0" text="Sell" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" />
                   <Label fx:id="transactionIdLabel1" alignment="CENTER" contentDisplay="CENTER" layoutX="136.0" layoutY="10.0" prefHeight="65.0" prefWidth="158.0" text="Name" textAlignment="CENTER" wrapText="true" />
                   <Label fx:id="actionTypeLabel1" alignment="CENTER" contentDisplay="CENTER" layoutX="199.0" layoutY="10.0" prefHeight="65.0" prefWidth="151.0" text="Amount" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" />
