@@ -1,0 +1,4 @@
+.main .sellBtn {
+    -fx-background-color: linear-gradient(to right,#e74c3c,#c0392b);
+    -fx-effect: dropshadow(gaussian, #e74c3c, 15, -15, 0, 0);
+}
