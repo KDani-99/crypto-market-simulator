@@ -117,8 +117,15 @@ public class MarketController implements Initializable, Controller {
     }
 
     private void setNextRefreshTimeText() {
-        var minutes = serviceHandler.getMarketManager().getRemainingTimeUntilRefresh() / (60 * 1000);
-        remaningTimeLabel.setText("Next refresh in: " + minutes + " minute(s)");
+        var remaining = serviceHandler.getMarketManager().getRemainingTimeUntilRefresh();
+
+        var minutes = remaining / (60 * 1000);
+
+        var seconds = (remaining / 1000) - (minutes) * 60;
+
+        remaningTimeLabel.setText(
+                String.format("Next refresh in: %d minute(s) %d second(s)",minutes,seconds)
+        );
     }
 
     private void bindRankSorting() {
