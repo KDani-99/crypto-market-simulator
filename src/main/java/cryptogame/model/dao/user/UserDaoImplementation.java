@@ -1,11 +1,11 @@
 package cryptogame.model.dao.user;
 
-import cryptogame.controllers.main.market.components.CurrencyComponent;
 import cryptogame.model.models.CryptoCurrencyModel;
 import cryptogame.containers.CurrencyContainer;
-import cryptogame.model.dao.DaoBase;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.TypedQuery;
 import java.util.Calendar;
 import java.util.Optional;
@@ -16,38 +16,37 @@ import cryptogame.model.models.UserModel;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-@Component("userDao")
-public class UserDaoImplementation extends DaoBase<UserModel> implements UserDao {
+@Component
+public class UserDaoImplementation implements UserDao {
 
-    @Transactional
+    @PersistenceContext(type = PersistenceContextType.EXTENDED)
+    protected EntityManager entityManager;
+
     @Override
     public <TId> Optional<UserModel> getEntity(TId id) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
         var user = entityManager.find(UserModel.class,id);
         return Optional.of(user);
     }
 
     @Transactional
     @Override
-    public Optional<UserModel> getByUsername(String username) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        var query = entityManager.createQuery("SELECT user FROM UserModel user WHERE user.username = :value", UserModel.class);
-        var result = getUserModel(username, query);
-        entityManager.close();
-        return result;
+    public void persistEntity(UserModel entity) {
+        entityManager.persist(entity);
     }
 
-    @Transactional
+    @Override
+    public Optional<UserModel> getByUsername(String username) {
+        var query = entityManager.createQuery("SELECT user FROM UserModel user WHERE user.username = :value", UserModel.class);
+        return getUserModel(username, query);
+    }
+
     @Override
     public Optional<UserModel> getByEmail(String email) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
         var query = entityManager.createQuery("SELECT user FROM UserModel user WHERE user.email = :value", UserModel.class);
-        var result = getUserModel(email, query);
-        entityManager.close();
-        return result;
+        return getUserModel(email, query);
     }
 
-    private Optional<UserModel> getUserModel(String value, TypedQuery<UserModel> query) {
+    public Optional<UserModel> getUserModel(String value, TypedQuery<UserModel> query) {
         query.setParameter("value",value);
 
         UserModel user = null;
@@ -63,7 +62,7 @@ public class UserDaoImplementation extends DaoBase<UserModel> implements UserDao
         return Optional.ofNullable(user);
     }
 
-    private void purchaseAddToWallet(UserModel user, double amount, CurrencyContainer currency) {
+    public void purchaseAddToWallet(UserModel user, double amount, CurrencyContainer currency) {
 
         var tempWallet = user.getWallet().stream()
                 .filter(elem -> elem.getIdName().equals(currency.getId())).findFirst();
@@ -73,7 +72,7 @@ public class UserDaoImplementation extends DaoBase<UserModel> implements UserDao
             var tmp = tempWallet.get();
             tmp.setAmount(tmp.getAmount() + amount);
 
-            executeTransaction(entityManager -> entityManager.merge(tmp));
+            entityManager.merge(tmp);
 
         } else {
 
@@ -85,19 +84,19 @@ public class UserDaoImplementation extends DaoBase<UserModel> implements UserDao
 
             user.getWallet().add(tmp);
 
-            executeTransaction(entityManager -> entityManager.persist(tmp));
+            entityManager.persist(tmp);
         }
 
     }
 
-    private void purchaseDecreaseBalance(UserModel user, double amount, CurrencyContainer currency)
+    public void purchaseDecreaseBalance(UserModel user, double amount, CurrencyContainer currency)
     {
         var newBalance = user.getBalance();
         newBalance -= (amount * currency.getPriceUsd());
         user.setBalance(newBalance);
     }
 
-    private void createPurchaseActionHistory(UserModel user, double amount, CurrencyContainer currency) {
+    public void createPurchaseActionHistory(UserModel user, double amount, CurrencyContainer currency) {
         var purchase = new PurchaseHistoryModel();
         purchase.setUser(user);
         purchase.setActionTime(Calendar.getInstance().getTimeInMillis());
@@ -107,10 +106,10 @@ public class UserDaoImplementation extends DaoBase<UserModel> implements UserDao
 
         user.getPurchaseHistory().add(purchase);
 
-        executeTransaction(entityManager -> entityManager.persist(purchase));
+        entityManager.persist(purchase);
     }
 
-    private void createSellActionHistory(UserModel user, double amount, CurrencyContainer currency) {
+    public void createSellActionHistory(UserModel user, double amount, CurrencyContainer currency) {
         var sell = new SellHistoryModel();
         sell.setUser(user);
         sell.setActionTime(Calendar.getInstance().getTimeInMillis());
@@ -120,33 +119,34 @@ public class UserDaoImplementation extends DaoBase<UserModel> implements UserDao
 
         user.getSellHistory().add(sell);
 
-        executeTransaction(entityManager -> entityManager.persist(sell));
+        entityManager.persist(sell);
     }
 
-    private void removeCurrencyFromWallet(UserModel user, double amount, CurrencyContainer currency) {
-        var tempWallet = user.getWallet()
+    public void removeCurrencyFromWallet(UserModel user, double amount, CurrencyContainer currency) {
+        var currencyModel = user.getWallet()
                 .stream()
-                .filter(currencyModel -> !currencyModel.getIdName().equals(currency.getId()))
-                .findFirst();
+                .filter(cryptoCurrencyModel -> cryptoCurrencyModel.getIdName().equals(currency.getId()))
+                .findFirst()
+                .get();
 
-        if(tempWallet.isPresent()) {
-            var tmp = tempWallet.get();
-            tmp.setAmount(tmp.getAmount() - amount);
+        currencyModel.setAmount(currencyModel.getAmount() - amount);
 
-            if(tmp.getAmount() <= 0.0d) {
-                user.getWallet().remove(tmp);
-            }
-
-            executeTransaction(entityManager -> entityManager.merge(tmp));
+        if(currencyModel.getAmount() <= 0.0d) {
+            entityManager.remove(currencyModel);
+        } else {
+            //entityManager.merge(currencyModel);
+            entityManager.merge(currencyModel);
         }
+
     }
 
-    private void sellIncreaseBalance(UserModel user, double amount, CurrencyContainer currency) {
+    public void sellIncreaseBalance(UserModel user, double amount, CurrencyContainer currency) {
         var newBalance = user.getBalance();
         newBalance += (amount * currency.getPriceUsd());
         user.setBalance(newBalance);
     }
 
+    @Transactional
     @Override
     public void purchaseCurrency(UserModel user, double amount, CurrencyContainer currency) {
 
@@ -154,10 +154,10 @@ public class UserDaoImplementation extends DaoBase<UserModel> implements UserDao
         purchaseDecreaseBalance(user,amount,currency);
         createPurchaseActionHistory(user,amount,currency);
 
-        executeTransaction(entityManager -> entityManager.merge(user));
-
+        entityManager.merge(user);
     }
 
+    @Transactional
     @Override
     public void sellCurrency(UserModel user, double amount, CurrencyContainer currency) {
 
@@ -165,6 +165,6 @@ public class UserDaoImplementation extends DaoBase<UserModel> implements UserDao
         sellIncreaseBalance(user,amount,currency);
         createSellActionHistory(user,amount,currency);
 
-        executeTransaction(entityManager -> entityManager.merge(user));
+        entityManager.merge(user);
     }
 }

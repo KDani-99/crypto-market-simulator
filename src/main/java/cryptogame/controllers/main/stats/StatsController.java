@@ -1,11 +1,9 @@
 package cryptogame.controllers.main.stats;
 
 import cryptogame.common.Refreshable;
-import cryptogame.containers.CryptoCurrency;
 import cryptogame.controllers.Controller;
 import cryptogame.controllers.main.stats.components.StatsComponent;
 import cryptogame.model.models.ActionHistoryModel;
-import cryptogame.model.models.CryptoCurrencyModel;
 import cryptogame.model.models.UserModel;
 import cryptogame.model.services.Service;
 import javafx.fxml.FXML;
@@ -68,6 +66,14 @@ public class StatsController implements Controller, Refreshable {
         this.loadStats();
     }
 
+    private void initializeWithErrHandling() {
+        try {
+            this.initialize();
+        } catch (Exception exception) {
+            logger.error(exception);
+        }
+    }
+
     private void loadStatsComponent(ActionHistoryModel action,StatsComponent.ActionType actionType) throws Exception {
 
         var statsComponent = (StatsComponent) serviceHandler.getSceneManager().createStatsComponent();
@@ -124,7 +130,7 @@ public class StatsController implements Controller, Refreshable {
             }
         }
 
-        netWorthLabel.setText(String.format("$%.6f",netWorth));
+        netWorthLabel.setText(String.format("$%s",serviceHandler.formatDouble(netWorth)));
         mostValuableLabel.setText(mostExpensiveName);
         numberOfAssetsLabel.setText(String.format("%d",user.getWallet().size()));
 
@@ -181,13 +187,7 @@ public class StatsController implements Controller, Refreshable {
 
     @Override
     public void refresh() {
-
         resetBox();
-
-        try {
-            this.initialize();
-        } catch (Exception exception) {
-            logger.error(exception);
-        }
+        initializeWithErrHandling();
     }
 }

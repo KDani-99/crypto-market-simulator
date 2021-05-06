@@ -1,6 +1,7 @@
 package cryptogame.controllers.dialog;
 
 import cryptogame.containers.CurrencyContainer;
+import cryptogame.controllers.BaseController;
 import cryptogame.controllers.Controller;
 import cryptogame.model.exception.EntityDoesNotExistException;
 import cryptogame.model.models.UserModel;
@@ -9,6 +10,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -22,36 +24,20 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-public class PurchaseDialogController implements Controller {
+public class PurchaseDialogController extends BaseDialogController {
 
     private static final Logger logger = LogManager.getLogger(PurchaseDialogController.class);
-
-    @FXML private VBox vBox;
-    @FXML private Label headerLabel;
-    @FXML private TextField amountTextField;
-    @FXML private Button purchaseButton;
-
-    private final Service serviceHandler;
 
     private CurrencyContainer currency;
 
     @Autowired
     public PurchaseDialogController(Service serviceHandler) {
-        this.serviceHandler = serviceHandler;
+        super(serviceHandler);
     }
 
     @Override
-    public void initialize() {
-        this.makeTextFieldAcceptNumberOnly();
-        this.bindPurchaseButton();
-    }
-
-    private void refreshData() {
-        serviceHandler.getSceneManager().refresh();
-    }
-
-    private void bindPurchaseButton() {
-        this.purchaseButton.setOnMouseClicked(event -> {
+    protected void bindButton() {
+        this.actionButton.setOnMouseClicked(event -> {
             try {
 
                 // Get amount and parse it
@@ -83,41 +69,23 @@ public class PurchaseDialogController implements Controller {
 
                 serviceHandler.getSceneManager().closeAllDialog();
 
-            } catch (Exception exception) {
-                logger.error(exception);
             }
-        });
-    }
-
-    private void makeTextFieldAcceptNumberOnly() {
-        amountTextField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-               if (!t1.matches("-?(([1-9][0-9]*)|0)?(\\.[0-9]*)?")) {
-                    amountTextField.setText(t1.replaceAll("[^\\d.]", ""));
-                }
+            catch (Exception exception) {
+                serviceHandler.getSceneManager()
+                        .createAlert(Alert.AlertType.ERROR,"An error has occurred",exception.getMessage());
+                logger.error(exception);
             }
         });
     }
 
     private void setCryptoDetails(String name,double price) {
         headerLabel.setText(
-                String.format("Purchase %s @ $%.2f",name,price)
+                String.format("Purchase `%s` @ $%.2f",name,price)
         );
     }
 
     public void setCurrencyContainer(CurrencyContainer currency) {
         this.currency = currency;
         this.setCryptoDetails(currency.getName(), currency.getPriceUsd());
-    }
-
-    @Override
-    public Node getRoot() {
-        return this.vBox;
-    }
-
-    @Override
-    public boolean isResizable() {
-        return false;
     }
 }

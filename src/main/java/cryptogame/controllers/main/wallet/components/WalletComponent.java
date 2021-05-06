@@ -1,12 +1,18 @@
 package cryptogame.controllers.main.wallet.components;
 
 import cryptogame.controllers.Controller;
+import cryptogame.controllers.dialog.PurchaseDialogController;
+import cryptogame.controllers.dialog.SellCurrencyDialogController;
+import cryptogame.controllers.main.market.components.CurrencyComponent;
 import cryptogame.model.models.CryptoCurrencyModel;
 import cryptogame.model.services.Service;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -16,6 +22,8 @@ import org.springframework.stereotype.Component;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class WalletComponent implements Controller {
 
+    private static final Logger logger = LogManager.getLogger(WalletComponent.class);
+
     private CryptoCurrencyModel currencyModel;
     private final Service serviceHandler;
 
@@ -24,6 +32,7 @@ public class WalletComponent implements Controller {
     @FXML private Label nameLabel;
     @FXML private Label amountLabel;
     @FXML private Label priceLabel;
+    @FXML private Button sellButton;
 
     @Autowired
     public WalletComponent(Service serviceHandler) {
@@ -35,6 +44,7 @@ public class WalletComponent implements Controller {
         if(currencyModel == null) return;
 
         this.bindData();
+        this.bindSellButton();
     }
 
     @Override
@@ -71,12 +81,30 @@ public class WalletComponent implements Controller {
                 .filter(currency -> currency.getId().equals(currencyModel.getIdName()))
                 .findFirst();
 
+        var priceText = "$";
+
         if(currencyOptional.isEmpty()) {
-            this.priceLabel.setText(serviceHandler.formatDouble(0.0d));
+            priceText = serviceHandler.formatDouble(0.0d);
         } else {
             var price = currencyOptional.get().getPriceUsd() * currencyModel.getAmount();
-            this.priceLabel.setText(serviceHandler.formatDouble(price));
+            priceText += serviceHandler.formatDouble(price);
         }
+
+        this.priceLabel.setText(priceText);
+    }
+
+    private void bindSellButton() {
+        this.sellButton.setOnMouseClicked(event -> {
+            try {
+
+                var purchaseWindow = (SellCurrencyDialogController) serviceHandler.getSceneManager()
+                        .createSellCurrencyWindow();
+
+                purchaseWindow.setCryptoCurrencyModel(currencyModel);
+            } catch (Exception exception) {
+                logger.error(exception);
+            }
+        });
     }
 
 }

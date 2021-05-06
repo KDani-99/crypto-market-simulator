@@ -1,5 +1,6 @@
 package cryptogame.controllers.main.wallet;
 
+import cryptogame.common.Refreshable;
 import cryptogame.controllers.Controller;
 import cryptogame.controllers.main.stats.StatsController;
 import cryptogame.controllers.main.stats.components.StatsComponent;
@@ -19,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class WalletController implements Controller {
+public class WalletController implements Controller, Refreshable {
 
     private static final Logger logger = LogManager.getLogger(WalletController.class);
 
@@ -45,6 +46,14 @@ public class WalletController implements Controller {
         HBox.setHgrow(scrollPane, Priority.ALWAYS);
 
         this.loadWallet();
+    }
+
+    private void initializeWithErrHandling() {
+        try {
+            this.initialize();
+        } catch (Exception exception) {
+            logger.error(exception);
+        }
     }
 
     @Override
@@ -95,5 +104,11 @@ public class WalletController implements Controller {
         } catch (Exception exception) {
             logger.error(exception);
         }
+    }
+
+    @Override
+    public void refresh() {
+        resetBox();
+        initializeWithErrHandling();
     }
 }
