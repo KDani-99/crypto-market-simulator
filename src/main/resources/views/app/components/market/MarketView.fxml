@@ -11,11 +11,11 @@
          <children>
             <AnchorPane prefHeight="39.0" prefWidth="559.0">
                <children>
-                  <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="559.0" text="Showing: 100 currencies" textFill="WHITE" AnchorPane.rightAnchor="0.0">
+                  <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="559.0" textFill="WHITE" AnchorPane.rightAnchor="0.0">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>
-                  <Label fx:id="remaningTimeLabel" prefHeight="50.0" prefWidth="323.0" text="Next refresh in: 10 minute(s)" textFill="WHITE" AnchorPane.leftAnchor="0.0">
+                  <Label fx:id="remaningTimeLabel" prefHeight="50.0" prefWidth="323.0" textFill="WHITE" AnchorPane.leftAnchor="0.0">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>

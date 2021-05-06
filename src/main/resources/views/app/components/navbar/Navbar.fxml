@@ -13,7 +13,7 @@
    <children>
       <HBox alignment="CENTER_LEFT" maxHeight="126.0" prefHeight="126.0" prefWidth="250.0" styleClass="info">
          <children>
-            <Label prefHeight="75.0" prefWidth="268.0" text="Trading Game">
+            <Label prefHeight="75.0" prefWidth="268.0" text="Crypto Trading Game">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Label>
@@ -114,13 +114,13 @@
                   <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <Label text="Logged in as" />
-                        <Label fx:id="loggedInUsernameLabel" layoutX="10.0" layoutY="10.0" styleClass="user" text="Daniel K." />
+                        <Label fx:id="loggedInUsernameLabel" layoutX="10.0" layoutY="10.0" styleClass="user" text="username" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" layoutX="70.0" layoutY="25.0" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <Label text="Balance" />
-                        <Label fx:id="balanceLabel" layoutX="10.0" layoutY="10.0" text="\$100000" textFill="#2ecc71">
+                        <Label fx:id="balanceLabel" layoutX="10.0" layoutY="10.0" text="\\$100000" textFill="#2ecc71">
                            <styleClass>
                               <String fx:value="balance" />
                               <String fx:value="positiveBalance" />
