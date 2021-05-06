@@ -26,6 +26,7 @@ public interface SceneManager extends Initializable {
     Controller createWalletComponent() throws Exception;
     Controller createCurrencyComponent() throws Exception;
     Controller createPurchaseWindow() throws Exception;
+    Controller createSellCurrencyWindow() throws Exception;
 
     void createAlert(Alert.AlertType alertType, String title,String message);
     void closeAllDialog();

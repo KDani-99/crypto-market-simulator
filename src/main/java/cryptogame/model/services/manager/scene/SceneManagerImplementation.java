@@ -4,6 +4,7 @@ import cryptogame.Main;
 import cryptogame.common.Refreshable;
 import cryptogame.controllers.*;
 import cryptogame.controllers.dialog.PurchaseDialogController;
+import cryptogame.controllers.dialog.SellCurrencyDialogController;
 import cryptogame.controllers.login.LoginController;
 import cryptogame.controllers.main.MainController;
 import cryptogame.controllers.main.navbar.NavbarController;
@@ -110,6 +111,7 @@ public class SceneManagerImplementation implements SceneManager {
     private void addDialogControllers() {
         // Dialog windows
         this.dialogControllerCollection.put(PurchaseDialogController.class,getResourceURL("/views/dialog/purchase/PurchaseDialogView.fxml"));
+        this.dialogControllerCollection.put(SellCurrencyDialogController.class,getResourceURL("/views/dialog/sell/SellCurrencyDialogView.fxml"));
     }
 
     private <T> T loadFXML(URL url, Controller controllerInstance) throws IOException {
@@ -170,14 +172,13 @@ public class SceneManagerImplementation implements SceneManager {
         var stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(primaryStage);
-
         Scene scene = new Scene(loader.load(),width,height);
         stage.setResizable(resizable);
         stage.setScene(scene);
         stage.setTitle(title);
         stage.show();
 
-        activeStages.put(PurchaseDialogController.class,stage);
+        activeStages.put(dialog,stage);
 
         return controllerInstance;
     }
@@ -282,6 +283,16 @@ public class SceneManagerImplementation implements SceneManager {
         }
 
         return createDialog(PurchaseDialogController.class,"Purchase currency",250,135,false);
+    }
+
+    @Override
+    public Controller createSellCurrencyWindow() throws Exception {
+        if(activeStages.containsKey(SellCurrencyDialogController.class)) {
+            activeStages.get(SellCurrencyDialogController.class).close();
+            activeStages.remove(SellCurrencyDialogController.class);
+        }
+
+        return createDialog(SellCurrencyDialogController.class, "Sell currency", 250, 135, false);
     }
 
     @Override
