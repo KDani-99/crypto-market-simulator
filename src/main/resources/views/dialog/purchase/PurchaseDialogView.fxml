@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -9,10 +10,15 @@
    <children>
       <Label fx:id="headerLabel" alignment="BOTTOM_CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="250.0" text="Purchase $NAME @ $PRICE" textFill="WHITE" />
       <TextField fx:id="amountTextField" alignment="CENTER" promptText="Enter amount" styleClass="input" />
-      <Button fx:id="purchaseButton" mnemonicParsing="false" styleClass="buyBtn" text="Purchase" />
+      <Button fx:id="actionButton" mnemonicParsing="false" text="Purchase">
+         <styleClass>
+            <String fx:value="btn" />
+            <String fx:value="buyBtn" />
+         </styleClass></Button>
    </children>
    <stylesheets>
 
+      <URL value="@../Common.css" />
       <URL value="@PurchaseDialogView.css" />
    </stylesheets>
    <opaqueInsets>
