@@ -23,10 +23,6 @@ public class MainController extends BaseController implements WindowController, 
 
     private NavbarController navbarController;
 
-    private Controller marketController;
-    private Controller statsController;
-    private Controller walletController;
-
     @FXML private BorderPane mainComponent;
 
     @FXML private HBox hBox;
@@ -83,11 +79,8 @@ public class MainController extends BaseController implements WindowController, 
 
             this.setEmpty();
 
-            if(marketController == null) {
-                marketController = serviceHandler.getSceneManager().getMarketComponentController();
-            }
-
-           displayMainNode(marketController.getRoot());
+            var marketController = serviceHandler.getSceneManager().getMarketComponentController();
+            displayMainNode(marketController.getRoot());
 
         } catch (Exception exception) {
             logger.error(exception);
@@ -99,10 +92,7 @@ public class MainController extends BaseController implements WindowController, 
 
             this.setEmpty();
 
-            if(statsController == null) {
-                statsController = serviceHandler.getSceneManager().getStatsController();
-            }
-
+            var statsController = serviceHandler.getSceneManager().getStatsController();
             statsController.initialize();
 
             displayMainNode(statsController.getRoot());
@@ -116,10 +106,7 @@ public class MainController extends BaseController implements WindowController, 
         try {
             this.setEmpty();
 
-            if(walletController == null) {
-                walletController = serviceHandler.getSceneManager().getWalletController();
-            }
-
+            var walletController = serviceHandler.getSceneManager().getWalletController();
             walletController.initialize();
 
             displayMainNode(walletController.getRoot());
@@ -127,11 +114,6 @@ public class MainController extends BaseController implements WindowController, 
         } catch (Exception exception) {
             logger.error(exception);
         }
-    }
-
-    @Override
-    public void initialize() {
-
     }
 
     @Override
