@@ -19,15 +19,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-@Component("marketManager")
+@Component
 public class MarketManagerImplementation implements MarketManager {
 
     private static final Logger logger = LogManager.getLogger(MarketController.class);
-    private static final long TIMEOUT = 10 * 60; // 600 seconds
+    private static final long TIMEOUT = 10 * 30; // 300 seconds
+    private static final String API_URL = "https://api.coincap.io/v2";
 
     private final Duration timeout = Duration.ofMinutes(1);
     private final HttpClient httpClient;
-    private final String apiURL = "https://api.coincap.io/v2";
     private final ObjectMapper mapper = new ObjectMapper();
 
     private final HashMap<String, CryptoCurrency> currencies = new HashMap<>();
@@ -49,9 +49,9 @@ public class MarketManagerImplementation implements MarketManager {
                 .build();
     }
 
-    private HttpRequest buildHttpRequest(String ep) {
+    private HttpRequest buildHttpRequest(String endpoint) {
         return HttpRequest.newBuilder()
-                .uri(URI.create(apiURL + "/" + ep))
+                .uri(URI.create(API_URL + "/" + endpoint))
                 .timeout(timeout)
                 .header("Content-Type", "application/json")
                 .GET()
@@ -69,8 +69,8 @@ public class MarketManagerImplementation implements MarketManager {
 
            clearCurrencies();
 
-           String ep = "assets";
-           var request = buildHttpRequest(ep);
+           String endpoint = "assets";
+           var request = buildHttpRequest(endpoint);
 
            var result = httpClient
                    .sendAsync(request, HttpResponse.BodyHandlers.ofString())
