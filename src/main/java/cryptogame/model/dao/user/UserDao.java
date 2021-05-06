@@ -4,6 +4,7 @@ import cryptogame.containers.CurrencyContainer;
 import cryptogame.controllers.main.market.components.CurrencyComponent;
 import cryptogame.model.dao.Dao;
 import cryptogame.model.models.UserModel;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
