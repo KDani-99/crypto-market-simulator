@@ -1,5 +1,6 @@
 package cryptogame.controllers.registration;
 
+import cryptogame.common.validation.BaseValidation;
 import cryptogame.common.validation.Validation;
 import cryptogame.common.validation.ValidationError;
 import cryptogame.controllers.BaseController;
@@ -70,57 +71,6 @@ public class RegistrationController extends BaseController {
             try {
 
                 serviceHandler.getSceneManager().showLoginScene();
-
-            } catch (Exception exception) {
-                onError(exception);
-            }
-        });
-    }
-
-    private void setupRegisterButton() {
-        this.registerButton.setOnMouseClicked(event -> {
-            removeErrorMarkers();
-            try {
-
-                var username = usernameInput.getText();
-                var email = emailInput.getText();
-                var password = passwordInput.getText();
-
-                var user = new UserModel();
-                user.setUsername(username);
-                user.setEmail(email);
-                user.setPassword(password);
-                user.setBalance(1000.d);
-
-                var validationResult = Validation.validateObject(user);
-
-                if(validationResult.size() > 0) {
-                    throw new ValidationException(validationResult);
-                }
-
-                if(serviceHandler.getUserDao().getByUsername(username).isPresent()) {
-                    validationResult.add(new ValidationError("username","Username is already in use."));
-                    throw new ValidationException(validationResult);
-                }
-
-                if(serviceHandler.getUserDao().getByEmail(email).isPresent()) {
-                    validationResult.add(new ValidationError("email","Email address is already in use."));
-                    throw new ValidationException(validationResult);
-                }
-
-                user.setPassword(AuthService.generatePasswordHash(password));
-
-                serviceHandler.getUserDao().persistEntity(user);
-
-                serviceHandler.getSceneManager()
-                        .createAlert(Alert.AlertType.INFORMATION,"Successful","You can now log in");
-
-                clearInputFields();
-
-            } catch(ValidationException exception) {
-
-                logger.warn("Registration failed! A validation error has occured.");
-                markValidationErrors(exception.getValidationErrors());
 
             } catch (Exception exception) {
                 onError(exception);
@@ -199,6 +149,55 @@ public class RegistrationController extends BaseController {
         usernameInput.setText("");
         emailInput.setText("");
         passwordInput.setText("");
+    }
+
+    private void setupRegisterButton() {
+        this.registerButton.setOnMouseClicked(event -> {
+            removeErrorMarkers();
+            try {
+
+                var username = usernameInput.getText();
+                var email = emailInput.getText();
+                var password = passwordInput.getText();
+
+                var user = new UserModel();
+                user.setUsername(username);
+                user.setEmail(email);
+                user.setPassword(password);
+                user.setBalance(1000.d);
+
+                var validationResult = BaseValidation.validateObject(user);
+
+                if(validationResult.size() > 0) {
+                    throw new ValidationException(validationResult);
+                }
+
+                if(serviceHandler.getUserDao().getByUsername(username).isPresent()) {
+                    validationResult.add(new ValidationError("username","Username is already in use."));
+                    throw new ValidationException(validationResult);
+                }
+
+                if(serviceHandler.getUserDao().getByEmail(email).isPresent()) {
+                    validationResult.add(new ValidationError("email","Email address is already in use."));
+                    throw new ValidationException(validationResult);
+                }
+
+                user.setPassword(AuthService.generatePasswordHash(password));
+
+                serviceHandler.getUserDao().persistEntity(user);
+                serviceHandler.getSceneManager()
+                        .createAlert(Alert.AlertType.INFORMATION,"Successful","You can now log in");
+                clearInputFields();
+
+            } catch(ValidationException exception) {
+
+                logger.warn("Registration failed! A validation error has occurred.");
+                markValidationErrors(exception.getValidationErrors());
+
+            } catch (Exception exception) {
+                onError(exception);
+            }
+        });
     }
 
 }
