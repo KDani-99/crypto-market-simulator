@@ -8,7 +8,7 @@ import java.util.Objects;
 public class CryptoCurrencyModel {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column
     private long id;
     private String idName;

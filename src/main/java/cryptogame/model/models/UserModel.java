@@ -13,7 +13,7 @@ import java.util.Set;
 @lombok.Data
 public class UserModel {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column
     private Long id;
     @Column(nullable = false,unique = true)

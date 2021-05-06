@@ -7,7 +7,7 @@ import java.util.Objects;
 @lombok.Data
 public class ActionHistoryModel {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column
     private long id;
     private String name;
