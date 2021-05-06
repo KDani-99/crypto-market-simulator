@@ -4,6 +4,7 @@ import java.util.Objects;
 
 @lombok.Data
 public class CryptoCurrency implements CurrencyContainer,Comparable {
+
     private String id;
     private int rank;
     private String symbol;
