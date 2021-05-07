@@ -1,6 +1,6 @@
 package cryptogame.controllers.main.market;
 
-import cryptogame.common.Initializable;
+import cryptogame.common.interfaces.Initializable;
 import cryptogame.containers.CryptoCurrency;
 import cryptogame.controllers.Controller;
 import cryptogame.controllers.main.market.components.CurrencyComponent;
@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import org.apache.logging.log4j.LogManager;
@@ -41,6 +42,9 @@ public class MarketController implements Initializable, Controller {
 
     @FXML private Label remaningTimeLabel;
 
+    @FXML private Pane infoPane;
+    @FXML private Pane headerPane;
+
     private boolean sorted = true;
 
     private final Service serviceHandler;
@@ -63,7 +67,6 @@ public class MarketController implements Initializable, Controller {
 
         this.bindRankSorting();
 
-        this.serviceHandler.getMarketManager().startAssetLoadingService();
         this.loadMarketWhenReady();
 
         isInitialized = true;
@@ -120,8 +123,11 @@ public class MarketController implements Initializable, Controller {
         var remaining = serviceHandler.getMarketManager().getRemainingTimeUntilRefresh();
 
         var minutes = remaining / (60 * 1000);
-
         var seconds = (remaining / 1000) - (minutes) * 60;
+
+        if(minutes == 0 && seconds <= 1) {
+            loadMarket();
+        }
 
         remaningTimeLabel.setText(
                 String.format("Next refresh in: %d minute(s) %d second(s)",minutes,seconds)
@@ -152,6 +158,11 @@ public class MarketController implements Initializable, Controller {
 
             rankHeaderLabel.setText(text + " ▽");
         }
+    }
+
+    private void cleaView() {
+        this.vBox.getChildren().clear();
+        this.vBox.getChildren().addAll(infoPane,headerPane);
     }
 
     private void reOrderMarketView() {
@@ -203,6 +214,9 @@ public class MarketController implements Initializable, Controller {
     }
 
     private void loadMarket() {
+
+        cleaView();
+
         var currencies = sorted
                 ?
                 serviceHandler.getMarketManager().getCurrencies().stream().sorted().collect(Collectors.toList())
@@ -222,6 +236,12 @@ public class MarketController implements Initializable, Controller {
     @Override
     public boolean isResizable() {
         return false;
+    }
+
+    @Override
+    public void reset() {
+        cleaView();
+        isInitialized = false;
     }
 
     @Override
