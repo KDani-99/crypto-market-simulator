@@ -3,6 +3,9 @@ package cryptogame.common.validation;
 import java.lang.reflect.Field;
 import java.util.HashSet;
 
+/**
+ *
+ */
 public abstract class BaseValidation {
 
     private static <T> HashSet<ValidationError> validateField(Field field, T object, Validate validationAnnotation) throws Exception {
