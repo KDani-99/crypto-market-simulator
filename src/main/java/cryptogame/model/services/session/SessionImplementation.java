@@ -17,7 +17,7 @@ public class SessionImplementation implements Session {
     private long userId;
 
     /**
-     * A no-args constructor
+     * A no-args constructor.
      */
     public SessionImplementation() {}
 

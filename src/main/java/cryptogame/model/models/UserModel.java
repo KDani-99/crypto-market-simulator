@@ -26,14 +26,14 @@ public class UserModel {
     private Long id;
     /**
      * The username of the user, annotated with {@link Validate} annotation, with validator class of
-     * type {@link UsernameValidation}
+     * type {@link UsernameValidation}.
      */
     @Column(nullable = false,unique = true)
     @Validate(validatorClass = UsernameValidation.class)
     private String username;
     /**
      * The email of the user, annotated with {@link Validate} annotation, with validator class of
-     * type {@link EmailValidation}
+     * type {@link EmailValidation}.
      */
     @Validate(validatorClass = EmailValidation.class)
     @Column(nullable = false,unique = true)
@@ -72,7 +72,7 @@ public class UserModel {
     private Set<SellHistoryModel> sellHistory = new HashSet<>();
 
     /**
-     * A no-args constructor
+     * A no-args constructor.
      */
     public UserModel() {}
 

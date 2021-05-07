@@ -26,7 +26,7 @@ public class ValidationException extends Exception {
     }
 
     /**
-     * Returns the validation errors {@link java.util.Set}
+     * Returns the validation errors {@link java.util.Set}.
      *
      * @return the {@link java.util.Set} with all the validation errors
      */

@@ -38,7 +38,7 @@ public interface Service {
      */
     Session getSession();
     /**
-     * Creates a new session with the given {@code userId}
+     * Creates a new session with the given {@code userId}.
      *
      * @param userId the id of the logged in user
      */

@@ -67,6 +67,7 @@ public abstract class AuthService {
      * Generates the password hash for the given plain text password with a {@code key}.
      *
      * @param password the user's plain text password
+     * @param key key
      * @return hashed password
      * @throws NoSuchAlgorithmException if no such algorithm exists
      * @throws InvalidKeyException if the key is invalid

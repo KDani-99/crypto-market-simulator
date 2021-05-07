@@ -321,7 +321,7 @@ public class SceneManagerImplementation implements SceneManager {
     }
 
     /**
-     * Sets the minimum size properties of the primary stage
+     * Sets the minimum size properties of the primary stage.
      *
      * @param width the minimum width
      * @param height the minimum height
@@ -332,7 +332,7 @@ public class SceneManagerImplementation implements SceneManager {
     }
 
     /**
-     * Sets maximum size properties of the primary stage
+     * Sets maximum size properties of the primary stage.
      *
      * @param width the maximum width
      * @param height the maximum height
@@ -343,7 +343,7 @@ public class SceneManagerImplementation implements SceneManager {
     }
 
     /**
-     * Sets preferred size properties of the primary stage
+     * Sets preferred size properties of the primary stage.
      *
      * @param width the preferred width
      * @param height the preferred height

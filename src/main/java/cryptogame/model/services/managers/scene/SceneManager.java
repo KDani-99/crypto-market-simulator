@@ -12,7 +12,7 @@ import javafx.stage.Stage;
  */
 public interface SceneManager extends Initializable {
     /**
-     * Returns the primary stage instance of the application
+     * Returns the primary stage instance of the application.
      *
      * @return primary stage instance
      */

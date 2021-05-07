@@ -53,7 +53,7 @@ public class CryptoCurrency implements CurrencyContainer,Comparable {
      */
     private BigDecimal priceUsd;
     /**
-     * Volume Weighted Average Price in the last 24 hours
+     * Volume Weighted Average Price in the last 24 hours.
      */
     private BigDecimal vwap24Hr;
 
