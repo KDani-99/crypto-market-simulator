@@ -16,11 +16,11 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <Label fx:id="transactionIdLabel" contentDisplay="CENTER" layoutX="10.0" layoutY="-7.0" prefWidth="560.0" styleClass="rank" text="TransactionId" wrapText="true" />
-        <Label fx:id="nameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="-7.0" prefWidth="560.0" styleClass="rank" text="Name" textAlignment="CENTER" GridPane.columnIndex="2" />
-      <Label fx:id="costLabel" contentDisplay="CENTER" layoutX="310.0" layoutY="10.0" prefWidth="560.0" styleClass="rank" text="Cost" GridPane.columnIndex="3" />
-      <Label fx:id="amountLabel" contentDisplay="CENTER" layoutX="410.0" layoutY="10.0" prefWidth="560.0" styleClass="rank" text="Amount" GridPane.columnIndex="4" />
-        <Label fx:id="actionDateLabel" contentDisplay="CENTER" layoutX="323.0" layoutY="-7.0" prefWidth="560.0" styleClass="rank" text="ActionDate" GridPane.columnIndex="5" />
-      <Label fx:id="transactionTypeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="210.0" layoutY="10.0" prefWidth="560.0" styleClass="rank" text="Type" textAlignment="CENTER" GridPane.columnIndex="1" />
+        <Label fx:id="transactionIdLabel" contentDisplay="CENTER" layoutX="10.0" layoutY="-7.0" prefWidth="560.0" styleClass="rank" text="TransactionId" textAlignment="CENTER" wrapText="true" />
+        <Label fx:id="nameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="-7.0" prefWidth="560.0" styleClass="rank" text="Name" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" />
+      <Label fx:id="costLabel" contentDisplay="CENTER" layoutX="310.0" layoutY="10.0" prefWidth="560.0" styleClass="rank" text="Cost" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="3" />
+      <Label fx:id="amountLabel" contentDisplay="CENTER" layoutX="410.0" layoutY="10.0" prefWidth="560.0" styleClass="rank" text="Amount" textAlignment="CENTER" GridPane.columnIndex="4" />
+        <Label fx:id="actionDateLabel" contentDisplay="CENTER" layoutX="323.0" layoutY="-7.0" prefWidth="560.0" styleClass="rank" text="ActionDate" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="5" />
+      <Label fx:id="transactionTypeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="210.0" layoutY="10.0" prefWidth="560.0" styleClass="rank" text="Type" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" />
     </children>
 </GridPane>
