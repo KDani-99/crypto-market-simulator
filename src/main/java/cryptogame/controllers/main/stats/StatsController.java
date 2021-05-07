@@ -1,6 +1,6 @@
 package cryptogame.controllers.main.stats;
 
-import cryptogame.common.Refreshable;
+import cryptogame.common.interfaces.Refreshable;
 import cryptogame.controllers.Controller;
 import cryptogame.controllers.main.stats.components.StatsComponent;
 import cryptogame.model.models.ActionHistoryModel;
@@ -18,6 +18,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
 
 @Component
 public class StatsController implements Controller, Refreshable {
@@ -92,25 +94,36 @@ public class StatsController implements Controller, Refreshable {
         }
     }
 
-    private double getTotalSpent(UserModel user) {
+    private BigDecimal getTotalSpent(UserModel user) {
         var purchaseHistory = user.getPurchaseHistory();
-        var totalSpent = 0.0d;
+        var totalSpent = new BigDecimal(0);
 
         for(var purchase : purchaseHistory) {
-            totalSpent += purchase.getCost();
+            totalSpent = totalSpent.add(purchase.getCost());
         }
 
         return totalSpent;
     }
 
+    private BigDecimal getTotalEarned(UserModel user) {
+        var sellHistory = user.getSellHistory();
+        BigDecimal totalEarned = new BigDecimal(0);
+
+        for(var action : sellHistory) {
+            totalEarned = totalEarned.add(action.getCost());
+        }
+
+        return totalEarned;
+    }
+
     private void setNetStats(UserModel user) {
 
-        var netWorth = 0.0d;
+        var netWorth = new BigDecimal(0);
 
         var currencies = serviceHandler.getMarketManager().getCurrencies();
         var wallet = user.getWallet();
 
-        var mostExpensive = 0.0d;
+        var mostExpensive = new BigDecimal(0);
         var mostExpensiveName = "";
 
         for(var walletCurrency : wallet) {
@@ -119,10 +132,11 @@ public class StatsController implements Controller, Refreshable {
 
             if(currencyModel.isPresent()) {
 
-                var price = currencyModel.get().getPriceUsd() * walletCurrency.getAmount();
-                netWorth += price;
+                var price = currencyModel.get().getPriceUsd().multiply(walletCurrency.getAmount());//currencyModel.get().getPriceUsd() * walletCurrency.getAmount();
+                netWorth = netWorth.add(price);
 
-                if(price >= mostExpensive) {
+                var isPriceGreaterOrEqual = price.compareTo(mostExpensive);
+                if(isPriceGreaterOrEqual  == 0 || isPriceGreaterOrEqual == 1) {
                     mostExpensive = price;
                     mostExpensiveName = walletCurrency.getName();
                 }
@@ -130,28 +144,32 @@ public class StatsController implements Controller, Refreshable {
             }
         }
 
-        netWorthLabel.setText(String.format("$%s",serviceHandler.formatDouble(netWorth)));
+        netWorthLabel.setText(String.format("$%s",serviceHandler.formatNumber(netWorth)));
         mostValuableLabel.setText(mostExpensiveName);
         numberOfAssetsLabel.setText(String.format("%d",user.getWallet().size()));
 
         var spent = getTotalSpent(user);
+        var earned = getTotalEarned(user);
+
         setTotalSpentLabel(spent);
-        setTotalEarnedLabel(netWorth - spent);
+        setTotalEarnedLabel(earned.subtract(spent));
     }
 
-    private void setTotalSpentLabel(double spent) {
-        totalSpentLabel.setText(String.format("$%s",serviceHandler.formatDouble(spent)));
+    private void setTotalSpentLabel(BigDecimal spent) {
+        totalSpentLabel.setText(String.format("$%s",serviceHandler.formatNumber(spent)));
     }
 
-    private void setTotalEarnedLabel(double profit) {
+    private void setTotalEarnedLabel(BigDecimal profit) {
 
-        if(profit < 0) {
+        var isProfit = profit.compareTo(new BigDecimal(0)) == -1;
+
+        if(isProfit) {
             totalEarnedLabel.getStyleClass().add("spent");
         } else {
             totalEarnedLabel.getStyleClass().add("profit");
         }
 
-        totalEarnedLabel.setText(String.format("$%s",serviceHandler.formatDouble(profit)));
+        totalEarnedLabel.setText(String.format("$%s",serviceHandler.formatNumber(profit)));
     }
 
     private void resetBox() {

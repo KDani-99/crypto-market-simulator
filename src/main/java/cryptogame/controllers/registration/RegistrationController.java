@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Component
@@ -164,7 +165,7 @@ public class RegistrationController extends BaseController {
                 user.setUsername(username);
                 user.setEmail(email);
                 user.setPassword(password);
-                user.setBalance(1000.d);
+                user.setBalance(new BigDecimal(1000));
 
                 var validationResult = BaseValidation.validateObject(user);
 

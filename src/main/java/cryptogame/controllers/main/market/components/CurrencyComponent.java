@@ -16,6 +16,9 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class CurrencyComponent implements Controller {
@@ -67,13 +70,17 @@ public class CurrencyComponent implements Controller {
         this.formatChange();
     }
 
-    private String formatBigNumber(double n) {
-        if(n >= 1_000_000_000) {
-            return String.format("$%.2fb",n / 1_000_000_000d);
-        } else if(n >= 1_000_000) {
-            return String.format("$%.2fm",n / 1_000_000d);
+    private String formatBigNumber(BigDecimal number) {
+
+        var compareNumberToBillion = number.compareTo(new BigDecimal(1_000_000_000));
+        var compareNumberToMillion = number.compareTo(new BigDecimal(1_000_000));
+
+        if(compareNumberToBillion > -1) {
+            return String.format("$%.2fb",number.divide(new BigDecimal(1_000_000_000), RoundingMode.FLOOR));
+        } else if(compareNumberToMillion > -1) {
+            return String.format("$%.2fm",number.divide(new BigDecimal(1_000_000), RoundingMode.FLOOR));
         } else {
-            return String.format("$%.2f",n);
+            return String.format("$%.2f",number);
         }
     }
 
@@ -94,7 +101,7 @@ public class CurrencyComponent implements Controller {
     private void formatPrice() {
         var price = currency.getPriceUsd();
 
-        this.priceLabel.setText(String.format("$%.2f",price));
+        this.priceLabel.setText(String.format("$%s",serviceHandler.formatNumber(price)));
     }
 
     private void formatMarketCap() {
@@ -107,7 +114,9 @@ public class CurrencyComponent implements Controller {
 
         this.changePercentLabel.setText(String.format("%.2f",currency.getChangePercent24Hr()) + "%");
 
-        if(currency.getChangePercent24Hr() >= 0.0d) {
+        var compareChangePercentToZero = currency.getChangePercent24Hr().compareTo(new BigDecimal(0)) > -1;
+
+        if(compareChangePercentToZero) {
             changePercentLabel.getStyleClass().add("posChangePercent");
         } else {
             changePercentLabel.getStyleClass().add("negChangePercent");

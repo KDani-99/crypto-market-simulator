@@ -1,13 +1,14 @@
 package cryptogame.model.services;
 
 import cryptogame.model.dao.user.UserDao;
-import cryptogame.model.services.manager.market.MarketManager;
-import cryptogame.model.services.manager.scene.SceneManager;
+import cryptogame.model.services.managers.market.MarketManager;
+import cryptogame.model.services.managers.scene.SceneManager;
 import cryptogame.model.services.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 
 @Component
@@ -52,13 +53,17 @@ public class ServiceImplementation implements Service {
 
     @Override
     public void createSession(long userId) {
-        this.destroyActiveSession();
+
+        if(activeSession != null) {
+            destroyActiveSession();
+        }
+
         this.activeSession = context.getBean(Session.class);
         this.activeSession.setUserId(userId);
     }
 
     @Override
-    public String formatDouble(double number) {
+    public String formatNumber(BigDecimal number) {
 
         NumberFormat numberFormat = NumberFormat.getInstance();
         numberFormat.setMaximumFractionDigits(6);
@@ -70,6 +75,8 @@ public class ServiceImplementation implements Service {
     @Override
     public void destroyActiveSession() {
         this.activeSession = null;
+        this.sceneManager.reset();
+        this.marketManager.reset();
     }
 
     @Override

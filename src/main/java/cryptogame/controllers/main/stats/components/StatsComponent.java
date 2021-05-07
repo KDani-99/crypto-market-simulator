@@ -2,10 +2,12 @@ package cryptogame.controllers.main.stats.components;
 
 import cryptogame.controllers.Controller;
 import cryptogame.model.models.ActionHistoryModel;
+import cryptogame.model.services.Service;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -25,6 +27,13 @@ public class StatsComponent implements Controller {
 
     private ActionHistoryModel action;
     private ActionType actionType;
+
+    private final Service serviceHandler;
+
+    @Autowired
+    public StatsComponent(Service serviceHandler) {
+        this.serviceHandler = serviceHandler;
+    }
 
     @FXML private GridPane gridPane;
 
@@ -66,15 +75,6 @@ public class StatsComponent implements Controller {
         this.formatTransactionType();
     }
 
-    public String formatDouble(double number) {
-
-        NumberFormat numberFormat = NumberFormat.getInstance();
-        numberFormat.setMaximumFractionDigits(6);
-        numberFormat.setMinimumFractionDigits(0);
-
-        return numberFormat.format(number);
-    }
-
     private void formatTransactionId() {
         this.transactionIdLabel.setText(Long.toString(action.getId()));
     }
@@ -84,17 +84,17 @@ public class StatsComponent implements Controller {
     }
 
     private void formatCost() {
-        this.costLabel.setText(String.format("$%s",formatDouble(action.getCost())));
+        this.costLabel.setText(String.format("$%s",serviceHandler.formatNumber(action.getCost())));
     }
 
     private void formatAmount() {
-        this.amountLabel.setText(formatDouble(action.getAmount()));
+        this.amountLabel.setText(serviceHandler.formatNumber(action.getAmount()));
     }
 
     private void formatActionDate() {
         Date date = new Date(this.action.getActionTime());
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy - hh:mm:ss");
 
         this.actionDateLabel.setText(
                 dateFormat.format(date)

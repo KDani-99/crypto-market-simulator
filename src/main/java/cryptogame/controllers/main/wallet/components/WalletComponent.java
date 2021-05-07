@@ -18,6 +18,8 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class WalletComponent implements Controller {
@@ -72,7 +74,7 @@ public class WalletComponent implements Controller {
     }
 
     private void formatAmount() {
-        this.amountLabel.setText(serviceHandler.formatDouble(currencyModel.getAmount()));
+        this.amountLabel.setText(serviceHandler.formatNumber(currencyModel.getAmount()));
     }
 
     private void formatPrice() {
@@ -84,10 +86,10 @@ public class WalletComponent implements Controller {
         var priceText = "$";
 
         if(currencyOptional.isEmpty()) {
-            priceText = serviceHandler.formatDouble(0.0d);
+            priceText = serviceHandler.formatNumber(new BigDecimal(0));
         } else {
-            var price = currencyOptional.get().getPriceUsd() * currencyModel.getAmount();
-            priceText += serviceHandler.formatDouble(price);
+            var price = currencyOptional.get().getPriceUsd().multiply(currencyModel.getAmount());
+            priceText += serviceHandler.formatNumber(price);
         }
 
         this.priceLabel.setText(priceText);
