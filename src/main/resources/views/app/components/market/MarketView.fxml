@@ -9,7 +9,7 @@
    <content>
       <VBox fx:id="vBox" alignment="TOP_CENTER" prefHeight="0.0" prefWidth="460.0" spacing="5.0">
          <children>
-            <AnchorPane prefHeight="39.0" prefWidth="559.0">
+            <AnchorPane fx:id="infoPane" prefHeight="39.0" prefWidth="559.0">
                <children>
                   <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="559.0" textFill="WHITE" AnchorPane.rightAnchor="0.0">
                      <font>
@@ -21,7 +21,7 @@
                      </font></Label>
                </children>
             </AnchorPane>
-            <GridPane maxHeight="65.0" minHeight="65.0" prefHeight="65.0" styleClass="header" VBox.vgrow="ALWAYS">
+            <GridPane fx:id="headerPane" maxHeight="65.0" minHeight="65.0" prefHeight="65.0" styleClass="header" VBox.vgrow="ALWAYS">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
