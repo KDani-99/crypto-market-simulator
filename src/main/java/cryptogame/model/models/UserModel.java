@@ -6,6 +6,8 @@ import cryptogame.common.validation.UsernameValidation;
 import cryptogame.common.validation.Validate;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -13,7 +15,7 @@ import java.util.Set;
 @lombok.Data
 public class UserModel {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
     @Column(nullable = false,unique = true)
@@ -25,16 +27,16 @@ public class UserModel {
     @Validate(validatorClass = PasswordValidation.class)
     private String password;
 
-    private double balance;
+    private BigDecimal balance;
 
-    @OneToMany(mappedBy = "user")
-    private Set<CryptoCurrencyModel> wallet;
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    private Set<CryptoCurrencyModel> wallet = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
-    private Set<PurchaseHistoryModel> purchaseHistory;
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    private Set<PurchaseHistoryModel> purchaseHistory = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
-    private Set<SellHistoryModel> sellHistory;
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    private Set<SellHistoryModel> sellHistory = new HashSet<>();
 
     public UserModel() {}
 
