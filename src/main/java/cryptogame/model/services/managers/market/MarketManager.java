@@ -11,6 +11,7 @@ public interface MarketManager {
     void stopAssetLoadingService();
     long getRemainingTimeUntilRefresh();
     boolean hasLoaded();
+    void reset();
     default void onExit() {
         // empty
     }

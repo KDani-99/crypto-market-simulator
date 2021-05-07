@@ -1,10 +1,9 @@
 package cryptogame.model.services.manager.scene;
 
-import cryptogame.common.Initializable;
+import cryptogame.common.interfaces.Initializable;
 import cryptogame.controllers.Controller;
 import cryptogame.controllers.main.MainController;
 import cryptogame.controllers.WindowController;
-import cryptogame.controllers.main.stats.StatsController;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
@@ -31,5 +30,6 @@ public interface SceneManager extends Initializable {
     void createAlert(Alert.AlertType alertType, String title,String message);
     void closeAllDialog();
     void refresh();
+    void reset();
     void onExit();
 }

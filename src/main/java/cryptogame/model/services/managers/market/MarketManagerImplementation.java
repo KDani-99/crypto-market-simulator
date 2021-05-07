@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 public class MarketManagerImplementation implements MarketManager {
 
     private static final Logger logger = LogManager.getLogger(MarketController.class);
-    private static final long TIMEOUT = 10 * 30; // 300 seconds
+    private static final long TIMEOUT = 300; // 300 seconds
     private static final String API_URL = "https://api.coincap.io/v2";
 
     private final Duration timeout = Duration.ofMinutes(1);
@@ -90,6 +90,11 @@ public class MarketManagerImplementation implements MarketManager {
 
     @Override
     public void startAssetLoadingService() {
+
+        if(executorService != null) {
+            stopAssetLoadingService();
+        }
+
         Runnable marketLoadRunnable = this::loadAssets;
 
         executorService = Executors.newSingleThreadScheduledExecutor(runnable -> {
@@ -104,8 +109,11 @@ public class MarketManagerImplementation implements MarketManager {
 
     @Override
     public void stopAssetLoadingService() {
-        executorService.shutdown();
-        logger.info("Stopped asset loader service");
+        if(executorService != null) {
+            executorService.shutdown();
+            executorService = null;
+            logger.info("Stopped asset loader service");
+        }
     }
 
     @Override
@@ -121,6 +129,14 @@ public class MarketManagerImplementation implements MarketManager {
     @Override
     public boolean hasLoaded() {
         return hasLoaded;
+    }
+
+    @Override
+    public void reset() {
+       refreshTimestamp = 0;
+       hasLoaded = false;
+       currencies.clear();
+       stopAssetLoadingService();
     }
 
     @Override

@@ -1,7 +1,7 @@
 package cryptogame.model.services.manager.scene;
 
-import cryptogame.Main;
-import cryptogame.common.Refreshable;
+import cryptogame.main.Main;
+import cryptogame.common.interfaces.Refreshable;
 import cryptogame.controllers.*;
 import cryptogame.controllers.dialog.PurchaseDialogController;
 import cryptogame.controllers.dialog.SellCurrencyDialogController;
@@ -347,6 +347,22 @@ public class SceneManagerImplementation implements SceneManager {
             logger.error(exception);
         }
     }
+
+    @Override
+    public void reset() {
+
+        for(var controller : context.getBeansOfType(Controller.class).values()) {
+            controller.reset();
+        }
+
+        for(var controllerInfo : controllerCollection.values()) {
+            controllerInfo.setLoaded(false);
+        }
+        for(var controllerInfo : mainControllerComponents.values()) {
+            controllerInfo.setLoaded(false);
+        }
+    }
+
     @Override
     public void onExit() {
         for(var controller : context.getBeansOfType(Controller.class).values()) {

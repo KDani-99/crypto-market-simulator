@@ -27,6 +27,7 @@ public class AppConfig {
 
     @Bean
     public PlatformTransactionManager transactionManager(){
+
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory );
         transactionManager.setNestedTransactionAllowed(true);
