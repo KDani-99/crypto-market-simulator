@@ -1,8 +1,7 @@
 package cryptogame.controllers.main;
 
 import cryptogame.controllers.BaseController;
-import cryptogame.controllers.Controller;
-import cryptogame.common.Refreshable;
+import cryptogame.common.interfaces.Refreshable;
 import cryptogame.controllers.WindowController;
 import cryptogame.controllers.main.navbar.NavbarController;
 import cryptogame.model.services.Service;
@@ -13,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import org.apache.logging.log4j.*;
-
-import java.text.NumberFormat;
 
 @Component
 public class MainController extends BaseController implements WindowController, Refreshable {
@@ -48,7 +45,7 @@ public class MainController extends BaseController implements WindowController, 
                 .getEntity(serviceHandler.getSession().getActiveUserId()).get();
 
         navbarController.setLoggedInUsernameLabelText(user.getUsername());
-        navbarController.setBalanceLabelText(String.format("$%s",serviceHandler.formatDouble(user.getBalance())));
+        navbarController.setBalanceLabelText(String.format("$%s",serviceHandler.formatNumber(user.getBalance())));
     }
 
     private void setEmpty() {
@@ -80,6 +77,7 @@ public class MainController extends BaseController implements WindowController, 
             this.setEmpty();
 
             var marketController = serviceHandler.getSceneManager().getMarketComponentController();
+            marketController.initialize();
             displayMainNode(marketController.getRoot());
 
         } catch (Exception exception) {
