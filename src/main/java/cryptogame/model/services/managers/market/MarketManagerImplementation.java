@@ -15,32 +15,72 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cryptogame.controllers.main.market.MarketController;
+import cryptogame.model.services.managers.scene.SceneManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+/**
+ * The implementation of the {@link MarketManager} interface.
+ */
 @Component
 public class MarketManagerImplementation implements MarketManager {
 
+    /**
+     * Logger for logging.
+     */
     private static final Logger logger = LogManager.getLogger(MarketController.class);
+    /**
+     * The default timeout until the next refresh.
+     */
     private static final long TIMEOUT = 300; // 300 seconds
+    /**
+     * The URL of the API.
+     */
     private static final String API_URL = "https://api.coincap.io/v2";
-
+    /**
+     * Request timeout duration.
+     */
     private final Duration timeout = Duration.ofMinutes(1);
+    /**
+     * The http client for sending requests.
+     */
     private final HttpClient httpClient;
+    /**
+     * The JSON object mapper.
+     */
     private final ObjectMapper mapper = new ObjectMapper();
-
+    /**
+     * A {@link HashMap} that contains all of the available currencies.
+     */
     private final HashMap<String, CryptoCurrency> currencies = new HashMap<>();
-
+    /**
+     * Executor service.
+     * Asset loading service.
+     */
     private ScheduledExecutorService executorService;
-
+    /**
+     * The timestamp of the previous refresh.
+     */
     private long refreshTimestamp;
+    /**
+     * Whether the market has been loaded into the context.
+     */
     private boolean hasLoaded = false;
 
-   public MarketManagerImplementation() {
+    /**
+     * Creates a new {@link MarketManagerImplementation} instance
+     * and sets the default properties of the class.
+     */
+    public MarketManagerImplementation() {
         this.httpClient = buildHttpClient();
     }
 
+    /**
+     * A helper method that creates a new pre-configured {@link HttpClient}.
+     *
+     * @return configured {@link HttpClient} instance
+     */
     private HttpClient buildHttpClient() {
         return HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_1_1)
@@ -49,6 +89,12 @@ public class MarketManagerImplementation implements MarketManager {
                 .build();
     }
 
+    /**
+     * Builds a new http request with the specified endpoint.
+     *
+     * @param endpoint the api endpoint
+     * @return configured {@link HttpRequest} instance
+     */
     private HttpRequest buildHttpRequest(String endpoint) {
         return HttpRequest.newBuilder()
                 .uri(URI.create(API_URL + "/" + endpoint))
@@ -58,10 +104,16 @@ public class MarketManagerImplementation implements MarketManager {
                 .build();
     }
 
+    /**
+     * Clears the currencies from the collection.
+     */
     private void clearCurrencies() {
         currencies.clear();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadAssets() {
        try {
@@ -88,6 +140,9 @@ public class MarketManagerImplementation implements MarketManager {
        }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void startAssetLoadingService() {
 
@@ -107,6 +162,9 @@ public class MarketManagerImplementation implements MarketManager {
         logger.info("Started asset loader service");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void stopAssetLoadingService() {
         if(executorService != null) {
@@ -116,21 +174,33 @@ public class MarketManagerImplementation implements MarketManager {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Collection<CryptoCurrency> getCurrencies() {
         return this.currencies.values();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long getRemainingTimeUntilRefresh() {
         return (refreshTimestamp + TIMEOUT * 1000) - Calendar.getInstance().getTimeInMillis();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean hasLoaded() {
         return hasLoaded;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reset() {
        refreshTimestamp = 0;
@@ -139,6 +209,9 @@ public class MarketManagerImplementation implements MarketManager {
        stopAssetLoadingService();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onExit() {
        if(executorService != null) executorService.shutdownNow();
