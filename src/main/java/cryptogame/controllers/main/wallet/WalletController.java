@@ -1,9 +1,7 @@
 package cryptogame.controllers.main.wallet;
 
-import cryptogame.common.Refreshable;
+import cryptogame.common.interfaces.Refreshable;
 import cryptogame.controllers.Controller;
-import cryptogame.controllers.main.stats.StatsController;
-import cryptogame.controllers.main.stats.components.StatsComponent;
 import cryptogame.controllers.main.wallet.components.WalletComponent;
 import cryptogame.model.models.CryptoCurrencyModel;
 import cryptogame.model.services.Service;
