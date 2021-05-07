@@ -22,7 +22,7 @@
         <javafx.version>11.0.2</javafx.version>
         <exec.cleanupDaemonThreads>false</exec.cleanupDaemonThreads>
         <exec.enablePreview>true</exec.enablePreview>
-        <exec.mainClass>cryptogame.main.Main</exec.mainClass>
+        <exec.mainClass>cryptogame.Main</exec.mainClass>
     </properties>
 
     <dependencyManagement>
@@ -210,6 +210,17 @@
                                     <mainClass>${exec.mainClass}</mainClass>
                                 </transformer>
                             </transformers>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                        <exclude>META-INF/*.MF</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
                         </configuration>
                     </execution>
                 </executions>
