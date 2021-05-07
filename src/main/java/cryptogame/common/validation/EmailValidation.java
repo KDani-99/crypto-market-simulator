@@ -1,9 +1,15 @@
 package cryptogame.common.validation;
 
+/**
+ * Validation class for email type fields.
+ * Implements {@link Validation<String>} interface.
+ */
 public class EmailValidation implements Validation<String> {
 
-    private final String errorMessage = "Invalid email address.";
-
+    /**
+     * {@inheritDoc}
+     * @return
+     */
     @Override
     public boolean validate(String email) {
         if(email.length() > 125 || email.length() < 6) {
@@ -36,8 +42,11 @@ public class EmailValidation implements Validation<String> {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getErrorMessage() {
-        return errorMessage;
+        return "Invalid email address.";
     }
 }

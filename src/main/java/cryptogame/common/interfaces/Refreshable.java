@@ -1,7 +1,7 @@
 package cryptogame.common.interfaces;
 
 /**
- * Interface for classes that may need to be refreshed explicitly to acquire the current state.
+ * Interface for classes that may need to be explicitly refreshed to acquire the current state.
  */
 public interface Refreshable {
     /**

@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * 
+ */
 @Entity
 @lombok.Data
 public class ActionHistoryModel {

@@ -17,12 +17,22 @@ import cryptogame.model.models.UserModel;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * The class that implements the UserDao interface.
+ */
 @Component
 public class UserDaoImplementation implements UserDao {
 
+    /**
+     * The entity manager, injected by Spring framework.
+     * It is responsible for database operations.
+     */
     @PersistenceContext(type = PersistenceContextType.EXTENDED)
     protected EntityManager entityManager;
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Override
     public <TId> Optional<UserModel> getEntity(TId id) {
@@ -30,12 +40,18 @@ public class UserDaoImplementation implements UserDao {
         return Optional.of(user);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Override
     public void persistEntity(UserModel entity) {
         entityManager.persist(entity);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Override
     public Optional<UserModel> getByUsername(String username) {
@@ -43,6 +59,9 @@ public class UserDaoImplementation implements UserDao {
         return getUserModel(username, query);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Override
     public Optional<UserModel> getByEmail(String email) {
@@ -50,6 +69,9 @@ public class UserDaoImplementation implements UserDao {
         return getUserModel(email, query);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     public Optional<UserModel> getUserModel(String value, TypedQuery<UserModel> query) {
         query.setParameter("value",value);
@@ -67,6 +89,15 @@ public class UserDaoImplementation implements UserDao {
         return Optional.ofNullable(user);
     }
 
+    /**
+     * Purchases the given {@code currency} and adds it to the user's wallet.
+     * If the {@code currency} is already in the wallet {@link java.util.Set}, the {@code amount} will be increased by
+     * the {@code amount} parameter.
+     *
+     * @param user the user instance
+     * @param amount the amount that the user wants to purchase
+     * @param currency the given currency instance
+     */
     public void purchaseAddToWallet(UserModel user, BigDecimal amount, CurrencyContainer currency) {
 
         var tempWallet = user.getWallet().stream()
@@ -94,6 +125,13 @@ public class UserDaoImplementation implements UserDao {
 
     }
 
+    /**
+     * Decreases the user's balance by the price multiplied by {@code amount}.
+     *
+     * @param user the user instance
+     * @param amount the amount that the user wants to purchase
+     * @param currency the currency instance
+     */
     public void purchaseDecreaseBalance(UserModel user, BigDecimal amount, CurrencyContainer currency)
     {
         var newBalance = user.getBalance();
@@ -105,6 +143,13 @@ public class UserDaoImplementation implements UserDao {
         user.setBalance(newBalance);
     }
 
+    /**
+     * Creates a new purchase history and saves it into the database.
+     *
+     * @param user the user instance
+     * @param amount the amount that the user wants to purchase
+     * @param currency the currency instance
+     */
     public void createPurchaseActionHistory(UserModel user, BigDecimal amount, CurrencyContainer currency) {
         var purchase = new PurchaseHistoryModel();
         purchase.setUser(user);
@@ -118,6 +163,13 @@ public class UserDaoImplementation implements UserDao {
         entityManager.persist(purchase);
     }
 
+    /**
+     * Creates a new sell history and saves it into the database.
+     *
+     * @param user the user instance
+     * @param amount the amount that the user wants to purchase
+     * @param currency the currency instance
+     */
     public void createSellActionHistory(UserModel user, BigDecimal amount, CurrencyContainer currency) {
         var sell = new SellHistoryModel();
         sell.setUser(user);
@@ -131,6 +183,15 @@ public class UserDaoImplementation implements UserDao {
         entityManager.persist(sell);
     }
 
+    /**
+     * Removes {@code amount} of the currency from the user's wallet.
+     * If the remaining {@code amount} in the user's wallet is less equals zero,
+     * the entire {@code currency} object will be deleted from the database.
+     *
+     * @param user the user instance
+     * @param amount the amount that the user wants to purchase
+     * @param currency the currency instance
+     */
     @Transactional
     public void removeCurrencyFromWallet(UserModel user, BigDecimal amount, CurrencyContainer currency) {
         var currencyModel = user.getWallet()
@@ -152,12 +213,22 @@ public class UserDaoImplementation implements UserDao {
 
     }
 
+    /**
+     * Increases the user's balance by {@code amount}.
+     *
+     * @param user the user instance
+     * @param amount the amount that the user wants to purchase
+     * @param currency the currency instance
+     */
     public void sellIncreaseBalance(UserModel user, BigDecimal amount, CurrencyContainer currency) {
         var newBalance = user.getBalance();
         newBalance = newBalance.add(amount.multiply(currency.getPriceUsd()));
         user.setBalance(newBalance);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Override
     public void purchaseCurrency(UserModel user, BigDecimal amount, CurrencyContainer currency) {
@@ -169,6 +240,9 @@ public class UserDaoImplementation implements UserDao {
         entityManager.merge(user);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Transactional
     @Override
     public void sellCurrency(UserModel user, BigDecimal amount, CurrencyContainer currency) {

@@ -2,12 +2,28 @@ package cryptogame.common.validation;
 
 import java.lang.reflect.Field;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
- *
+ * Abstract validation class that handles the validation of the given object with type.
+ * This class must not be instantiated, so it is an abstract class.
  */
 public abstract class BaseValidation {
 
+    /***
+     * A helper method that validates each field of the given generic object that has
+     * a {@link Validate} annotation.
+     *
+     * If the validation fails, a new {@link ValidationError} instance will be added to
+     * the result Set, which contains all of the {@link ValidationError} errors of the given field.
+     *
+     * @param field the field with a {@link Validate} annotation
+     * @param object the object instance that contains the given field
+     * @param validationAnnotation the given {@link Validate} annotation
+     * @param <T> the type of the given object instance
+     * @return a set with all the {@link ValidationError} errors of the given field
+     * @throws Exception if {@link java.lang.Class<T>#getDeclaredConstructor() } method is not found
+     */
     private static <T> HashSet<ValidationError> validateField(Field field, T object, Validate validationAnnotation) throws Exception {
 
         var result = new HashSet<ValidationError>();
@@ -25,7 +41,19 @@ public abstract class BaseValidation {
         return result;
     }
 
-    public static <T> HashSet<ValidationError> validateObject(T object) throws Exception {
+    /**
+     * Validates all the {@link Field}s of the given object of type T
+     * with {@link Validate} annotation.
+     *
+     * A result {@link java.util.Set} with all the validation errors
+     * if there has been any, otherwise an empty set will be returned.
+     *
+     * @param object the object instance to validate
+     * @param <T> the type of the given object instance
+     * @return a {@link java.util.Set} with all the validation errors of all {@link Validate} annotated fields
+     * @throws Exception if {@code validateField} throws an error
+     */
+    public static <T> Set<ValidationError> validateObject(T object) throws Exception {
 
         var result = new HashSet<ValidationError>();
 
