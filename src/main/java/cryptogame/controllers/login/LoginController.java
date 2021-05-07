@@ -89,6 +89,8 @@ public class LoginController extends BaseController {
 
                 serviceHandler.getSceneManager()
                         .showMainScene();
+                serviceHandler.getMarketManager()
+                        .startAssetLoadingService();
 
                 clearTextFields();
 
