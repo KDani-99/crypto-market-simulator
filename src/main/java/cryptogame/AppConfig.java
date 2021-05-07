@@ -1,4 +1,4 @@
-package cryptogame.main;
+package cryptogame;
 
 import javafx.stage.Stage;
 import org.springframework.context.annotation.Bean;
