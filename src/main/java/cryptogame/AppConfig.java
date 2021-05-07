@@ -61,7 +61,7 @@ public class AppConfig {
     @Primary
     @Bean
     public Stage primaryStage() {
-        return Main.primaryStage;
+        return CryptoGameApp.primaryStage;
     }
 
 }
