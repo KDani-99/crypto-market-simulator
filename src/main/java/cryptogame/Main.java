@@ -1,10 +1,6 @@
-package cryptogame.main;
+package cryptogame;
 
-import cryptogame.model.services.Service;
-import cryptogame.model.services.managers.scene.SceneManager;
 import javafx.application.Application;
-import javafx.stage.Stage;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * The main application class.
