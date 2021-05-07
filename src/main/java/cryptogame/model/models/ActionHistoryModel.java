@@ -1,6 +1,7 @@
 package cryptogame.model.models;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
@@ -11,8 +12,8 @@ public class ActionHistoryModel {
     @Column
     private long id;
     private String name;
-    private double amount;
-    private double cost;
+    private BigDecimal amount;
+    private BigDecimal cost;
     private Long actionTime;
 
     @ManyToOne

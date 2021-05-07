@@ -1,9 +1,11 @@
 package cryptogame.model.services;
 
 import cryptogame.model.dao.user.UserDao;
-import cryptogame.model.services.manager.market.MarketManager;
-import cryptogame.model.services.manager.scene.SceneManager;
+import cryptogame.model.services.managers.market.MarketManager;
+import cryptogame.model.services.managers.scene.SceneManager;
 import cryptogame.model.services.session.Session;
+
+import java.math.BigDecimal;
 
 public interface Service {
 
@@ -21,7 +23,7 @@ public interface Service {
     void createSession(long userId);
     void destroyActiveSession();
 
-    String formatDouble(double number);
+    String formatNumber(BigDecimal number);
 
     default void onExit() {
         // empty

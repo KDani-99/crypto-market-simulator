@@ -13,6 +13,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Component
@@ -41,8 +42,11 @@ public class SellCurrencyDialogController extends BaseDialogController {
             try {
 
                 // Get amount and parse it
-                var amount = Double.parseDouble(amountTextField.getText());
-                if(amount <= 0) {
+                var amount = new BigDecimal(amountTextField.getText());
+
+                var compareZeroToAmount = new BigDecimal(0).compareTo(amount);
+
+                if(compareZeroToAmount > -1) {
                     throw new IllegalArgumentException("Unable to sell 0 or less item");
                 }
 
@@ -58,14 +62,16 @@ public class SellCurrencyDialogController extends BaseDialogController {
                     throw new IllegalArgumentException("The selected currency is unavailable to be sold at this time.");
                 }
 
-                if(amount > cryptoCurrencyModel.getAmount()) {
-                    throw new IllegalArgumentException(String.format("You can't sell more `%s `than you have! You own = %f - Input = %f",
+                var isAmountGreater = amount.compareTo(cryptoCurrencyModel.getAmount()) > 0;
+
+                if(isAmountGreater) {
+                    throw new IllegalArgumentException(String.format("You can't sell more `%s `than you have! You have = %s - Input = %s",
                             cryptoCurrencyModel.getIdName(),
-                            cryptoCurrencyModel.getAmount(),
-                            amount));
+                            serviceHandler.formatNumber(cryptoCurrencyModel.getAmount()),
+                            serviceHandler.formatNumber(amount)));
                 }
 
-                var price = amount * selectedCurrency.get().getPriceUsd();
+                var price = amount.multiply(selectedCurrency.get().getPriceUsd());//amount * selectedCurrency.get().getPriceUsd();
 
                 // Sell the selected currency
                 serviceHandler.getUserDao().sellCurrency(user.get(),amount,selectedCurrency.get());
@@ -73,7 +79,7 @@ public class SellCurrencyDialogController extends BaseDialogController {
                 refreshData();
 
                 logger.info(
-                        String.format("Sold %f * `%s` for $%f @ %f by `%s`",amount,selectedCurrency.get().getName(),price, selectedCurrency.get().getPriceUsd(), user.get().getUsername())
+                        String.format("Sold %f * `%s` for $%s @ %f by `%s`",amount,selectedCurrency.get().getName(),serviceHandler.formatNumber(price), selectedCurrency.get().getPriceUsd(), user.get().getUsername())
                 );
 
                 refreshData();
@@ -88,9 +94,9 @@ public class SellCurrencyDialogController extends BaseDialogController {
         });
     }
 
-    private void setCryptoDetails(String name,double price) {
+    private void setCryptoDetails(String name,BigDecimal price) {
         headerLabel.setText(
-                String.format("Sell `%s` @ $%.2f",name,price)
+                String.format("Sell `%s` @ $%s",name,serviceHandler.formatNumber(price))
         );
     }
 

@@ -1,5 +1,6 @@
 package cryptogame.containers;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @lombok.Data
@@ -9,13 +10,13 @@ public class CryptoCurrency implements CurrencyContainer,Comparable {
     private int rank;
     private String symbol;
     private String name;
-    private double supply;
-    private double maxSupply;
-    private double marketCapUsd;
-    private double volumeUsd24Hr;
-    private double changePercent24Hr;
-    private double priceUsd;
-    private double vwap24Hr;
+    private BigDecimal supply;
+    private BigDecimal maxSupply;
+    private BigDecimal marketCapUsd;
+    private BigDecimal volumeUsd24Hr;
+    private BigDecimal changePercent24Hr;
+    private BigDecimal priceUsd;
+    private BigDecimal vwap24Hr;
     private String explorer;
 
     @Override

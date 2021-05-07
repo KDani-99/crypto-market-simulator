@@ -1,6 +1,7 @@
 package cryptogame.model.models;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
@@ -13,7 +14,7 @@ public class CryptoCurrencyModel {
     private long id;
     private String idName;
     private String name;
-    private double amount;
+    private BigDecimal amount;
 
     @ManyToOne
     private UserModel user;

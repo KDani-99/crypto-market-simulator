@@ -22,6 +22,8 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public class PurchaseDialogController extends BaseDialogController {
@@ -41,8 +43,10 @@ public class PurchaseDialogController extends BaseDialogController {
             try {
 
                 // Get amount and parse it
-                var amount = Double.parseDouble(amountTextField.getText());
-                if(amount <= 0) {
+                var amount = new BigDecimal(amountTextField.getText());
+                var compareAmountToZero = new BigDecimal(0).compareTo(amount);
+
+                if(compareAmountToZero > -1) {
                     throw new IllegalArgumentException("Unable to purchase 0 or less item");
                 }
 
@@ -53,8 +57,10 @@ public class PurchaseDialogController extends BaseDialogController {
                     throw new EntityDoesNotExistException(UserModel.class);
                 }
 
-                var price = amount * currency.getPriceUsd();
-                if(user.get().getBalance() < price) {
+                var price = amount.multiply(currency.getPriceUsd());
+                var comparePriceToBalance = price.compareTo(user.get().getBalance());
+
+                if(comparePriceToBalance > 0) {
                     throw new IllegalArgumentException("You can't afford to buy that much of the given currency");
                 }
 
@@ -78,9 +84,9 @@ public class PurchaseDialogController extends BaseDialogController {
         });
     }
 
-    private void setCryptoDetails(String name,double price) {
+    private void setCryptoDetails(String name,BigDecimal price) {
         headerLabel.setText(
-                String.format("Purchase `%s` @ $%.2f",name,price)
+                String.format("Purchase `%s` @ $%s",name,serviceHandler.formatNumber(price))
         );
     }
 
