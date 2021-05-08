@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
  * The base history model entity, that can be inherited by
- * different action history types, such as {@link SellHistoryModel} or {@link PurchaseHistoryModel}, and so on.
+ * different action history types, such as {@link SellHistoryModel} or {@link PurchaseHistoryModel}.
  */
 @Entity
 @lombok.Data
