@@ -56,6 +56,10 @@ public class CryptoCurrency implements CurrencyContainer,Comparable {
      * Volume Weighted Average Price in the last 24 hours.
      */
     private BigDecimal vwap24Hr;
+    /**
+     * Explorer.
+     */
+    private String explorer;
 
     /**
      * Determines whether two objects of this class are equal based on their unique Id.
