@@ -6,6 +6,7 @@ import cryptogame.controllers.Controller;
 import cryptogame.model.exception.EntityDoesNotExistException;
 import cryptogame.model.models.UserModel;
 import cryptogame.model.services.Service;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -40,48 +41,53 @@ public class PurchaseDialogController extends BaseDialogController {
     @Override
     protected void bindButton() {
         this.actionButton.setOnMouseClicked(event -> {
-            try {
-
-                // Get amount and parse it
-                var amount = new BigDecimal(amountTextField.getText());
-                var compareAmountToZero = new BigDecimal(0).compareTo(amount);
-
-                if(compareAmountToZero > -1) {
-                    throw new IllegalArgumentException("Unable to purchase 0 or less item");
-                }
-
-                // Get user object
-                var userId = serviceHandler.getSession().getActiveUserId();
-                var user = serviceHandler.getUserDao().getEntity(userId); // get id from session
-                if(user.isEmpty()) {
-                    throw new EntityDoesNotExistException(UserModel.class);
-                }
-
-                var price = amount.multiply(currency.getPriceUsd());
-                var comparePriceToBalance = price.compareTo(user.get().getBalance());
-
-                if(comparePriceToBalance > 0) {
-                    throw new IllegalArgumentException("You can't afford to buy that much of the given currency");
-                }
-
-                // Purchase the given currency
-                serviceHandler.getUserDao().purchaseCurrency(user.get(),amount,currency);
-
-                refreshData();
-
-                logger.info(
-                        String.format("Purchased %f * `%s` for $%f @ %f by `%s`",amount,currency.getName(),price, currency.getPriceUsd(), user.get().getUsername())
-                );
-
-                serviceHandler.getSceneManager().closeAllDialog();
-
-            }
-            catch (Exception exception) {
-                serviceHandler.getSceneManager()
-                        .createAlert(Alert.AlertType.ERROR,"An error has occurred",exception.getMessage());
-                logger.error(exception);
-            }
+            var amount = new BigDecimal(amountTextField.getText());
+            new Thread(() -> purchaseAction(amount)).start();
         });
+
+    }
+
+    private void purchaseAction(BigDecimal amount) {
+        try {
+
+            var compareAmountToZero = new BigDecimal(0).compareTo(amount);
+
+            if(compareAmountToZero > -1) {
+                throw new IllegalArgumentException("Unable to purchase 0 or less item");
+            }
+
+            // Get user object
+            var userId = serviceHandler.getSession().getActiveUserId();
+            var user = serviceHandler.getUserDao().getEntity(userId); // get id from session
+            if(user.isEmpty()) {
+                throw new EntityDoesNotExistException(UserModel.class);
+            }
+
+            var price = amount.multiply(currency.getPriceUsd());
+            var comparePriceToBalance = price.compareTo(user.get().getBalance());
+
+            if(comparePriceToBalance > 0) {
+                throw new IllegalArgumentException("You can't afford to buy that much of the given currency");
+            }
+
+            // Purchase the given currency
+            serviceHandler.getUserDao().purchaseCurrency(user.get(),amount,currency);
+
+            logger.info(
+                    String.format("Purchased %f * `%s` for $%f @ %f by `%s`",amount,currency.getName(),price, currency.getPriceUsd(), user.get().getUsername())
+            );
+
+            Platform.runLater(() -> {
+                refreshData();
+                serviceHandler.getSceneManager().closeAllDialog();
+            });
+
+        }
+        catch (Exception exception) {
+
+            Platform.runLater(() -> serviceHandler.getSceneManager().createAlert(Alert.AlertType.ERROR,"An error has occurred",exception.getMessage()));
+            logger.error(exception);
+        }
     }
 
     private void setCryptoDetails(String name,BigDecimal price) {

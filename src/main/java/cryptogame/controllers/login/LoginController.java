@@ -1,8 +1,10 @@
 package cryptogame.controllers.login;
 
 import cryptogame.controllers.BaseController;
+import cryptogame.model.models.UserModel;
 import cryptogame.model.services.Service;
 import cryptogame.model.services.auth.AuthService;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -67,40 +69,41 @@ public class LoginController extends BaseController {
     }
 
     private void setupLoginButton() {
+
         this.loginButton.setOnMouseClicked(event -> {
-            try {
-
-                errorPane.setVisible(false);
-
-                var username = usernameInput.getText();
-                var password = passwordInput.getText();
-
-                var result = serviceHandler.getUserDao().getByUsername(username);
-
-                if(result.isEmpty()) {
-                    throw new Exception("Invalid username or password");
-                }
-
-                if(!AuthService.comparePasswords(result.get().getPassword(),password)) {
-                    throw new Exception("Invalid username or password");
-                }
-
-                serviceHandler.createSession(result.get().getId());
-
-                serviceHandler.getSceneManager()
-                        .showMainScene();
-                serviceHandler.getMarketManager()
-                        .startAssetLoadingService();
-
-                clearTextFields();
-
-                logger.info(String.format("User `%s` logged in.",username));
-
-            }  catch (Exception exception) {
-                onError(exception);
-            }
+            new Thread(this::loginAction
+            ).start();
         });
     }
+
+    private void loginAction() {
+        try {
+
+            errorPane.setVisible(false);
+
+            var username = usernameInput.getText();
+            var password = passwordInput.getText();
+
+            var result = serviceHandler.getUserDao().getByUsername(username);
+
+            if(result.isEmpty()) {
+                throw new Exception("Invalid username or password");
+            }
+
+            if(!AuthService.comparePasswords(result.get().getPassword(),password)) {
+                throw new Exception("Invalid username or password");
+            }
+
+            Platform.runLater(this::clearTextFields);
+            Platform.runLater(() -> this.onSuccessfulLogin(result.get()));
+
+            logger.info(String.format("User `%s` logged in.",username));
+
+        }  catch (Exception exception) {
+            Platform.runLater(() -> onError(exception));
+        }
+    }
+
     private void setupRegisterButton() {
         this.registerButton.setOnMouseClicked(event -> {
             try {
@@ -112,6 +115,20 @@ public class LoginController extends BaseController {
                 onError(exception);
             }
         });
+    }
+
+    private void onSuccessfulLogin(UserModel user) {
+        serviceHandler.createSession(user.getId());
+
+        try {
+            serviceHandler.getSceneManager()
+                    .showMainScene();
+        } catch (Exception exception) {
+            onError(exception);
+        }
+
+        serviceHandler.getMarketManager()
+                .startAssetLoadingService();
     }
 
     private void onError(Exception exception) {

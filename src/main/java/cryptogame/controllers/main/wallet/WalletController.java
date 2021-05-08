@@ -5,6 +5,7 @@ import cryptogame.controllers.Controller;
 import cryptogame.controllers.main.wallet.components.WalletComponent;
 import cryptogame.model.models.CryptoCurrencyModel;
 import cryptogame.model.services.Service;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
@@ -16,6 +17,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Set;
 
 @Component
 public class WalletController implements Controller, Refreshable {
@@ -43,7 +46,7 @@ public class WalletController implements Controller, Refreshable {
 
         HBox.setHgrow(scrollPane, Priority.ALWAYS);
 
-        this.loadWallet();
+        new Thread(this::loadWallet).start();
     }
 
     private void initializeWithErrHandling() {
@@ -85,19 +88,24 @@ public class WalletController implements Controller, Refreshable {
         }
     }
 
+    private void loadWalletComponents(Set<CryptoCurrencyModel> wallet) {
+        for(var currency : wallet) {
+            loadWalletComponentWithErrHandling(currency);
+        }
+    }
+
     private void loadWallet() {
         try {
-
-            resetBox();
 
             var user = serviceHandler.getUserDao().getEntity(serviceHandler.getSession().getActiveUserId())
                     .get();
 
             var wallet = user.getWallet();
 
-            for(var currency : wallet) {
-                loadWalletComponentWithErrHandling(currency);
-            }
+            Platform.runLater(() -> {
+                this.resetBox();
+                this.loadWalletComponents(wallet);
+            });
 
         } catch (Exception exception) {
             logger.error(exception);

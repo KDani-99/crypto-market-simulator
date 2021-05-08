@@ -6,6 +6,7 @@ import cryptogame.controllers.main.stats.components.StatsComponent;
 import cryptogame.model.models.ActionHistoryModel;
 import cryptogame.model.models.UserModel;
 import cryptogame.model.services.Service;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -20,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class StatsController implements Controller, Refreshable {
@@ -65,7 +68,7 @@ public class StatsController implements Controller, Refreshable {
 
         HBox.setHgrow(scrollPane, Priority.ALWAYS);
 
-        this.loadStats();
+        new Thread(this::loadStats).start();
     }
 
     private void initializeWithErrHandling() {
@@ -179,25 +182,28 @@ public class StatsController implements Controller, Refreshable {
         this.vBox.getChildren().add(headerGrid);
     }
 
+    private void loadHistory(Set<ActionHistoryModel> transactionHistory, StatsComponent.ActionType type) {
+        for(var action : transactionHistory) {
+            loadStatsComponentWithErrHandling(action,type);
+        }
+    }
+
     private void loadStats() {
         try {
-            resetBox();
 
             var user = serviceHandler.getUserDao()
                     .getEntity(serviceHandler.getSession().getActiveUserId()).get();
 
-            var purchaseHistory = user.getPurchaseHistory();
-            var sellHistory = user.getSellHistory();
+            var purchaseHistory = new HashSet<ActionHistoryModel>(user.getPurchaseHistory());
+            var sellHistory = new HashSet<ActionHistoryModel>(user.getSellHistory());
 
-            for(var action : purchaseHistory) {
-                loadStatsComponentWithErrHandling(action,StatsComponent.ActionType.PURCHASE);
-            }
+            Platform.runLater(() -> {
+                this.resetBox();
+                this.loadHistory(purchaseHistory,StatsComponent.ActionType.PURCHASE);
+                this.loadHistory(sellHistory,StatsComponent.ActionType.SELL);
+                this.setNetStats(user);
+            });
 
-            for(var action : sellHistory) {
-                loadStatsComponentWithErrHandling(action,StatsComponent.ActionType.SELL);
-            }
-
-            setNetStats(user);
         } catch (Exception exception) {
             logger.error(exception);
         }

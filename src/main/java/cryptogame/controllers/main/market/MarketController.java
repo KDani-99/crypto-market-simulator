@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -104,7 +105,7 @@ public class MarketController implements Initializable, Controller {
                     logger.error(exception);
                 }
             }
-            Platform.runLater(this::initMarket);
+            this.initMarket();
         });
 
         thread.start();
@@ -213,9 +214,15 @@ public class MarketController implements Initializable, Controller {
         }
     }
 
+    private void loadCurrencies(List<CryptoCurrency> currencies) {
+        for(var currency : currencies) {
+            loadCurrencyComponentWithErrHandling(currency);
+        }
+    }
+
     private void loadMarket() {
 
-        cleaView();
+        Platform.runLater(this::cleaView);
 
         var currencies = sorted
                 ?
@@ -223,9 +230,7 @@ public class MarketController implements Initializable, Controller {
                 :
                 serviceHandler.getMarketManager().getCurrencies().stream().sorted(Comparator.comparingInt(CryptoCurrency::getRank).reversed()).collect(Collectors.toList());
 
-        for(var currency : currencies) {
-            loadCurrencyComponentWithErrHandling(currency);
-        }
+        Platform.runLater(() -> loadCurrencies(currencies));
     }
 
     @Override
