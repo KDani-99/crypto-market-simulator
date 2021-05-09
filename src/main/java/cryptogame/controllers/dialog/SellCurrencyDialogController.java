@@ -30,7 +30,7 @@ public class SellCurrencyDialogController extends BaseDialogController {
         super(serviceHandler);
     }
 
-    private Optional<CryptoCurrency> getSelectedCurrency() {
+    private Optional<CryptoCurrency> getSelectedCurrencyFromMarket() {
         return serviceHandler.getMarketManager().getCurrencies()
                 .stream()
                 .filter(cryptoCurrency -> cryptoCurrency.getId().equals(cryptoCurrencyModel.getIdName()))
@@ -61,14 +61,12 @@ public class SellCurrencyDialogController extends BaseDialogController {
                 throw new EntityDoesNotExistException(UserModel.class);
             }
 
-            var selectedCurrency = getSelectedCurrency();
+            var selectedCurrency = getSelectedCurrencyFromMarket();
             if(selectedCurrency.isEmpty()) {
                 throw new IllegalArgumentException("The selected currency is unavailable to be sold at this time.");
             }
 
-            var isAmountGreater = amount.compareTo(cryptoCurrencyModel.getAmount()) > 0;
-
-            if(isAmountGreater) {
+            if(!user.get().canSellGivenCurrency(selectedCurrency.get().getId(),amount)) {
                 throw new IllegalArgumentException(String.format("You can't sell more `%s `than you have! You have = %s - Input = %s",
                         cryptoCurrencyModel.getIdName(),
                         serviceHandler.formatNumber(cryptoCurrencyModel.getAmount()),
@@ -105,7 +103,7 @@ public class SellCurrencyDialogController extends BaseDialogController {
 
         this.cryptoCurrencyModel = cryptoCurrencyModel;
 
-        var selected = getSelectedCurrency();
+        var selected = getSelectedCurrencyFromMarket();
 
         if(selected.isEmpty()) {
             return;

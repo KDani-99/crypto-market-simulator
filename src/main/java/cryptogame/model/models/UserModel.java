@@ -4,6 +4,7 @@ import cryptogame.common.validation.EmailValidation;
 import cryptogame.common.validation.PasswordValidation;
 import cryptogame.common.validation.UsernameValidation;
 import cryptogame.common.validation.Validate;
+import cryptogame.containers.CurrencyContainer;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -87,5 +88,23 @@ public class UserModel {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public boolean canPurchaseGivenCurrency(CurrencyContainer currency, BigDecimal amount) {
+        var price = amount.multiply(currency.getPriceUsd());
+
+        return price.compareTo(this.getBalance()) <= 0;
+    }
+
+    public boolean canSellGivenCurrency(String id, BigDecimal amount) {
+        var currency = wallet.stream()
+                .filter(cryptoCurrencyModel -> cryptoCurrencyModel.getIdName().equals(id))
+                .findFirst();
+
+        if(currency.isEmpty()) {
+            return false;
+        }
+
+        return amount.compareTo(currency.get().getAmount()) <= 0;
     }
 }

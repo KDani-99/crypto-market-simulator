@@ -58,17 +58,17 @@ public class PurchaseDialogController extends BaseDialogController {
 
             // Get user object
             var userId = serviceHandler.getSession().getActiveUserId();
+
             var user = serviceHandler.getUserDao().getEntity(userId); // get id from session
             if(user.isEmpty()) {
                 throw new EntityDoesNotExistException(UserModel.class);
             }
 
-            var price = amount.multiply(currency.getPriceUsd());
-            var comparePriceToBalance = price.compareTo(user.get().getBalance());
-
-            if(comparePriceToBalance > 0) {
+            if(!user.get().canPurchaseGivenCurrency(currency, amount)) {
                 throw new IllegalArgumentException("You can't afford to buy that much of the given currency");
             }
+
+            var price = amount.multiply(currency.getPriceUsd());
 
             // Purchase the given currency
             serviceHandler.getUserDao().purchaseCurrency(user.get(),amount,currency);
@@ -77,6 +77,7 @@ public class PurchaseDialogController extends BaseDialogController {
                     String.format("Purchased %f * `%s` for $%f @ %f by `%s`",amount,currency.getName(),price, currency.getPriceUsd(), user.get().getUsername())
             );
 
+            // Call on main UI thread
             Platform.runLater(() -> {
                 refreshData();
                 serviceHandler.getSceneManager().closeAllDialog();
