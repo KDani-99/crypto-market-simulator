@@ -118,8 +118,11 @@ public class ServiceImplementation implements Service {
     @Override
     public void destroyActiveSession() {
         this.activeSession = null;
-        this.sceneManager.reset();
-        this.marketManager.reset();
+
+        if(this.sceneManager != null)
+            this.sceneManager.reset();
+        if(this.marketManager != null)
+            this.marketManager.reset();
     }
     /**
      * {@inheritDoc}
