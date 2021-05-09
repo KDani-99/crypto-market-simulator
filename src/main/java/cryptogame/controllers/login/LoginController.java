@@ -3,7 +3,7 @@ package cryptogame.controllers.login;
 import cryptogame.controllers.BaseController;
 import cryptogame.model.models.UserModel;
 import cryptogame.model.services.Service;
-import cryptogame.model.services.auth.AuthService;
+import cryptogame.model.security.Auth;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -90,7 +90,7 @@ public class LoginController extends BaseController {
                 throw new Exception("Invalid username or password");
             }
 
-            if(!AuthService.comparePasswords(result.get().getPassword(),password)) {
+            if(!Auth.comparePasswords(result.get().getPassword(),password)) {
                 throw new Exception("Invalid username or password");
             }
 

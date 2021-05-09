@@ -1,13 +1,12 @@
 package cryptogame.controllers.registration;
 
 import cryptogame.common.validation.BaseValidation;
-import cryptogame.common.validation.Validation;
 import cryptogame.common.validation.ValidationError;
 import cryptogame.controllers.BaseController;
 import cryptogame.model.models.UserModel;
 import cryptogame.model.services.Service;
 
-import cryptogame.model.services.auth.AuthService;
+import cryptogame.model.security.Auth;
 import cryptogame.model.exception.ValidationException;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -183,7 +182,7 @@ public class RegistrationController extends BaseController {
                     throw new ValidationException(validationResult);
                 }
 
-                user.setPassword(AuthService.generatePasswordHash(password));
+                user.setPassword(Auth.generatePasswordHash(password));
 
                 serviceHandler.getUserDao().persistEntity(user);
                 serviceHandler.getSceneManager()

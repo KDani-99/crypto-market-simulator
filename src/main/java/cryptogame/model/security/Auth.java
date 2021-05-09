@@ -1,4 +1,4 @@
-package cryptogame.model.services.auth;
+package cryptogame.model.security;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
@@ -15,7 +15,7 @@ import java.util.Arrays;
  * AuthService is responsible for securing sensitive user information.
  * This class is abstract and can not be instantiated.
  */
-public abstract class AuthService {
+public abstract class Auth {
 
     /**
      * Static final salt size.
@@ -72,7 +72,7 @@ public abstract class AuthService {
      * @throws NoSuchAlgorithmException if no such algorithm exists
      * @throws InvalidKeyException if the key is invalid
      */
-    public static String generatePasswordHash(String password, byte [] key) throws NoSuchAlgorithmException, InvalidKeyException {
+    private static String generatePasswordHash(String password, byte [] key) throws NoSuchAlgorithmException, InvalidKeyException {
         return hmacHelper(password.getBytes(),key);
     }
 
