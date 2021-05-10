@@ -1,4 +1,4 @@
-package cryptogame.common.interfaces;
+package cryptogame.utils.interfaces;
 
 /**
  * Interface for classes that require initialization.

@@ -1,4 +1,4 @@
-package cryptogame.common.validation;
+package cryptogame.utils.validation;
 
 /**
  * The {@link ValidationError} class is a POJO that contains

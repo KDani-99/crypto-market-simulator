@@ -1,4 +1,4 @@
-package cryptogame.common.validation;
+package cryptogame.utils.validation;
 
 /**
  * Validation class for email type fields.
@@ -12,6 +12,11 @@ public class EmailValidation implements Validation<String> {
      */
     @Override
     public boolean validate(String email) {
+
+        if(email == null) {
+            return false;
+        }
+
         if(email.length() > 125 || email.length() < 6) {
             return false;
         }
@@ -22,11 +27,20 @@ public class EmailValidation implements Validation<String> {
 
         StringBuilder reversedEmail = new StringBuilder(email).reverse();
 
-        if(reversedEmail.substring(0,reversedEmail.indexOf(".")).length() < 2) {
+        var lastDotIndex = reversedEmail.indexOf(".");
+        var lastAtIndex = reversedEmail.indexOf("@");
+
+        if(reversedEmail.substring(0,lastDotIndex).length() < 2) {
             // name@email.c -> invalid
             // name@email.co -> valid
             return false;
         }
+
+        if(reversedEmail.substring(lastDotIndex + 1,lastAtIndex).length() < 2) {
+
+            return false;
+        }
+
 
         int atCount = 0;
         for(int i=0;i<reversedEmail.length();i++) {

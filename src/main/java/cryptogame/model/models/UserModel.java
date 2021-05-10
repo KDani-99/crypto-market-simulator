@@ -1,9 +1,9 @@
 package cryptogame.model.models;
 
-import cryptogame.common.validation.EmailValidation;
-import cryptogame.common.validation.PasswordValidation;
-import cryptogame.common.validation.UsernameValidation;
-import cryptogame.common.validation.Validate;
+import cryptogame.utils.validation.EmailValidation;
+import cryptogame.utils.validation.PasswordValidation;
+import cryptogame.utils.validation.UsernameValidation;
+import cryptogame.utils.validation.Validate;
 import cryptogame.containers.CurrencyContainer;
 
 import javax.persistence.*;

@@ -1,6 +1,6 @@
 package cryptogame.controllers.main.market;
 
-import cryptogame.common.interfaces.Initializable;
+import cryptogame.utils.interfaces.Initializable;
 import cryptogame.containers.CryptoCurrency;
 import cryptogame.controllers.Controller;
 import cryptogame.controllers.main.market.components.CurrencyComponent;

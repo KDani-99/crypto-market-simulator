@@ -1,4 +1,4 @@
-package cryptogame.common.interfaces;
+package cryptogame.utils.interfaces;
 
 /**
  * Interface for classes that may need to be explicitly refreshed to acquire the current state.

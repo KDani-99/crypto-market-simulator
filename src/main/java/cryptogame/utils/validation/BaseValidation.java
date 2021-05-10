@@ -1,4 +1,6 @@
-package cryptogame.common.validation;
+package cryptogame.utils.validation;
+
+import cryptogame.model.exception.ValidationException;
 
 import java.lang.reflect.Field;
 import java.util.HashSet;
@@ -50,10 +52,10 @@ public abstract class BaseValidation {
      *
      * @param object the object instance to validate
      * @param <T> the type of the given object instance
-     * @return a {@link java.util.Set} with all the validation errors of all {@link Validate} annotated fields
-     * @throws Exception if {@code validateField} throws an error
+     * @throws Exception if an unexpected error occurs
+     * @throws ValidationException if {@link BaseValidation#validateField(Field, Object, Validate)} throws an error
      */
-    public static <T> Set<ValidationError> validateObject(T object) throws Exception {
+    public static <T> void validateObject(T object) throws Exception,ValidationException {
 
         var result = new HashSet<ValidationError>();
 
@@ -71,7 +73,9 @@ public abstract class BaseValidation {
 
         }
 
-        return result;
+        if(result.size() != 0) {
+            throw new ValidationException(result);
+        }
     }
 
 }

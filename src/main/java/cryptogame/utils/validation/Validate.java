@@ -1,4 +1,4 @@
-package cryptogame.common.validation;
+package cryptogame.utils.validation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

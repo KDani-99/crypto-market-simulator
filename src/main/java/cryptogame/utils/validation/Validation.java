@@ -1,4 +1,4 @@
-package cryptogame.common.validation;
+package cryptogame.utils.validation;
 
 /**
  * The validation interface that must be implemented by classes

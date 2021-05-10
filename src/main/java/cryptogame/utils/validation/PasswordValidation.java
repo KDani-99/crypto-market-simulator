@@ -1,4 +1,4 @@
-package cryptogame.common.validation;
+package cryptogame.utils.validation;
 
 import java.util.regex.Pattern;
 
@@ -24,6 +24,9 @@ public class PasswordValidation implements Validation<String> {
      */
     @Override
     public boolean validate(String password) {
+        if(password == null) {
+            return false;
+        }
         return pattern.matcher(password).find();
     }
 

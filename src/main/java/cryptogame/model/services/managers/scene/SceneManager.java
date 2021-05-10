@@ -1,6 +1,6 @@
 package cryptogame.model.services.managers.scene;
 
-import cryptogame.common.interfaces.Initializable;
+import cryptogame.utils.interfaces.Initializable;
 import cryptogame.controllers.Controller;
 import cryptogame.controllers.main.MainController;
 import cryptogame.controllers.WindowController;

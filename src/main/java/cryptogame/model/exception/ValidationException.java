@@ -1,6 +1,6 @@
 package cryptogame.model.exception;
 
-import cryptogame.common.validation.ValidationError;
+import cryptogame.utils.validation.ValidationError;
 
 import java.util.Set;
 

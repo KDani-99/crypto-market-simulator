@@ -1,6 +1,6 @@
 package cryptogame.controllers.main.stats;
 
-import cryptogame.common.interfaces.Refreshable;
+import cryptogame.utils.interfaces.Refreshable;
 import cryptogame.controllers.Controller;
 import cryptogame.controllers.main.stats.components.StatsComponent;
 import cryptogame.model.models.ActionHistoryModel;

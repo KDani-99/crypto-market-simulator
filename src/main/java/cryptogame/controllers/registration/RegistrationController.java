@@ -1,7 +1,7 @@
 package cryptogame.controllers.registration;
 
-import cryptogame.common.validation.BaseValidation;
-import cryptogame.common.validation.ValidationError;
+import cryptogame.utils.validation.BaseValidation;
+import cryptogame.utils.validation.ValidationError;
 import cryptogame.controllers.BaseController;
 import cryptogame.model.models.UserModel;
 import cryptogame.model.services.Service;
@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 
 @Component
@@ -166,20 +167,18 @@ public class RegistrationController extends BaseController {
                 user.setPassword(password);
                 user.setBalance(new BigDecimal(1000));
 
-                var validationResult = BaseValidation.validateObject(user);
-
-                if(validationResult.size() > 0) {
-                    throw new ValidationException(validationResult);
-                }
+                BaseValidation.validateObject(user);
 
                 if(serviceHandler.getUserDao().getByUsername(username).isPresent()) {
-                    validationResult.add(new ValidationError("username","Username is already in use."));
-                    throw new ValidationException(validationResult);
+                    final var resultSet = new HashSet<ValidationError>();
+                    resultSet.add(new ValidationError("username","Username is already in use."));
+                    throw new ValidationException(resultSet);
                 }
 
                 if(serviceHandler.getUserDao().getByEmail(email).isPresent()) {
-                    validationResult.add(new ValidationError("email","Email address is already in use."));
-                    throw new ValidationException(validationResult);
+                    final var resultSet = new HashSet<ValidationError>();
+                    resultSet.add(new ValidationError("username","Email address is already in use."));
+                    throw new ValidationException(resultSet);
                 }
 
                 user.setPassword(Auth.generatePasswordHash(password));

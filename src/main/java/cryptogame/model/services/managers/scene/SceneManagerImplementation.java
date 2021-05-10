@@ -1,7 +1,7 @@
 package cryptogame.model.services.managers.scene;
 
 import cryptogame.Main;
-import cryptogame.common.interfaces.Refreshable;
+import cryptogame.utils.interfaces.Refreshable;
 import cryptogame.controllers.*;
 import cryptogame.controllers.dialog.PurchaseDialogController;
 import cryptogame.controllers.dialog.SellCurrencyDialogController;

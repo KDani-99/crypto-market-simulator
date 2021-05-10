@@ -1,6 +1,6 @@
 package cryptogame.controllers;
 
-import cryptogame.common.interfaces.Initializable;
+import cryptogame.utils.interfaces.Initializable;
 import javafx.scene.Node;
 
 public interface Controller extends Initializable {

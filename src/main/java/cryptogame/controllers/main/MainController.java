@@ -1,7 +1,7 @@
 package cryptogame.controllers.main;
 
 import cryptogame.controllers.BaseController;
-import cryptogame.common.interfaces.Refreshable;
+import cryptogame.utils.interfaces.Refreshable;
 import cryptogame.controllers.WindowController;
 import cryptogame.controllers.main.navbar.NavbarController;
 import cryptogame.model.services.Service;
