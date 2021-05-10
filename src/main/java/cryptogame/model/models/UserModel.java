@@ -90,12 +90,26 @@ public class UserModel {
         this.password = password;
     }
 
+    /**
+     * Determines whether the user can purchase {@code amount} from the given currency.
+     *
+     * @param currency the currency that the user wants to purchase
+     * @param amount the amount that the user wants to purchase
+     * @return {@code true}, if the user is able to buy it, @{code false} otherwise
+     */
     public boolean canPurchaseGivenCurrency(CurrencyContainer currency, BigDecimal amount) {
         var price = amount.multiply(currency.getPriceUsd());
 
         return price.compareTo(this.getBalance()) <= 0;
     }
 
+    /**
+     * Determines whether the user is able to sell the given currency.
+     *
+     * @param id the id of the currency
+     * @param amount the amount that the user wants to sell
+     * @return {@code true}, if the user is able to sell it, @{code false} otherwise
+     */
     public boolean canSellGivenCurrency(String id, BigDecimal amount) {
         var currency = wallet.stream()
                 .filter(cryptoCurrencyModel -> cryptoCurrencyModel.getIdName().equals(id))
