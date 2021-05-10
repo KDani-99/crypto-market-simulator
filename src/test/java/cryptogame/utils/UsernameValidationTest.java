@@ -34,9 +34,8 @@ public class UsernameValidationTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"username","User91","user-name","User_name"})
-    public void testUsernameValidationWithValidUsername() {
+    public void testUsernameValidationWithValidUsername(String username) {
         // Arrange
-        var username = "username51";
         this.userModel.setUsername(username);
         // Act
         var result = assertThrows(ValidationException.class,()-> BaseValidation.validateObject(userModel));
