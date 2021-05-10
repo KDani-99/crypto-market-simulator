@@ -18,7 +18,7 @@ public class UserModelTest {
 
     @Test
     public void testUserPurchaseGivenCurrencyShouldFailWhenBalanceIsLess() {
-        // Given
+        // Arrange
         var currency = new CryptoCurrency();
         currency.setPriceUsd(
                 new BigDecimal(1)
@@ -29,15 +29,15 @@ public class UserModelTest {
         this.userModel.setBalance(
                 new BigDecimal(15)
         );
-        // When
+        // Act
         var canPurchase = this.userModel.canPurchaseGivenCurrency(currency,amount);
-        // Then
+        // Assert
         Assert.assertFalse(canPurchase);
     }
 
     @Test
     public void testUserPurchaseGivenCurrencyShouldSucceedWhenEqual() {
-        // Given
+        // Arrange
         var currency = new CryptoCurrency();
         currency.setPriceUsd(
                 new BigDecimal(1)
@@ -48,15 +48,15 @@ public class UserModelTest {
         this.userModel.setBalance(
                 new BigDecimal(15)
         );
-        // When
+        // Act
         var canPurchase = this.userModel.canPurchaseGivenCurrency(currency,amount);
-        // Then
+        // Assert
         Assert.assertTrue(canPurchase);
     }
 
     @Test
     public void testUserPurchaseGivenCurrencyShouldSucceedWhenBalanceIsGreater() {
-        // Given
+        // Arrange
         var currency = new CryptoCurrency();
         currency.setPriceUsd(
                 new BigDecimal(1)
@@ -67,14 +67,14 @@ public class UserModelTest {
         this.userModel.setBalance(
                 new BigDecimal(150)
         );
-        // When
+        // Act
         var canPurchase = this.userModel.canPurchaseGivenCurrency(currency,amount);
-        // Then
+        // Assert
         Assert.assertTrue(canPurchase);
     }
     @Test
     public void testUserSellGivenCurrencyShouldFailWhenUserHasLessAmount() {
-        // Given
+        // Arrange
         var currencyModel = new CryptoCurrencyModel();
         currencyModel.setIdName("test");
         currencyModel.setAmount(new BigDecimal(1));
@@ -83,15 +83,15 @@ public class UserModelTest {
 
         var amount = new BigDecimal(2);
 
-        // When
+        // Act
         var canSell = this.userModel.canSellGivenCurrency(currencyModel.getIdName(),amount);
-        // Then
+        // Assert
         Assert.assertFalse(canSell);
     }
 
     @Test
     public void testUserSellGivenCurrencyShouldSucceedWhenUserHasEqualAmount() {
-        // Given
+        // Arrange
         var currencyModel = new CryptoCurrencyModel();
         currencyModel.setIdName("test");
         currencyModel.setAmount(new BigDecimal(1));
@@ -100,14 +100,14 @@ public class UserModelTest {
 
         var amount = new BigDecimal(1);
 
-        // When
+        // Act
         var canSell = this.userModel.canSellGivenCurrency(currencyModel.getIdName(),amount);
-        // Then
+        // Assert
         Assert.assertTrue(canSell);
     }
     @Test
     public void testUserSellGivenCurrencyShouldSucceedWhenUserHasMore() {
-        // Given
+        // Arrange
         var currencyModel = new CryptoCurrencyModel();
         currencyModel.setIdName("test");
         currencyModel.setAmount(new BigDecimal(2));
@@ -116,9 +116,9 @@ public class UserModelTest {
 
         var amount = new BigDecimal(1);
 
-        // When
+        // Act
         var canSell = this.userModel.canSellGivenCurrency(currencyModel.getIdName(),amount);
-        // Then
+        // Assert
         Assert.assertTrue(canSell);
     }
 }
