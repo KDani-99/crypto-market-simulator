@@ -12,7 +12,6 @@ The prices of the currencies are taken from an API (https://), **the prices migh
 
 The project was made with JavaFX (using Java 11).
 #### Usage
----
 - Site
   ```mvn site```
 - Package
@@ -24,3 +23,6 @@ The project was made with JavaFX (using Java 11).
   mvn package
   java -jar ./target/crypto-trading-game-1.0-SNAPSHOT.jar
   ```
+#### Important
+- Database connection details must be configured in advance in the `resources/META-INF/persistence.xml` file
+- Not secure (connection details are packaged with the app)
