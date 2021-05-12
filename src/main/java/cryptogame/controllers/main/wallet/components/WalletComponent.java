@@ -4,6 +4,7 @@ import cryptogame.controllers.Controller;
 import cryptogame.controllers.dialog.PurchaseDialogController;
 import cryptogame.controllers.dialog.SellCurrencyDialogController;
 import cryptogame.controllers.main.market.components.CurrencyComponent;
+import cryptogame.controllers.scene.SceneManager;
 import cryptogame.model.models.CryptoCurrencyModel;
 import cryptogame.model.services.Service;
 import javafx.fxml.FXML;
@@ -28,6 +29,7 @@ public class WalletComponent implements Controller {
 
     private CryptoCurrencyModel currencyModel;
     private final Service serviceHandler;
+    private final SceneManager sceneManager;
 
     @FXML private GridPane gridPane;
 
@@ -37,8 +39,9 @@ public class WalletComponent implements Controller {
     @FXML private Button sellButton;
 
     @Autowired
-    public WalletComponent(Service serviceHandler) {
+    public WalletComponent(Service serviceHandler, SceneManager sceneManager) {
         this.serviceHandler = serviceHandler;
+        this.sceneManager = sceneManager;
     }
 
     @Override
@@ -99,7 +102,7 @@ public class WalletComponent implements Controller {
         this.sellButton.setOnMouseClicked(event -> {
             try {
 
-                var purchaseWindow = (SellCurrencyDialogController) serviceHandler.getSceneManager()
+                var purchaseWindow = (SellCurrencyDialogController) sceneManager
                         .createSellCurrencyWindow();
 
                 purchaseWindow.setCryptoCurrencyModel(currencyModel);

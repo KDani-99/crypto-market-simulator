@@ -1,7 +1,6 @@
 package cryptogame.model.services.managers.market;
 
 import cryptogame.containers.CryptoCurrency;
-import cryptogame.model.services.managers.scene.SceneManager;
 
 import java.util.Collection;
 

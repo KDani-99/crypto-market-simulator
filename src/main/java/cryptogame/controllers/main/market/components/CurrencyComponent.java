@@ -3,6 +3,7 @@ package cryptogame.controllers.main.market.components;
 import cryptogame.containers.CryptoCurrency;
 import cryptogame.controllers.Controller;
 import cryptogame.controllers.dialog.PurchaseDialogController;
+import cryptogame.controllers.scene.SceneManager;
 import cryptogame.model.services.Service;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -37,10 +38,12 @@ public class CurrencyComponent implements Controller {
     @FXML private Button purchaseButton;
 
     private final Service serviceHandler;
+    private final SceneManager sceneManager;
 
     @Autowired
-    public CurrencyComponent(Service serviceHandler) {
+    public CurrencyComponent(Service serviceHandler, SceneManager sceneManager) {
         this.serviceHandler = serviceHandler;
+        this.sceneManager = sceneManager;
     }
 
     public void setCurrency(CryptoCurrency currency) {
@@ -114,7 +117,11 @@ public class CurrencyComponent implements Controller {
 
         this.changePercentLabel.setText(String.format("%.2f",currency.getChangePercent24Hr()) + "%");
 
-        var compareChangePercentToZero = currency.getChangePercent24Hr().compareTo(new BigDecimal(0)) > -1;
+        if(currency.getChangePercent24Hr() == null) {
+            return;
+        }
+
+        var compareChangePercentToZero = new BigDecimal(0).compareTo(currency.getChangePercent24Hr()) < 0;
 
         if(compareChangePercentToZero) {
             changePercentLabel.getStyleClass().add("posChangePercent");
@@ -126,7 +133,7 @@ public class CurrencyComponent implements Controller {
     private void bindPurchaseButton() {
         this.purchaseButton.setOnMouseClicked(event -> {
             try {
-                var purchaseWindow = (PurchaseDialogController) serviceHandler.getSceneManager()
+                var purchaseWindow = (PurchaseDialogController) sceneManager
                         .createPurchaseWindow();
 
                 purchaseWindow.setCurrencyContainer(currency);

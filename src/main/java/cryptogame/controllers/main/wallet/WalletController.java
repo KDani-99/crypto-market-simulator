@@ -1,5 +1,6 @@
 package cryptogame.controllers.main.wallet;
 
+import cryptogame.controllers.scene.SceneManager;
 import cryptogame.utils.interfaces.Refreshable;
 import cryptogame.controllers.Controller;
 import cryptogame.controllers.main.wallet.components.WalletComponent;
@@ -30,10 +31,12 @@ public class WalletController implements Controller, Refreshable {
     @FXML private GridPane headerGrid;
 
     private final Service serviceHandler;
+    private final SceneManager sceneManager;
 
     @Autowired
-    public WalletController(Service serviceHandler) {
+    public WalletController(Service serviceHandler, SceneManager sceneManager) {
         this.serviceHandler = serviceHandler;
+        this.sceneManager = sceneManager;
     }
 
     @FXML
@@ -73,7 +76,7 @@ public class WalletController implements Controller, Refreshable {
     }
 
     private void loadWalletComponent(CryptoCurrencyModel currencyModel) throws Exception {
-        var statsComponent = (WalletComponent) serviceHandler.getSceneManager().createWalletComponent();
+        var statsComponent = (WalletComponent) sceneManager.createWalletComponent();
         statsComponent.setCurrencyModel(currencyModel);
         statsComponent.initialize();
 

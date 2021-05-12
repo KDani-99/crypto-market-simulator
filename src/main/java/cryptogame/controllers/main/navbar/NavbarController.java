@@ -1,6 +1,7 @@
 package cryptogame.controllers.main.navbar;
 
 import cryptogame.controllers.Controller;
+import cryptogame.controllers.scene.SceneManager;
 import cryptogame.model.services.Service;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -34,10 +35,12 @@ public class NavbarController implements Controller {
     @FXML private Pane walletButtonPane;
 
     private final Service serviceHandler;
+    private final SceneManager sceneManager;
 
     @Autowired
-    public NavbarController(Service serviceHandler) {
+    public NavbarController(Service serviceHandler, SceneManager sceneManager) {
         this.serviceHandler = serviceHandler;
+        this.sceneManager = sceneManager;
     }
 
     @Override
@@ -62,7 +65,7 @@ public class NavbarController implements Controller {
             removeButtonStyles();
             marketButtonPane.getStyleClass().add("selected");
 
-            serviceHandler.getSceneManager().getMainController()
+            sceneManager.getMainController()
                     .setMarket();
         });
     }
@@ -74,7 +77,7 @@ public class NavbarController implements Controller {
             serviceHandler.getMarketManager().stopAssetLoadingService();
 
             try {
-                serviceHandler.getSceneManager().showLoginScene();
+                sceneManager.showLoginScene();
                 logger.info("User logged out.");
             } catch (Exception exception) {
                 logger.error(exception);
@@ -89,7 +92,7 @@ public class NavbarController implements Controller {
             removeButtonStyles();
             statsButtonPane.getStyleClass().add("selected");
 
-            serviceHandler.getSceneManager().getMainController()
+            sceneManager.getMainController()
             .setStats();
         });
     }
@@ -100,7 +103,7 @@ public class NavbarController implements Controller {
             removeButtonStyles();
             walletButtonPane.getStyleClass().add("selected");
 
-            serviceHandler.getSceneManager().getMainController()
+            sceneManager.getMainController()
                     .setWallet();
         });
     }

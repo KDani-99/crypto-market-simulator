@@ -1,5 +1,6 @@
 package cryptogame.controllers.main.market;
 
+import cryptogame.controllers.scene.SceneManager;
 import cryptogame.utils.interfaces.Initializable;
 import cryptogame.containers.CryptoCurrency;
 import cryptogame.controllers.Controller;
@@ -49,14 +50,16 @@ public class MarketController implements Initializable, Controller {
     private boolean sorted = true;
 
     private final Service serviceHandler;
+    private final SceneManager sceneManager;
 
     private ScheduledExecutorService executorService;
 
     private boolean isInitialized;
 
     @Autowired
-    public MarketController(Service serviceHandler) {
+    public MarketController(Service serviceHandler, SceneManager sceneManager) {
         this.serviceHandler = serviceHandler;
+        this.sceneManager = sceneManager;
     }
 
     @FXML
@@ -199,7 +202,7 @@ public class MarketController implements Initializable, Controller {
     }
 
     private void loadCurrencyComponent(CryptoCurrency currency) throws Exception {
-        var currencyComponent = (CurrencyComponent) serviceHandler.getSceneManager().createCurrencyComponent();
+        var currencyComponent = (CurrencyComponent) sceneManager.createCurrencyComponent();
         currencyComponent.setCurrency(currency);
         currencyComponent.initialize();
 

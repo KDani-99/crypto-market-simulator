@@ -1,4 +1,4 @@
-package cryptogame.model.services.managers.scene;
+package cryptogame.controllers.scene;
 
 import cryptogame.utils.interfaces.Initializable;
 import cryptogame.controllers.Controller;

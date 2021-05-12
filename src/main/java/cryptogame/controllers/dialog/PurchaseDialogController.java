@@ -3,6 +3,7 @@ package cryptogame.controllers.dialog;
 import cryptogame.containers.CurrencyContainer;
 import cryptogame.controllers.BaseController;
 import cryptogame.controllers.Controller;
+import cryptogame.controllers.scene.SceneManager;
 import cryptogame.model.exception.EntityDoesNotExistException;
 import cryptogame.model.models.UserModel;
 import cryptogame.model.services.Service;
@@ -34,8 +35,8 @@ public class PurchaseDialogController extends BaseDialogController {
     private CurrencyContainer currency;
 
     @Autowired
-    public PurchaseDialogController(Service serviceHandler) {
-        super(serviceHandler);
+    public PurchaseDialogController(Service serviceHandler, SceneManager sceneManager) {
+        super(serviceHandler, sceneManager);
     }
 
     @Override
@@ -80,13 +81,13 @@ public class PurchaseDialogController extends BaseDialogController {
             // Call on main UI thread
             Platform.runLater(() -> {
                 refreshData();
-                serviceHandler.getSceneManager().closeAllDialog();
+                sceneManager.closeAllDialog();
             });
 
         }
         catch (Exception exception) {
 
-            Platform.runLater(() -> serviceHandler.getSceneManager().createAlert(Alert.AlertType.ERROR,"An error has occurred",exception.getMessage()));
+            Platform.runLater(() -> sceneManager.createAlert(Alert.AlertType.ERROR,"An error has occurred",exception.getMessage()));
             logger.error(exception);
         }
     }

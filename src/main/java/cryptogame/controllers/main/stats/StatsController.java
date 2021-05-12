@@ -1,5 +1,6 @@
 package cryptogame.controllers.main.stats;
 
+import cryptogame.controllers.scene.SceneManager;
 import cryptogame.utils.interfaces.Refreshable;
 import cryptogame.controllers.Controller;
 import cryptogame.controllers.main.stats.components.StatsComponent;
@@ -42,10 +43,12 @@ public class StatsController implements Controller, Refreshable {
     @FXML private Label mostValuableLabel;
 
     private final Service serviceHandler;
+    private final SceneManager sceneManager;
 
     @Autowired
-    public StatsController(Service serviceHandler) {
+    public StatsController(Service serviceHandler, SceneManager sceneManager) {
         this.serviceHandler = serviceHandler;
+        this.sceneManager = sceneManager;
     }
 
     @Override
@@ -81,7 +84,7 @@ public class StatsController implements Controller, Refreshable {
 
     private void loadStatsComponent(ActionHistoryModel action,StatsComponent.ActionType actionType) throws Exception {
 
-        var statsComponent = (StatsComponent) serviceHandler.getSceneManager().createStatsComponent();
+        var statsComponent = (StatsComponent) sceneManager.createStatsComponent();
         statsComponent.setAction(action);
         statsComponent.setActionType(actionType);
         statsComponent.initialize();

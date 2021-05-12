@@ -1,4 +1,4 @@
-package cryptogame.model.services.managers.scene;
+package cryptogame.controllers.scene;
 
 import cryptogame.Main;
 import cryptogame.utils.interfaces.Refreshable;

@@ -1,6 +1,7 @@
 package cryptogame.controllers.login;
 
 import cryptogame.controllers.BaseController;
+import cryptogame.controllers.scene.SceneManager;
 import cryptogame.model.models.UserModel;
 import cryptogame.model.services.Service;
 import cryptogame.model.security.Auth;
@@ -31,11 +32,13 @@ public class LoginController extends BaseController {
     @FXML private Label errorLabel;
 
     private final Service serviceHandler;
+    private final SceneManager sceneManager;
 
     @Autowired
-    public LoginController(Service serviceHandler) {
+    public LoginController(Service serviceHandler, SceneManager sceneManager) {
         super( false,400,500);
         this.serviceHandler = serviceHandler;
+        this.sceneManager = sceneManager;
     }
 
     @Override
@@ -56,7 +59,7 @@ public class LoginController extends BaseController {
     }
 
     private void setWindowProperties() {
-        var primaryStage = this.serviceHandler.getSceneManager()
+        var primaryStage = sceneManager
                 .getPrimaryStage();
 
         primaryStage.setMinWidth(400);
@@ -109,7 +112,7 @@ public class LoginController extends BaseController {
             try {
                 hideError();
 
-                serviceHandler.getSceneManager().showRegistrationScene();
+                sceneManager.showRegistrationScene();
 
             } catch (Exception exception) {
                 onError(exception);
@@ -121,7 +124,7 @@ public class LoginController extends BaseController {
         serviceHandler.createSession(user.getId());
 
         try {
-            serviceHandler.getSceneManager()
+            sceneManager
                     .showMainScene();
         } catch (Exception exception) {
             onError(exception);

@@ -1,6 +1,7 @@
 package cryptogame.controllers.dialog;
 
 import cryptogame.containers.CryptoCurrency;
+import cryptogame.controllers.scene.SceneManager;
 import cryptogame.model.exception.EntityDoesNotExistException;
 import cryptogame.model.models.CryptoCurrencyModel;
 import cryptogame.model.models.UserModel;
@@ -26,8 +27,8 @@ public class SellCurrencyDialogController extends BaseDialogController {
     private CryptoCurrencyModel cryptoCurrencyModel;
 
     @Autowired
-    public SellCurrencyDialogController(Service serviceHandler) {
-        super(serviceHandler);
+    public SellCurrencyDialogController(Service serviceHandler, SceneManager sceneManager) {
+        super(serviceHandler, sceneManager);
     }
 
     private Optional<CryptoCurrency> getSelectedCurrencyFromMarket() {
@@ -84,11 +85,11 @@ public class SellCurrencyDialogController extends BaseDialogController {
 
             Platform.runLater(() -> {
                 refreshData();
-                serviceHandler.getSceneManager().closeAllDialog();
+                sceneManager.closeAllDialog();
             });
 
         } catch (Exception exception) {
-            Platform.runLater(() -> serviceHandler.getSceneManager().createAlert(Alert.AlertType.ERROR,"An error has occurred",exception.getMessage()));
+            Platform.runLater(() -> sceneManager.createAlert(Alert.AlertType.ERROR,"An error has occurred",exception.getMessage()));
             logger.error(exception);
         }
     }

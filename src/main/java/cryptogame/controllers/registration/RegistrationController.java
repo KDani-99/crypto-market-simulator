@@ -1,5 +1,6 @@
 package cryptogame.controllers.registration;
 
+import cryptogame.controllers.scene.SceneManager;
 import cryptogame.utils.validation.BaseValidation;
 import cryptogame.utils.validation.ValidationError;
 import cryptogame.controllers.BaseController;
@@ -36,12 +37,14 @@ public class RegistrationController extends BaseController {
     @FXML private Label errorLabel;
 
     private final Service serviceHandler;
+    private final SceneManager sceneManager;
 
     @Autowired
-    public RegistrationController(Service serviceHandler) {
+    public RegistrationController(Service serviceHandler, SceneManager sceneManager) {
         super(
                 false,400,500);
         this.serviceHandler = serviceHandler;
+        this.sceneManager = sceneManager;
     }
 
     @Override
@@ -57,7 +60,7 @@ public class RegistrationController extends BaseController {
     }
 
     private void setWindowProperties() {
-        var primaryStage = this.serviceHandler.getSceneManager()
+        var primaryStage = sceneManager
                 .getPrimaryStage();
 
         primaryStage.setMinWidth(400);
@@ -71,7 +74,7 @@ public class RegistrationController extends BaseController {
 
             try {
 
-                serviceHandler.getSceneManager().showLoginScene();
+                sceneManager.showLoginScene();
 
             } catch (Exception exception) {
                 onError(exception);
@@ -140,7 +143,7 @@ public class RegistrationController extends BaseController {
 
         for(var error : validationErrorSet) {
 
-            serviceHandler.getSceneManager()
+            sceneManager
                     .createAlert(Alert.AlertType.ERROR,"Invalid " + error.getFieldName(),error.getMessage());
         }
 
@@ -184,7 +187,7 @@ public class RegistrationController extends BaseController {
                 user.setPassword(Auth.generatePasswordHash(password));
 
                 serviceHandler.getUserDao().persistEntity(user);
-                serviceHandler.getSceneManager()
+                sceneManager
                         .createAlert(Alert.AlertType.INFORMATION,"Successful","You can now log in");
                 clearInputFields();
 

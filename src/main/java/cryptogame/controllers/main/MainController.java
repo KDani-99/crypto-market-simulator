@@ -1,6 +1,7 @@
 package cryptogame.controllers.main;
 
 import cryptogame.controllers.BaseController;
+import cryptogame.controllers.scene.SceneManager;
 import cryptogame.utils.interfaces.Refreshable;
 import cryptogame.controllers.WindowController;
 import cryptogame.controllers.main.navbar.NavbarController;
@@ -25,11 +26,13 @@ public class MainController extends BaseController implements WindowController, 
     @FXML private HBox hBox;
 
     private final Service serviceHandler;
+    private final SceneManager sceneManager;
 
     @Autowired
-    public MainController(Service serviceHandler) {
+    public MainController(Service serviceHandler, SceneManager sceneManager) {
         super(true,1024,768);
         this.serviceHandler = serviceHandler;
+        this.sceneManager = sceneManager;
     }
 
     @Override
@@ -57,7 +60,7 @@ public class MainController extends BaseController implements WindowController, 
     private void setNavbar() {
         try {
 
-            var navbarController = serviceHandler.getSceneManager().getNavbarController();
+            var navbarController = sceneManager.getNavbarController();
             this.hBox.getChildren().add(navbarController.getRoot());
             this.navbarController = (NavbarController) navbarController;
             this.navbarController.initialize();
@@ -76,7 +79,7 @@ public class MainController extends BaseController implements WindowController, 
 
             this.setEmpty();
 
-            var marketController = serviceHandler.getSceneManager().getMarketComponentController();
+            var marketController = sceneManager.getMarketComponentController();
             marketController.initialize();
             displayMainNode(marketController.getRoot());
 
@@ -90,7 +93,7 @@ public class MainController extends BaseController implements WindowController, 
 
             this.setEmpty();
 
-            var statsController = serviceHandler.getSceneManager().getStatsController();
+            var statsController = sceneManager.getStatsController();
             statsController.initialize();
 
             displayMainNode(statsController.getRoot());
@@ -104,7 +107,7 @@ public class MainController extends BaseController implements WindowController, 
         try {
             this.setEmpty();
 
-            var walletController = serviceHandler.getSceneManager().getWalletController();
+            var walletController = sceneManager.getWalletController();
             walletController.initialize();
 
             displayMainNode(walletController.getRoot());

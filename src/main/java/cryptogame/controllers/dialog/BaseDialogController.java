@@ -1,6 +1,7 @@
 package cryptogame.controllers.dialog;
 
 import cryptogame.controllers.Controller;
+import cryptogame.controllers.scene.SceneManager;
 import cryptogame.model.services.Service;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -17,9 +18,11 @@ public abstract class BaseDialogController implements Controller {
     @FXML protected Button actionButton;
 
     protected final Service serviceHandler;
+    protected final SceneManager sceneManager;
 
-    protected BaseDialogController(Service serviceHandler) {
+    protected BaseDialogController(Service serviceHandler, SceneManager sceneManager) {
         this.serviceHandler = serviceHandler;
+        this.sceneManager = sceneManager;
     }
 
     @Override
@@ -41,7 +44,7 @@ public abstract class BaseDialogController implements Controller {
     protected abstract void bindButton();
 
     protected void refreshData() {
-        serviceHandler.getSceneManager().refresh();
+        sceneManager.refresh();
     }
 
     private void makeTextFieldAcceptNumberOnly() {
