@@ -2,7 +2,7 @@ package cryptogame.model.services;
 
 import cryptogame.model.dao.user.UserDao;
 import cryptogame.model.services.managers.market.MarketManager;
-import cryptogame.model.services.managers.scene.SceneManager;
+import cryptogame.controllers.scene.SceneManager;
 import cryptogame.model.services.session.Session;
 
 import java.math.BigDecimal;
@@ -11,13 +11,6 @@ import java.math.BigDecimal;
  * The service class that is responsible for providing services.
  */
 public interface Service {
-    /**
-     * Returns the injected scene manager.
-     *
-     * @return the {@link SceneManager} instance
-     */
-    SceneManager getSceneManager();
-
     /**
      * Returns the injected market manager.
      *

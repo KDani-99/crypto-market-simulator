@@ -2,7 +2,7 @@ package cryptogame.model.services;
 
 import cryptogame.model.dao.user.UserDao;
 import cryptogame.model.services.managers.market.MarketManager;
-import cryptogame.model.services.managers.scene.SceneManager;
+import cryptogame.controllers.scene.SceneManager;
 import cryptogame.model.services.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -59,13 +59,6 @@ public class ServiceImplementation implements Service {
         this.context = context;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public SceneManager getSceneManager() {
-        return sceneManager;
-    }
     /**
      * {@inheritDoc}
      */
@@ -129,7 +122,7 @@ public class ServiceImplementation implements Service {
      */
     @Override
     public void onExit() {
-        getSceneManager().onExit();
+        sceneManager.onExit();
         getMarketManager().onExit();
     }
 }
