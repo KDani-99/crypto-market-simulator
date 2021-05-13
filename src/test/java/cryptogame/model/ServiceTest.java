@@ -28,7 +28,6 @@ public class ServiceTest {
         Assert.assertNull(session);
     }
 
-
     @ParameterizedTest
     @ValueSource(strings = {"1.124324123", "6571.32134132", "-123.74", ".76"})
     public void testServiceFormatNumber(String numberString) {
