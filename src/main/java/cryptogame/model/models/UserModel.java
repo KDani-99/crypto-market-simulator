@@ -9,6 +9,7 @@ import cryptogame.containers.CurrencyContainer;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -78,19 +79,6 @@ public class UserModel {
     public UserModel() {}
 
     /**
-     * Creates a new {@link UserModel} instance with the given parameters.
-     *
-     * @param username the username of the user
-     * @param email the email of the user
-     * @param password the hashed password of the user
-     */
-    public UserModel(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
-
-    /**
      * Determines whether the user can purchase {@code amount} from the given currency.
      *
      * @param currency the currency that the user wants to purchase
@@ -120,5 +108,19 @@ public class UserModel {
         }
 
         return amount.compareTo(currency.get().getAmount()) <= 0;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserModel userModel = (UserModel) o;
+        return id.equals(userModel.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
