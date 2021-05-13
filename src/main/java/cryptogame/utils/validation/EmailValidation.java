@@ -17,11 +17,11 @@ public class EmailValidation implements Validation<String> {
             return false;
         }
 
-        if(email.length() > 125 || email.length() < 6) {
+        if(email.indexOf(' ') > -1) {
             return false;
         }
 
-        if(email.indexOf(' ') > -1) {
+        if(email.length() > 125 || email.length() < 6) {
             return false;
         }
 
@@ -29,6 +29,10 @@ public class EmailValidation implements Validation<String> {
 
         var lastDotIndex = reversedEmail.indexOf(".");
         var lastAtIndex = reversedEmail.indexOf("@");
+
+        if(lastAtIndex == -1 || lastDotIndex == -1) {
+            return false;
+        }
 
         if(reversedEmail.substring(0,lastDotIndex).length() < 2) {
             // name@email.c -> invalid
