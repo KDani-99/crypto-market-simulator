@@ -1,4 +1,4 @@
-package cryptogame.utils;
+package cryptogame.utils.validation;
 
 import cryptogame.model.exception.ValidationException;
 import cryptogame.model.models.UserModel;

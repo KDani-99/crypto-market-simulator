@@ -1,4 +1,4 @@
-package cryptogame.utils;
+package cryptogame.utils.validation;
 
 import cryptogame.model.exception.ValidationException;
 import cryptogame.model.models.UserModel;
@@ -21,7 +21,7 @@ public class EmailValidationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"test@email.","test.email@.com","invalid.email@t.com"})
+    @ValueSource(strings = {"test@email.","test.email@.com","invalid.email@t.com", "test-email.com","email", " "})
     public void testEmailValidationWithInvalidEmailShouldFail(String email) {
         // Arrange
         this.userModel.setEmail(email);
