@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>hu.unideb.inf</groupId>
-    <artifactId>crypto-trading-game</artifactId>
+    <artifactId>crypto-market-game</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -162,6 +162,12 @@
             <version>2.4.5</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.7</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -239,7 +245,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.5</version>
+                <version>0.8.7</version>
                 <executions>
                     <execution>
                         <goals>
@@ -323,6 +329,13 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.5</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/controllers/**/*</exclude>
+                        <exclude>**/model/exception/**/*</exclude>
+                        <exclude>**/utils/interfaces/**/*</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.openclover</groupId>
