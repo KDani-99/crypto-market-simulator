@@ -17,6 +17,76 @@ public class UserModelTest {
     }
 
     @Test
+    public void testUserModelsShouldEqualBaseOnId() {
+        // Arrange
+        var userOne = new UserModel();
+        userOne.setId(1L);
+
+        var userTwo = new UserModel();
+        userTwo.setId(1L);
+        // Act
+        var areEqual = userOne.equals(userTwo);
+        // Assert
+        Assert.assertTrue(areEqual);
+    }
+
+    @Test
+    public void testUserModelsShouldDiffer() {
+        // Arrange
+        var userOne = new UserModel();
+        userOne.setId(1L);
+
+        var userTwo = new UserModel();
+        userTwo.setId(2L);
+        // Act
+        var areEqual = userOne.equals(userTwo);
+        // Assert
+        Assert.assertFalse(areEqual);
+    }
+
+    @Test
+    public void testUserModelHashCodeShouldEqual() {
+        // Arrange
+        var userOne = new UserModel();
+        userOne.setUsername("test_username");
+        userOne.setEmail("test@email.com");
+        userOne.setId(1L);
+
+        var userTwo = new UserModel();
+        userTwo.setUsername("test_username");
+        userTwo.setEmail("test@email.com");
+        userTwo.setId(1L);
+        // Act
+        var firstHashCode = userOne.hashCode();
+        var secondHashCode = userTwo.hashCode();
+
+        var areEqual = firstHashCode == secondHashCode;
+        // Assert
+        Assert.assertTrue(areEqual);
+    }
+
+    @Test
+    public void testUserModelHashCodeShouldDiffer() {
+        // Arrange
+        var userOne = new UserModel();
+        userOne.setUsername("test_username");
+        userOne.setEmail("test@email.com");
+        userOne.setId(1L);
+
+        var userTwo = new UserModel();
+        userTwo.setUsername("test-2_username");
+        userTwo.setEmail("test-2@email.com");
+        userTwo.setId(2L);
+        // Act
+        var firstHashCode = userOne.hashCode();
+        var secondHashCode = userTwo.hashCode();
+
+        var areEqual = firstHashCode == secondHashCode;
+        // Assert
+        Assert.assertFalse(areEqual);
+    }
+
+    @Test
     public void testUserPurchaseGivenCurrencyShouldFailWhenBalanceIsLess() {
         // Arrange
         var currency = new CryptoCurrency();
