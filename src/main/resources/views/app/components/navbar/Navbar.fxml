@@ -13,7 +13,7 @@
    <children>
       <HBox alignment="CENTER_LEFT" maxHeight="126.0" prefHeight="126.0" prefWidth="250.0" styleClass="info">
          <children>
-            <Label prefHeight="75.0" prefWidth="268.0" text="Crypto Trading Game">
+            <Label prefHeight="75.0" prefWidth="268.0" text="Crypto Market Game">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Label>
